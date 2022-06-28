@@ -1,0 +1,32 @@
+
+.menu-account {
+    padding : 0;
+    position: relative;
+    .menu-item {
+        border: transparent;
+        padding: 10px 20px;
+        color: var(--text);
+        display: block;
+        text-align: left;
+        &:hover{
+            background-color:rgba(22,24,35,0.08);
+            cursor: pointer;
+        }
+    }
+
+    &::after{
+        content: "";
+        border: 20px solid var(--white);
+        width: 0;
+        height: 0;
+        position: absolute;
+        z-index: -1;
+        top :-30px;
+        right: 50%;
+        transform: translateX(50%);
+        border-top-color: transparent ;
+        border-right-color: transparent ;
+        border-left-color: transparent ;
+    }
+   
+}

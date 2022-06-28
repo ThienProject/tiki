@@ -1,0 +1,26 @@
+@import 'normalize.css'; // reset css
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap');
+:root{
+    --primary : rgb(26, 148, 255);
+    --header-height : 100px;
+    --background : #f0f8ff;
+    --white : #fff;
+    --black : #000;
+    --text : #001b33;
+    --search-bar: 746px;
+    --btn-search :120px;
+}
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-family: 'Roboto', sans-serif;
+    font-size: 62.5%;
+    color: var(--text);
+}
+body{
+    font-size: 1.6rem;
+    text-rendering: optimizeSpeed;
+}

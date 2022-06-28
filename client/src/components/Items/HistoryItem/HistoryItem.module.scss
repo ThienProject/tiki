@@ -1,0 +1,34 @@
+.search-item{
+    width: 100%;
+    display: flex;
+    padding: 10px 20px 10px 10px;
+    justify-content: center;
+
+    &:hover{
+        cursor: pointer;
+        background-color: rgba(27, 168, 255, 0.1);
+    }
+}
+.search-detail{
+    flex: 1;
+    display: flex;
+}
+.icon{
+    font-size: 1.5rem;
+    color: var(--text);
+    margin: 0 10px;
+
+
+}
+.content{
+    font-size: 1.5rem;
+    color: var(--text);
+}
+.delete-search{
+    font-size: 1.5rem;
+    border: none;
+
+    &:hover{
+        cursor: pointer;
+    }
+}

@@ -1,0 +1,35 @@
+.shop-item{
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+}
+.avatar{
+    width: 40px;
+    height: 40px;
+    margin: 0 8px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+.info{
+    color: var(--text);
+}
+.shop-name{
+    font-size: 1.5rem;
+    font-weight: 500;
+}
+.rate{
+    display: flex;
+    align-items: center;
+}
+.rate-detail{
+    font-size: 1.3rem;
+}
+.num{
+
+
+}
+.icon{
+    margin-left: 8px;
+    font-size: 1rem;
+    color:#fdd835 ;
+}

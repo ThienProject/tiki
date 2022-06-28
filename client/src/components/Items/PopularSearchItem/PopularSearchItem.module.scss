@@ -1,0 +1,35 @@
+.shop-item{
+    width: 33%;
+    float: left;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+
+    &:hover {
+        cursor: pointer;
+        background-color: rgba(27, 168, 255, 0.1);;
+    }
+}
+.avatar{
+    width: 35px;
+    height: 35px;
+    margin: 0 8px;
+    object-fit: cover;
+}
+.info{
+    color: var(--text);
+}
+.shop-name{
+    font-size: 1.3rem;
+    font-weight: 400;
+}
+
+.num{
+
+
+}
+.icon{
+    margin-left: 8px;
+    font-size: 1rem;
+    color:#fdd835 ;
+}
