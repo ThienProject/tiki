@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faMagnifyingGlass,faSortDown} from '@fortawesome/free-solid-svg-icons';
@@ -11,16 +11,27 @@ import HistoryItem from '~/components/Items/HistoryItem';
 import PopularSearchItem from '~/components/Items/PopularSearchItem';
 import Button from '~/components/Button';
 import {default as PopperWrapper} from '~/components/Popper';
-
+import * as searchService from '~/apiServices/searchService';
 const cx = classNames.bind(styles)
 function Search(){
-    const [searchHistory, setSearchHistory] = useState([]);
-    const [searchPopular, setSearchPopular] = useState([]);
+  /*   const [searchHistory, setSearchHistory] = useState([]);
+    const [searchPopular, setSearchPopular] = useState([]); */
     const [searchResult, setSearchResult] = useState([]);
     const [searchValue, setSearchValue] = useState('');
     const [isFocus , setIsFocus ] = useState(false);
 
     const inputRef = useRef();
+
+    useEffect(()=>{
+       const  fetchApi = async ()=>{
+        const result = await searchService.search(searchValue);
+        setSearchResult(result);
+        console.log(searchResult);
+       }
+       fetchApi();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[searchValue])
+
     function handleOnInput(){
         setIsFocus(true);
     }
@@ -28,11 +39,13 @@ function Search(){
         setIsFocus(false);
     }
     
+
     return (
         <div className={cx('searchbar')}>
                         <div className={cx('tippy')}>
                             <Tippy 
                                 onClickOutside={handleOutInput}
+                                placement = {'bottom'}
                                 interactive = {true}
                                 visible = {isFocus}
                                 render={attrs => (
@@ -70,8 +83,11 @@ function Search(){
                                                             &&
                                                                 <div className={cx('search-group')}> 
                                                                     <h4 className={cx('search-title')}>Stall</h4>
-                                                                    <ShopItem />
-                                                                    <ShopItem />
+                                                                    {
+                                                                        searchResult.map((item, index) =>{
+                                                                            return <ShopItem item = {item} key={index}  > </ShopItem>;
+                                                                        })
+                                                                    }
                                                                 </div>    
                                                 }
                                             </PopperWrapper>

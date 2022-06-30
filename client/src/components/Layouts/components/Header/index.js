@@ -38,8 +38,8 @@ function Header()
                     <div className={cx('actions')}>
                         
                         <Menu
-                        items = {userLogin ? MENU_ITEMS : ''}
-                        > 
+                            items = {userLogin ? MENU_ITEMS : ''}
+                            > 
                             <div className={cx('account')}>
                                 <FontAwesomeIcon className={cx('account-icon')} icon ={faUser} />
                                 <span className={cx('name')}>Phạm Văn Thiên
