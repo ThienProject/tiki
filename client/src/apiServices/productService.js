@@ -1,0 +1,13 @@
+import * as request from '~/utils/request';
+export const getPromotionToDay = async(q)=>{
+    try {
+        const result = await request.get(`product/promotion`,{
+            params : {
+                q 
+            }
+        })
+        return result.data
+    } catch (error) {
+        console.warn(error);
+    }
+}

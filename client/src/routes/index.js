@@ -1,7 +1,7 @@
 import routes from "~/config/router";
 
-import { DefaultLayout } from "~/components/Layouts";
-import { HeaderFooterLayout } from "~/components/Layouts";
+import { DefaultLayout } from "~/Layouts";
+import { HeaderFooterLayout } from "~/Layouts";
 import { Fragment } from 'react'; // nếu k có layout
 
 //import pages

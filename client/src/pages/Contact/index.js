@@ -1,9 +1,9 @@
 import classNames from "classnames/bind";
 import styles from './Contact.module.scss';
-
+const cx = classNames.bind(styles);
 function Contact()
 {
-    const cx = classNames.bind(styles);
+   
     return  <div className={cx('contact')}>
 
     </div>

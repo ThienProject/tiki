@@ -1,0 +1,53 @@
+.home-wrapper{
+
+    .home-top{
+        height: 274px;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        justify-content: center;
+        margin-top: 20px;
+}
+
+}
+
+.img-banner__top{
+    height: 274px;
+    /* width: 408px; */
+    object-fit: cover;
+    border-radius: 4px;
+    overflow: hidden;
+    
+    width: 100%;
+}
+
+// price shock
+.carousel-shock{
+    border-radius: 4px;
+}
+.dealFlashIcon{
+    width: 21px;
+    animation: 0.8s linear 0s infinite hOKweE;
+}
+@keyframes hOKweE{
+    50% {
+        opacity: 0.3;
+        transform: scale(1.3);
+    }
+}
+.carousel-title__left{
+    display: flex;
+    align-items: center;
+}
+.countdown{
+
+}
+.carousel-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.video-astra{
+    border-radius: 10px;
+}
+

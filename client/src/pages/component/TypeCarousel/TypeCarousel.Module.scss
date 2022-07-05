@@ -1,0 +1,46 @@
+.type-carousel{
+    overflow: hidden;
+    margin: 20px -15px;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.content{
+    overflow: hidden;
+    transition: all linear 0.2s;
+}
+.type-item{
+    white-space: nowrap;
+    padding: 10px 20px;
+}
+.btn-prev{
+    position: absolute;
+    left: 0;
+    background-color: white;
+    padding: 0 5px ;
+    border: none;
+    font-size:2rem;
+    top : 0;
+    display:  none;
+    &:hover{
+        cursor: pointer;
+    }
+   
+}
+.btn-next{
+    padding: 0 5px ;
+    position: absolute;
+    right: 0;
+    background-color: white;
+    border: none;
+    font-size:2rem;
+    top : 0;
+    display:  none;
+    &:hover{
+        cursor: pointer;
+    }
+   
+}
+.btn-next.active , .btn-prev.active{
+    display: block;
+}

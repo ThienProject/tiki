@@ -5,6 +5,7 @@
     --header-height : 100px;
     --background : #f0f8ff;
     --white : #fff;
+    --red : red;
     --black : #000;
     --text : #001b33;
     --search-bar: 746px;
@@ -23,4 +24,23 @@ html{
 body{
     font-size: 1.6rem;
     text-rendering: optimizeSpeed;
+}
+a{
+    color: var(--text);
+    text-decoration: none;
+}
+/* scroll bar */
+html *::-webkit-scrollbar {
+    border-radius: 0;
+    width: 8px;
+}
+
+
+html *::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, .15);
+}
+html *::-webkit-scrollbar-track {
+    border-radius: 0;
+    background-color: rgba(0, 0, 0, 0);
 }
