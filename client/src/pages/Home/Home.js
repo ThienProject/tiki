@@ -10,8 +10,9 @@ import TypeCarousel from '../component/TypeCarousel';
 import ProductCarousel from '../component/ProductCarousel';
 import * as bannersService from '~/apiServices/BannersService';
 import * as productService from '~/apiServices/productService';
-import * as categoryService from '~/apiServices/categoryService'
+import * as categoryService from '~/apiServices/categoryService';
 import videos from '~/assets/videos';
+import Countdown from '../component/Countdown';
 
 const cx = classNames.bind(styles);
 function Home() {
@@ -41,11 +42,10 @@ function Home() {
         };
         fetchApi();
     }, []);
-
+    console.log(promotionToDay)
     const banner_top = banners.find((value) => {
         return value.name === 'banner_home_top';
     });
-
     return (
         <div className="wide grid">
             <div className={cx('home-wrapper')}>
@@ -83,19 +83,24 @@ function Home() {
                                     <Image src={images.price_shock} />
                                     <Image className={cx('dealFlashIcon')} src={images.dealFlashIcon} />
                                     <Image src={images.today} />
-                                    <div className={cx('countdown')}>CountDown</div>
+                                    {
+                                        promotionToDay.length> 0 &&
+                                        <Countdown end={promotionToDay[0].date_end} className={cx('countdown')}></Countdown>
+                                    }    
                                 </div>
-                                <div className={cx('more')}>
-                                    <Link to="/">View More</Link>
-                                </div>
+                                
+                                <Link className={cx('more')} to="/">View More</Link>
                             </div>
                             <ProductCarousel products={promotionToDay} />
                         </div>
                     </div>
                     <div className="l-5 m-0">
-                        <video className={cx('video-astra')}  width="100%" height="274" controls>
-                                <source src={videos.astra} type="video/mp4"/>
-                        </video>
+                        <div className={cx('video-group')}>
+                            <video className={cx('video-astra')}   controls>
+                                    <source src={videos.astra} type="video/mp4"/>
+                            </video>
+                        </div>
+                        
                     </div>
                 </div>
             </div>

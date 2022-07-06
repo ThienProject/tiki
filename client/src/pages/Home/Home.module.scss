@@ -24,6 +24,7 @@
 // price shock
 .carousel-shock{
     border-radius: 4px;
+    
 }
 .dealFlashIcon{
     width: 21px;
@@ -42,12 +43,25 @@
 .countdown{
 
 }
+.more{
+    color: var(--primary);
+    font-size: 1.7rem;
+}
 .carousel-title{
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin: 0 15px;
+}
+.video-group{
+    overflow: hidden;
+    border-radius: 5px;
+    width :100%;
+    height :274px;
 }
 .video-astra{
-    border-radius: 10px;
+    object-fit: cover;
+    width :100%;
+    height: 100%;
 }
 
