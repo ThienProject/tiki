@@ -5,6 +5,8 @@ import cors from 'cors';
 import bannerApi from '../services/bannerApi'
 import productApi from "../services/productApi";
 import categoryApi from "../services/categoryApi";
+import brandApi from "../services/brandApi";
+import typeApi from "../services/typeApi";
 /* import bodyParser from 'body-parser' */
 let router = express.Router();
 function innitAPIRoute(app){
@@ -28,6 +30,8 @@ function innitAPIRoute(app){
     bannerApi(router);
     productApi(router);
     categoryApi(router);
+    brandApi(router);
+    typeApi(router);
     return app.use('/api/',router)
 }
 export default innitAPIRoute;

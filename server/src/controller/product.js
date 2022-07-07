@@ -1,7 +1,10 @@
 import pool from "../configs/connectBD";
 const getPromotion = async (req, res) =>{
     const id_promotion = req.query.q;
-    const [rows, fields] = await pool.execute(`SELECT DISTINCT  product.*, image.*,promotion.promotion_quantity,promotion.percent ,detail_promotion.remaining_quantity ,(
+    const [rows, fields] = await pool.execute(`SELECT DISTINCT  product.*, image.*,
+    promotion.promotion_quantity, promotion.percent ,
+    DATE_FORMAT(promotion.date_begin, '%Y-%m-%d %H:%i:%s')  as date_begin, DATE_FORMAT(promotion.date_end,'%Y-%m-%d %H:%i:%s') as date_end,
+    detail_promotion.remaining_quantity ,(
         CASE 
             promotion.id_promotion = detail_promotion.id_promotion
             WHEN promotion.promotion_quantity > detail_promotion.remaining_quantity && 
