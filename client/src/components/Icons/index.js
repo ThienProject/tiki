@@ -1,1 +1,1 @@
-export const user = ()=>("icon");
+export * from './Icon'

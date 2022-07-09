@@ -1,6 +1,5 @@
 .slick-slider{
-    
-    &:hover .slick-prev:before,&:hover .slick-next:before{
+    &:hover .slick-prev:before, &:hover .slick-next:before{
        opacity: 1;
     }
     .slick-next {
@@ -11,14 +10,13 @@
         left: 0 ;
     }
     .slick-prev:before , .slick-next:before{
-       
         padding: 20px 5px;
         background: #888;
         border-radius: 3px;
     }
     .slick-dots {
         bottom: 5px;
-        }
+    }
     .slick-dots li button:before{
     font-size: 0.9rem;
        color: rgba(255, 255, 255, 0.5);
@@ -27,5 +25,10 @@
     .slick-dots li.slick-active button:before{
         color: rgba(255, 255, 255);
         opacity: 1;
+    }
+}
+.slick-dots li.slick-active {
+    .dot-active-primary{
+        background-color: var(--primary) !important ;
     }
 }

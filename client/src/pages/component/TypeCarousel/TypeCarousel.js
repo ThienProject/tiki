@@ -10,7 +10,7 @@ function TypeCarousel({ category }) {
     const carouselRef = useRef();
     const btnPrevRef = useRef();
     const btnNextRef = useRef();
-    console.log("reder...")
+   // console.log("reder...")
     return (
         <div className={cx('type-carousel')}>
             <button
@@ -25,7 +25,7 @@ function TypeCarousel({ category }) {
                         top: 0,
                         behavior: 'smooth',
                     });
-                    console.log(carouselRef.current.scrollLeft - Width);
+                   // console.log(carouselRef.current.scrollLeft - Width);
                     if (carouselRef.current.scrollLeft - Width <= 0) {
                         btnPrevRef.current.classList.remove(cx('active'));
                     }
@@ -67,15 +67,15 @@ function TypeCarousel({ category }) {
                         duration: 500,
                         easing: 'easeInOutQuad'
                     });
-                    console.log([carouselRef.current]);
+                   // console.log([carouselRef.current]);
                     if (carouselRef.current.scrollWidth - (carouselRef.current.scrollLeft + 2 * Width) <= 0) {
                         btnNextRef.current.classList.remove(cx('active'));
                     }
                     //
-                    console.log(
+                  /*   console.log(
                         carouselRef.current.scrollWidth -
                             (carouselRef.current.scrollLeft + carouselRef.current.offsetWidth),
-                    );
+                    ); */
                     //console.log(widthContent)
                     btnPrevRef.current.classList.add(cx('active'));
                 }}

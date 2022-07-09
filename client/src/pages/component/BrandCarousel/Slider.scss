@@ -1,0 +1,42 @@
+.brand-carousel {
+.slick-slider{
+    .slick-disabled{
+        display: none !important;
+    }
+    .slick-next {
+        right: 0px ;
+        background-color: transparent;
+        height: 100%;
+        padding: 0 30px;
+        background-image: linear-gradient(to left, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+    }
+    .slick-prev {
+        padding: 0;
+        background-color: transparent;
+        z-index: 3;
+        left: 0 ;
+        height: 100%;
+        padding: 0 30px;
+        background-image: linear-gradient(to right, rgb(255, 255, 255), rgba(255, 255, 255, 0));
+    }
+    .slick-prev:before , .slick-next:before{
+        font-size: 2.5rem;
+        padding: 0;
+        border-radius: 50%;
+        background-color: black;
+        
+    }
+    .slick-dots {
+        bottom: 5px;
+        }
+    .slick-dots li button:before{
+        font-size: 0.9rem;
+        color: rgba(255, 255, 255, 0.5);
+      
+    }
+    .slick-dots li.slick-active button:before{
+        color: rgba(255, 255, 255);
+      
+    }
+}
+}

@@ -1,0 +1,43 @@
+.suggestions-header{
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    width: 100%;
+    background-color: red;
+    display: block;
+    background: rgb(245, 245, 250);
+    border-radius: 4px 4px 0px 0px;
+    padding: 10px;
+}
+.title-content{
+    font-size: 2rem;
+    font-weight: 400;
+}
+.suggestions-list-option{
+    display: grid;
+    margin-bottom: 4px;
+    overflow: auto;
+    position: relative;
+    grid-template-columns: repeat(8, 1fr);
+    column-gap: 4px;
+}
+.suggestions-item__icon{
+    width: 48px;
+}
+.suggestions-content{
+  
+}
+.suggestions-item{
+    border: 1px solid white;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    -webkit-box-align: center;
+    align-items: center;
+    flex-shrink: 0;
+    cursor: pointer;
+    min-height: 78px;
+    border-radius: 4px;
+    padding: 4px 8px;
+}

@@ -8,7 +8,7 @@ function HeaderFooterLayout({children}){
   return( 
             <div className={cx('wrapper')}>
                 <Header />
-                <section className="content">
+                <section className={styles['content']}>
                     <div >{children}</div> 
                 </section>
                 <Footer />

@@ -1,12 +1,11 @@
 .home-wrapper{
-
     .home-top{
-        height: 274px;
         display: flex;
         align-items: center;
-        overflow: hidden;
+        overflow-x: clip;
+        box-sizing: border-box;
         justify-content: center;
-        margin-top: 20px;
+        margin-top: 30px;
 }
 
 }
@@ -40,9 +39,7 @@
     display: flex;
     align-items: center;
 }
-.countdown{
 
-}
 .more{
     color: var(--primary);
     font-size: 1.7rem;
@@ -59,9 +56,57 @@
     width :100%;
     height :274px;
 }
+
 .video-astra{
     object-fit: cover;
     width :100%;
     height: 100%;
 }
+.title-row{
+    display: flex;
+    margin: 0 10px 20px;
+}
+.title-image{
+    width: 22px;
+    height:  22px;
+    margin-right: 5px;
+}
+.title-content{
+    font-size: 2rem;
+    font-weight: 400;
+}
+.fix-gutter{
+    margin: -5px;
+}
 
+.gutter{
+    padding:0 5px;
+}
+
+.type-featured__item{
+    margin: 10px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+.type-featured__image{
+    border-radius: 20px;
+    overflow: hidden;
+    width: 60px;
+    height: 60px;
+
+}
+.type-featured__name{
+    display:  -webkit-box;
+    -webkit-box-orient: 2;
+    text-align: center;
+    line-height: 2rem;
+    margin: 12px 0px 16px;
+    padding: 0px 12px;
+    text-transform: capitalize;
+}
+
+.today-suggestions{
+ 
+}
