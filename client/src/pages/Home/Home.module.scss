@@ -6,50 +6,17 @@
         box-sizing: border-box;
         justify-content: center;
         margin-top: 30px;
-}
-
+    }
 }
 
 .img-banner__top{
     height: 274px;
-    /* width: 408px; */
     object-fit: cover;
     border-radius: 4px;
     overflow: hidden;
-    
     width: 100%;
 }
 
-// price shock
-.carousel-shock{
-    border-radius: 4px;
-    
-}
-.dealFlashIcon{
-    width: 21px;
-    animation: 0.8s linear 0s infinite hOKweE;
-}
-@keyframes hOKweE{
-    50% {
-        opacity: 0.3;
-        transform: scale(1.3);
-    }
-}
-.carousel-title__left{
-    display: flex;
-    align-items: center;
-}
-
-.more{
-    color: var(--primary);
-    font-size: 1.7rem;
-}
-.carousel-title{
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin: 0 15px;
-}
 .video-group{
     overflow: hidden;
     border-radius: 5px;
@@ -75,38 +42,4 @@
     font-size: 2rem;
     font-weight: 400;
 }
-.fix-gutter{
-    margin: -5px;
-}
 
-.gutter{
-    padding:0 5px;
-}
-
-.type-featured__item{
-    margin: 10px 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-}
-.type-featured__image{
-    border-radius: 20px;
-    overflow: hidden;
-    width: 60px;
-    height: 60px;
-
-}
-.type-featured__name{
-    display:  -webkit-box;
-    -webkit-box-orient: 2;
-    text-align: center;
-    line-height: 2rem;
-    margin: 12px 0px 16px;
-    padding: 0px 12px;
-    text-transform: capitalize;
-}
-
-.today-suggestions{
- 
-}

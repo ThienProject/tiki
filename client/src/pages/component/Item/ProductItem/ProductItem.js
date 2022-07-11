@@ -5,10 +5,10 @@ import { StarIcon } from '~/components/Icons/Icons';
 import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
-function ProductItem({product}){
-
-    return <Link to = {'/'} className={'l-2 col '+ cx('product-wrapper')}>
-        { product.images && <Image className = {cx('product-image')} src ={product.images[0].image_link}/> }
+function ProductItem({product, className}){
+    console.log(product)
+    return <Link to = {'/'} className={'l-2 col '+ cx('product-wrapper',className)}>
+        { <Image className = {cx('product-image')} src ={product.images ? product.images[0].image_link :''}/> }
         <div className={cx('product-title')}>
             <p className={cx('product-title__content')}>{product.name}</p>
         </div>

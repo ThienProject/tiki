@@ -1,0 +1,27 @@
+.carousel-shock{
+    border-radius: 4px; 
+}
+.dealFlashIcon{
+    width: 21px;
+    animation: 0.8s linear 0s infinite hOKweE;
+}
+.carousel-title__left{
+    display: flex;
+    align-items: center;
+}
+.more{
+    color: var(--primary);
+    font-size: 1.7rem;
+}
+.carousel-title{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 15px;
+}
+@keyframes hOKweE{
+    50% {
+        opacity: 0.3;
+        transform: scale(1.3);
+    }
+}

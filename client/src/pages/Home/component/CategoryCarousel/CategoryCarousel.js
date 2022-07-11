@@ -1,16 +1,29 @@
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import classNames from 'classnames/bind';
-import { useRef } from 'react';
-import { Link } from 'react-router-dom';
 import slugify from 'slugify';
-import styles from './TypeCarousel.Module.scss';
+import { Link } from 'react-router-dom';
+import classNames from 'classnames/bind';
+import { useEffect, useRef, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+
+import styles from './CategoryCarousel.Module.scss';
+import * as categoryService from '~/apiServices/categoryService';
+
 const cx = classNames.bind(styles);
-function TypeCarousel({ category }) {
+function CategoryCarousel() {
+    const [category, setCategory] = useState([]);
     const carouselRef = useRef();
     const btnPrevRef = useRef();
     const btnNextRef = useRef();
-   // console.log("reder...")
+
+    useEffect(() => {
+        const fetchApi = async () => {
+            const result_category = await categoryService.getCategory();
+            if (result_category) {
+                setCategory(result_category);
+            }
+        };
+        fetchApi();
+    }, []);
     return (
         <div className={cx('type-carousel')}>
             <button
@@ -25,7 +38,7 @@ function TypeCarousel({ category }) {
                         top: 0,
                         behavior: 'smooth',
                     });
-                   // console.log(carouselRef.current.scrollLeft - Width);
+                    // console.log(carouselRef.current.scrollLeft - Width);
                     if (carouselRef.current.scrollLeft - Width <= 0) {
                         btnPrevRef.current.classList.remove(cx('active'));
                     }
@@ -65,14 +78,14 @@ function TypeCarousel({ category }) {
                         top: 0,
                         behavior: 'smooth',
                         duration: 500,
-                        easing: 'easeInOutQuad'
+                        easing: 'easeInOutQuad',
                     });
-                   // console.log([carouselRef.current]);
+                    // console.log([carouselRef.current]);
                     if (carouselRef.current.scrollWidth - (carouselRef.current.scrollLeft + 2 * Width) <= 0) {
                         btnNextRef.current.classList.remove(cx('active'));
                     }
                     //
-                  /*   console.log(
+                    /*   console.log(
                         carouselRef.current.scrollWidth -
                             (carouselRef.current.scrollLeft + carouselRef.current.offsetWidth),
                     ); */
@@ -85,4 +98,4 @@ function TypeCarousel({ category }) {
         </div>
     );
 }
-export default TypeCarousel;
+export default CategoryCarousel;
