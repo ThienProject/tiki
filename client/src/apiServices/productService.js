@@ -11,12 +11,14 @@ export const getPromotionToDay = async(q)=>{
         console.warn(error);
     }
 }
-export const getProductLimit = async(offset,size) =>{
+export const getProductLimit = async(offset,size, category, product_id) =>{
     try {
         const result = await request.get(`product/limit`,{
             params : {
                 offset,
-                size
+                size,
+                category,
+                product_id
             }
         })
         return result.data;

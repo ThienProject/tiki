@@ -3,10 +3,12 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
 import classNames from 'classnames/bind';
+import slugify from 'slugify';
 import './Slider.scss';
 import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
 import images from '~/assets/images';
+
 const cx = classNames.bind(styles);
 function ProductCarousel({ products = [] }) {
     const formatter = new Intl.NumberFormat('de-DE', {
@@ -25,7 +27,15 @@ function ProductCarousel({ products = [] }) {
                     const price = formatter.format(product.price * (1- product.percent/100));
                     return (
                         <div key={index} className={cx('product')}>
-                            <Link className={cx('product-link')} to={'/'}>
+                            {/* / */}
+                            <Link className={cx('product-link')} to={slugify(product.name,{
+                                replacement: '-', // replace spaces with replacement character, defaults to `-`
+                                remove: undefined, // remove characters that match regex, defaults to `undefined`
+                                lower: true, // convert to lower case, defaults to `false`
+                                strict: true, // strip special characters except replacement, defaults to `false`
+                                locale: 'vi', // language code of the locale to use
+                                trim: true, // trim leading and trailing replacement chars, defaults to `true`
+                            })+`?id=${product.id_product}`}>
                                 <Image
                                     className={cx('image-product')}
                                     alt={product.image_name}

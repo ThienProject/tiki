@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 const cx = classNames.bind(styles);
 
 function ProductItem({product, className}){
-    console.log(product)
+ /*    console.log(product) */
     return <Link to = {'/'} className={'l-2 col '+ cx('product-wrapper',className)}>
         { <Image className = {cx('product-image')} src ={product.images ? product.images[0].image_link :''}/> }
         <div className={cx('product-title')}>

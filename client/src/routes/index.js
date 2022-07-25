@@ -11,6 +11,7 @@ import Search from "~/pages/Search";
 import Contact from "~/pages/Contact";
 import Shop from "~/pages/Shop";
 import UserUpdate from "~/pages/UserUpdate";
+import Product from "~/pages/Product";
 
 const publicRoutes = [
     {path : routes.home, component: Home, layout:HeaderFooterLayout},
@@ -18,6 +19,7 @@ const publicRoutes = [
     {path : routes.shop, component:Shop, layout: HeaderFooterLayout},
     {path : routes.user_update, component:UserUpdate, layout: HeaderFooterLayout},
     {path : routes.contact, component:Contact, layout: Fragment},
+    {path : routes.product, component: Product, layout: HeaderFooterLayout}
 ]
 const privateRoutes = [
 

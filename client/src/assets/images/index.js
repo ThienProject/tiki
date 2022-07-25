@@ -9,6 +9,11 @@ const images =
         realBrand : require('~/assets/images/real.png'),
         mark : require('~/assets/images/supper-mark.webp'),
         forYou : require('~/assets/images/for-you.webp'),
+        Fingerprint : require('~/assets/images/bo-cong-thuong-2.png'),
+        boCongThuong : require('~/assets/images/bo-cong-thuong.svg').default,
+        qrCode : require('~/assets/images/qrcode.png'),
+         playGoogle: require('~/assets/images/playstore.png'),
+         appStore : require('~/assets/images/appstore.png'),
     }
 
 export default images

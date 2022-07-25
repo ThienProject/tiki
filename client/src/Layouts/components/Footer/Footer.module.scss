@@ -1,5 +1,51 @@
 .footer{
     position: relative;
     bottom: 0;
-    height: 1000px;
+    margin-top: 30px;
+}
+.footer-top-item__title{
+    font-size: 1.7rem;
+    line-height: 24px;
+    font-weight: 550;
+    color: rgb(56, 56, 61);
+    margin-bottom: 12px;
+    margin-top: 0px;
+}
+.footer-top__item{
+    margin-top: 20px;
+}
+.footer-top-item_body-link{
+    display: block;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+    color: rgb(128, 128, 137);
+}
+.footer-top-item__body-row{
+    display: flex;
+   
+}
+.footer-top-item__body-row-image{
+    margin: 0 5px;
+    height: 32px;
+}
+.icon{
+    display: inline-block;
+    margin-right: 8px;
+    margin-bottom: 8px;
+    vertical-align: middle;
+    width: 32px;
+    height: 32px;
+}
+.qr-code{
+    width: 80px;
+    height: 80px;
+    margin-right: 5px;
+}
+.link-download{
+    .link-download__store{
+        height: 36px;
+    }
+    .link-download__googlePlay{
+        height: 36px;
+    }
 }

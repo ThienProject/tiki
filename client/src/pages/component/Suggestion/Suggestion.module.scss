@@ -48,11 +48,15 @@
 }
 
 .view-more{
+    display: none;
     text-align: center;
     font-size: 2rem;
     margin-top: 10px;
     width: 100%;
     cursor: pointer;
+    &.active{
+        display: block;
+    }
     p {
         width: 200px;
         padding: 5px;

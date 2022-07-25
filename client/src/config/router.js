@@ -2,7 +2,8 @@ const routes ={
     'home' : '/',
     'search' : '/search',
     'contact' : '/contact',
-    'shop' : '/@:shop',
-    'user_update' : '/user-update'
+    'shop' : '/shop/@:shop',
+    'user_update' : '/user-update',
+    'product' : '/:product'
 }
 export default routes 

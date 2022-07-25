@@ -54,7 +54,7 @@ function CategoryCarousel() {
                         <Link
                             className={cx('type-item')}
                             key={index}
-                            to={slugify(type.name, {
+                            to={'shop/@'+slugify(type.name, {
                                 replacement: '-', // replace spaces with replacement character, defaults to `-`
                                 remove: undefined, // remove characters that match regex, defaults to `undefined`
                                 lower: true, // convert to lower case, defaults to `false`
