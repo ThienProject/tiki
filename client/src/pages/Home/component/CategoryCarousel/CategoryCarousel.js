@@ -7,7 +7,6 @@ import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './CategoryCarousel.Module.scss';
 import * as categoryService from '~/apiServices/categoryService';
-
 const cx = classNames.bind(styles);
 function CategoryCarousel() {
     const [category, setCategory] = useState([]);
@@ -54,7 +53,7 @@ function CategoryCarousel() {
                         <Link
                             className={cx('type-item')}
                             key={index}
-                            to={'shop/@'+slugify(type.name, {
+                            to={'shop/@'+slugify(type.cate_name, {
                                 replacement: '-', // replace spaces with replacement character, defaults to `-`
                                 remove: undefined, // remove characters that match regex, defaults to `undefined`
                                 lower: true, // convert to lower case, defaults to `false`
@@ -63,7 +62,7 @@ function CategoryCarousel() {
                                 trim: true, // trim leading and trailing replacement chars, defaults to `true`
                             })}
                         >
-                            {type.name}
+                            {type.cate_name}
                         </Link>
                     );
                 })}

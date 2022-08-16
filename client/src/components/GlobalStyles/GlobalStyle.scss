@@ -1,5 +1,5 @@
-@import 'normalize.css'; // reset css
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap'); */
+ @import 'normalize.css'; // reset css
+ @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;900&display=swap'); 
 :root{
     --primary : rgb(26, 148, 255);
     --header-height : 100px;
@@ -17,10 +17,9 @@
     padding: 0;
 }
 html{
-   /*  font-family: 'Roboto', sans-serif; */
+    font-family: 'Roboto', sans-serif;
     font-size: 62.5%;
     color: var(--text);
-    background-color: #f7f4f4;
 }
 body{
     font-size: 1.6rem;
