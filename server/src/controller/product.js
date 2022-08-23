@@ -56,7 +56,7 @@ ON product.id_product = product2.id_product
     WHERE image.id_product = product.id_product 
     `);
 
-    const [row_colors, fields_colors] =  await pool.execute(`SELECT color.* FROM color, product
+    const [row_colors, fields_colors] =  await pool.execute(`SELECT color.*, image.image_link FROM color, image, product
     INNER JOIN 
 	(select id_product 
             	from product , type, category
@@ -69,7 +69,10 @@ ON product.id_product = product2.id_product
 	) as product2
     ON product.id_product = product2.id_product 
     WHERE color.id_product = product.id_product
+    and color.color_image = image.id_img
     `);
+
+
 
     const [row_rate, fields_rate] =  await pool.execute(`SELECT rate.*, user.name, \`order\`.date_received 
     FROM rate,  user,  \`order\`, detail_order,
@@ -99,6 +102,22 @@ ON product.id_product = product2.id_product
     and product.id_product = ${product_id} 
     and promotion.id_promotion = product.id_promotion
     limit ${offset}, ${size}`);
+
+    const [row_sizes, fields_sizes] =  await pool.execute(`SELECT size.* FROM size, product
+    INNER JOIN 
+	(select id_product 
+            	from product , type, category
+    where product.id_type = type.id_type 
+    and type.id_cate = category.id_cate
+    and category.cate_name = ${category}
+    and product.id_product = ${product_id}
+                order by id_product ASC
+        		limit ${offset}, ${size}
+	) as product2
+    ON product.id_product = product2.id_product 
+    WHERE size.id_product = product.id_product
+    `);
+
 
     const [row_brand, fields_brand] = await pool.execute(`SELECT product.id_product, brand.*
     FROM  product , type, category, brand
@@ -137,8 +156,19 @@ ON product.id_product = product2.id_product
                 if(!Array.isArray(product.colors)) {
                     product.colors = [];
                 }  
-                color.color_image = process.env.URL +"/images/products/" +color.color_image;
+                color.image_link = process.env.URL +"/images/products/" +color.image_link;
                 product.colors.push(color);
+            }
+            
+        });
+
+        row_sizes.forEach((size)=>{
+            if(size.id_product === product.id_product){
+                if(!Array.isArray(product.sizes)) {
+                    product.sizes = [];
+                }  
+                
+                product.sizes.push(size);
             }
             
         });
