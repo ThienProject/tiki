@@ -7,6 +7,7 @@ import productApi from "../services/productApi";
 import categoryApi from "../services/categoryApi";
 import brandApi from "../services/brandApi";
 import typeApi from "../services/typeApi";
+import userApi from "../services/userApi";
 /* import bodyParser from 'body-parser' */
 let router = express.Router();
 function innitAPIRoute(app){
@@ -27,11 +28,14 @@ function innitAPIRoute(app){
     router.put('/update-user',userController.update); // update
     /* router.delete('/delete-user/:id',userController.dlt);  */// delete
     router.delete('/delete-user/:id',userController.dlt); 
+
     bannerApi(router);
     productApi(router);
     categoryApi(router);
     brandApi(router);
     typeApi(router);
+    userApi(router);
+    
     return app.use('/api/',router)
 }
 export default innitAPIRoute;

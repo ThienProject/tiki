@@ -1,6 +1,5 @@
 import pool from '../configs/connectBD';
 
-
 const getAllUser = async (req, res)=>{
     const [rows, fields] = await pool.execute('SELECT * FROM USER');
 
@@ -9,6 +8,24 @@ const getAllUser = async (req, res)=>{
                 data : rows
                 
             })
+}
+const getAddress = async(req, res) =>{
+  //  const idUser =  req.params.id; // use in http/:id
+    const idUser =  req.query.id;
+    console.log(req.params)
+    const [rows, fields] = await pool.execute(`
+    SELECT address.*, village.*, district.*, city.* FROM address, user , district, village, city
+    WHERE address.id_user = user.id_user 
+        AND user.id_user = '${idUser}'
+    and village.id_district = district.id_district
+    and address.id_village = village.id_village
+    and district.id_city = city.id_city
+
+    `);
+    return res.status(200).json({
+        message : 'success',
+        data : rows
+    })
 }
 const searchShop = async (req, res)=>{
    // console.log(req)
@@ -133,10 +150,12 @@ const update = async (req, res) =>{
         })
     }
 }
+
 module.exports = {
     getAllUser,
     create,
     dlt,
     update,
-    searchShop
+    searchShop,
+    getAddress
 }
