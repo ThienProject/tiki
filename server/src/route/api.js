@@ -8,6 +8,7 @@ import categoryApi from "../services/categoryApi";
 import brandApi from "../services/brandApi";
 import typeApi from "../services/typeApi";
 import userApi from "../services/userApi";
+import administrativeApi from "../services/administrativeApi";
 /* import bodyParser from 'body-parser' */
 let router = express.Router();
 function innitAPIRoute(app){
@@ -35,7 +36,7 @@ function innitAPIRoute(app){
     brandApi(router);
     typeApi(router);
     userApi(router);
-    
+    administrativeApi(router)
     return app.use('/api/',router)
 }
 export default innitAPIRoute;
