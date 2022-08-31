@@ -25,7 +25,9 @@
     
 }
 .large{
-
+    width: 296px;
+    height: 40px;
+    border-radius:  4px;
 }
 .small{
 
@@ -41,6 +43,12 @@
 .primary{
     background-color: var(--primary);
     color: var(--white);
+}
+
+.red{
+    color: #fff;
+    background-color : rgb(255, 66, 78);
+
 }
 
 

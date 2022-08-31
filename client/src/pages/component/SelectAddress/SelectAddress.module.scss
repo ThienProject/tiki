@@ -1,0 +1,122 @@
+.wrapper{
+    margin-top: 20px;
+}
+.select-group{
+    display: flex;
+    align-items: center;
+    margin-top: 20px; 
+}
+.control{
+    position: relative;
+    border-radius: 4px;
+    min-height: 38px;   
+    display: flex;
+    align-items: center;
+    justify-content: space-between;  
+    width: 250px;
+    
+    &.control--play{
+        .search-box{
+            box-shadow: rgb(24 158 255) 0px 0px 0px 1px;
+            border-color: rgb(24, 158, 255);
+        }
+       
+        .menu{
+            display: block;
+        }
+    }
+}
+.search-box{
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    background-color: rgb(242, 242, 242);
+    border-color: rgba(0, 0, 0 ,0.05) ;
+    pointer-events: none;
+    &.active{
+        border-radius: 4px;
+        border-width: 1px;
+        border-style: solid;
+        border-color: rgba(0, 0, 0 ,0.3) ;
+        box-shadow: rgba(0, 0, 0 ,0.03)  0px 0px 0px 1px;
+        background-color: #fff;
+        pointer-events:all;
+        .input{
+            background-color: #fff;
+        }
+        .down-icon{
+            color: rgb(5, 7, 11,0.8);
+        }
+        .view-label {
+            color: rgb(51, 51, 51);
+        } 
+    }
+}
+.input-group{
+    position: relative;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    padding: 2px 8px;
+    box-sizing: border-box;
+}
+.view-label{
+    position: absolute;
+    color: #888;
+    max-width: calc(100% - 8px);
+    pointer-events: none;
+    font-size: 1.6rem;
+}
+.input{
+    font-size: 1.6rem;
+    background-color: rgb(242, 242, 242);
+    border: none;
+    outline: none;
+}
+.down-icon{
+    position: relative;
+    padding: 10px 20px;
+    cursor: pointer;
+    color: rgb(200, 195, 195);;
+
+    &::after{
+        content: '';
+        height: 25px;
+        top: -3px;   
+        width: 1px;
+        position: absolute;
+        background-color: rgb(5, 7, 11,0.3);
+        right: -10px;
+    }
+
+    &:hover{
+        background-color: rgb(5, 7, 11,0.05)
+    }
+}
+.title{
+    margin: 0 20px;
+    min-width: 100px;
+}
+.menu{
+    display: none;
+    position: absolute;
+    top : 42px;
+    background-color: #fff;
+    z-index: 11;
+    padding: 10px 0;
+    border-radius: 5px;
+    box-shadow: 1px 1px 4px #666;
+    max-height: 170.313px;
+    overflow-y: scroll;
+    width: 100%;
+}
+.menu-item{
+    padding: 10px 20px;
+    cursor: pointer;
+    
+    &:hover{
+        background-color: rgb(222, 235, 255);
+    }
+}

@@ -14,7 +14,8 @@ const images =
         qrCode : require('~/assets/images/qrcode.png'),
          playGoogle: require('~/assets/images/playstore.png'),
          appStore : require('~/assets/images/appstore.png'),
-         check : require('~/assets/images/check.svg').default
+         check : require('~/assets/images/check.svg').default,
+         tikiFast : require('~/assets/images/titkiFast.png')
     }
 
 export default images
