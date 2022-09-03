@@ -374,3 +374,49 @@
     margin-right: auto ;
     margin-left: auto;
 }
+.delivery-charges{
+    border-radius: 4px;
+    border: 1px solid rgb(238, 238, 238);
+    margin-top: 15px;
+    padding: 5px;
+}
+.transport-top{
+    display: flex;
+    align-items: center;
+}
+.transport-img{
+    width: 46px;
+    height: 16px;
+    margin-right: 10px;
+    margin-bottom: 5px;
+}
+.transport-date{
+    color: rgb(0, 171, 86);
+    font-weight: 500;
+    font-size: 1.5rem;
+}
+.transport-fee{
+
+}
+.quantity{
+    margin-top: 30px;
+}
+.action{
+    margin-top: 10px;
+    display: flex;
+}
+.chat{
+    margin-left: 5px;
+    border-radius: 5px;
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 6px;
+    
+    p{
+        font-size: 1.3rem;
+        display: block;
+    }
+}
+.btn-add{
+    height: 50px;
+}

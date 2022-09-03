@@ -7,11 +7,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import * as productService from '~/apiServices/productService';
 import * as userService from '~/apiServices/usersService';
 import Breadcrumb from '~/components/Breadcrumb';
-import { StarIcon } from '~/components/Icons';
+import { ChatIcon, StarIcon } from '~/components/Icons';
 import styles from './Product.module.scss';
 import images from '~/assets/images';
 import Button from '~/components/Button';
 import SelectAddress from '../component/SelectAddress';
+import ChangeQuantity from '../component/ChangeQuantity';
 
 const cx = classNames.bind(styles);
 function Product() {
@@ -325,17 +326,38 @@ function Product() {
                                                                 </div>
                                                             )}
                                                             <div className={cx('delivery-charges')}>
-                                                                <div className={cx('logo-group')}>
-                                                                    <img className={cx('logo-img')} alt='' src={images.tikiFast} />
+                                                                <div className={cx('transport-top')}>
+                                                                    <img className={cx('transport-img')} alt='' src={images.tikiFast} />
+                                                                    <p className={cx('transport-date')}>Friday 31/8/2022</p>
+                                                
                                                                 </div>
-                                                                
+                                                                <div className={cx("transport-fee")}>
+                                                                    22.000đ
+                                                                </div>
+
+                                    
                                                             </div>
                                                         </div>
                                                     }
+
+                                                    <div className={cx('quantity')}>
+                                                        <p>Quantity</p>
+                                                        <ChangeQuantity />
+                                                    </div>
+                                                    <div className={cx('action')}>
+                                                        <Button className={cx('btn-add')} red size='large'>Add to Cart</Button>
+                                                        <div className={cx('chat')}>
+                                                            <ChatIcon />
+                                                            <p>Chat</p>
+                                                        </div>
+                                                    </div>
+                                                    
                                                 </div>
                                             </div>
                                             <div className="col l-3">
-                                                <div className={cx('store-info')}></div>
+                                                <div className={cx('store-info')}>
+
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
