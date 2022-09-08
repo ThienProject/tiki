@@ -15,7 +15,12 @@ const images =
          playGoogle: require('~/assets/images/playstore.png'),
          appStore : require('~/assets/images/appstore.png'),
          check : require('~/assets/images/check.svg').default,
-         tikiFast : require('~/assets/images/titkiFast.png')
+         tikiFast : require('~/assets/images/titkiFast.png'),
+         shop : require('~/assets/images/shop.png'),
+         add : require('~/assets/images/add.png'),
+         security : require('~/assets/images/security.png'),
+         return : require('~/assets/images/return.png'),
+         like : require('~/assets/images/like.png')
     }
 
 export default images

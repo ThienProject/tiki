@@ -1,32 +1,25 @@
 import classNames from 'classnames/bind';
 import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
-import { faTimes } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
 import * as productService from '~/apiServices/productService';
-import * as userService from '~/apiServices/usersService';
 import Breadcrumb from '~/components/Breadcrumb';
 import { ChatIcon, StarIcon } from '~/components/Icons';
 import styles from './Product.module.scss';
 import images from '~/assets/images';
 import Button from '~/components/Button';
-import SelectAddress from '../component/SelectAddress';
 import ChangeQuantity from '../component/ChangeQuantity';
-
+import ImagePreview from '../component/ImagePreview';
+import DisplayAddress from '../component/DisplayAddress';
+import { avatarClasses } from '@mui/material';
 const cx = classNames.bind(styles);
 function Product() {
     const cx = classNames.bind(styles);
     const [searchParams, setSearchParams] = useSearchParams();
     const [product, setProduct] = useState();
-    const [imageCurrent, setImageCurrent] = useState('');
-    const [address, setAddress] = useState([]);
-
     const star = product && product.rates && product.rates.reduce((total, rate) => total + rate.star, 0);
     const countRate = product && ((product.rates && product.rates.length) || '0');
     const starPercent = (star / (countRate * 5)) * 100 || 0;
     const idProduct = searchParams.get('id');
-
     useEffect(() => {
         const fetchApi = async () => {
             const resultProduct = await productService.getProductLimit(0, 1, 'products', idProduct);
@@ -34,30 +27,11 @@ function Product() {
                 setProduct(...resultProduct);
             }
 
-            const resultAddress = await userService.getAddress(14);
-            if (resultAddress) {
-                setAddress(resultAddress);
-            }
+           
         };
         fetchApi();
     }, []);
-
-    function handlePreview(e) {
-        const imgThumbnails = document.querySelectorAll(`.${cx('thumbnail-item')} img`);
-        imgThumbnails.forEach((img) => img.classList.remove(cx('active')));
-        e.target.classList.add(cx('active'));
-        setImageCurrent(e.target.src);
-    }
-    const handleCloseAddress = (e) => {
-        const addressElement = e.target.closest('.' + cx('address'));
-        const addressBox = e.target.closest('.' + cx('address--select'));
-        const currentAddress = e.target.closest('.' + cx('current-address'));
-        if ((!addressBox && !currentAddress) || e.target.matches('.' + cx('close'))) {
-            addressElement.classList.remove(cx('address--active'));
-        }
-    };
     //console.log(searchParams.get('id'));
-
     return (
         <div className={cx('product grid wide')}>
             {product && (
@@ -72,60 +46,12 @@ function Product() {
                     <div className={cx('product-content')}>
                         <div className="row">
                             <div className="col l-4-5">
-                                <div className={cx('product__img-group')}>
-                                    <div className={cx('preview')}>
-                                        {
-                                            <div className={cx('preview-item')}>
-                                                <img
-                                                    alt=""
-                                                    src={
-                                                        imageCurrent !== ''
-                                                            ? imageCurrent
-                                                            : product.images[0].image_link
-                                                    }
-                                                ></img>
-                                            </div>
-                                        }
-                                    </div>
-
-                                    <div className={cx('thumbnail-list')}>
-                                        {product.images.map(
-                                            (img, index) =>
-                                                index < 5 && (
-                                                    <div key={index} className={cx('thumbnail-item')}>
-                                                        <img
-                                                            className={index === 0 ? cx('active') : ''}
-                                                            data-index={index}
-                                                            onClick={handlePreview}
-                                                            alt={img.image_name}
-                                                            src={img.image_link}
-                                                        ></img>
-                                                    </div>
-                                                ),
-                                        )}
-
-                                        {product.images.length > 6 && (
-                                            <div className={cx('thumbnail-item', 'thumbnail-item--more')}>
-                                                <div>
-                                                    <img
-                                                        onClick={handlePreview}
-                                                        alt={product.images[5].image_name}
-                                                        src={product.images[5].image_link}
-                                                    ></img>
-                                                </div>
-
-                                                <span className={cx('thumbnail-item__span')}>
-                                                    view more {product.images.length - 5} images
-                                                </span>
-                                            </div>
-                                        )}
-                                    </div>
-                                </div>
+                                <ImagePreview images = {product.images} />
                             </div>
                             <div className="col l-7-5">
-                                <div className={cx('product-detail')}>
-                                    <div className={cx('product-detail__top')}>
-                                        <p className={cx('product-detail__top-brand')}>
+                                <div className={cx('product-basic')}>
+                                    <div className={cx('product-basic__top')}>
+                                        <p className={cx('product-basic__top-brand')}>
                                             Brand: <span>{product.brand}</span>
                                         </p>
 
@@ -172,9 +98,9 @@ function Product() {
                                             <div className={cx('product-sold')}>Sold {product.sold}</div>
                                         </div>
                                     </div>
-                                    <div className={cx('product-detail__center')}>
+                                    <div className={cx('product-basic__center')}>
                                         <div className="row">
-                                            <div className="col l-9">
+                                            <div className="col l-7">
                                                 <div className={cx('order')}>
                                                     <div className={cx('price')}>
                                                         <h1 className={cx('price-new')}>
@@ -225,121 +151,9 @@ function Product() {
                                                             ))}
                                                         </div>
                                                     )}
-                                                    {
-                                                        <div className={cx('address')} onClick={handleCloseAddress}>
-                                                            <div
-                                                                className={cx('current-address')}
-                                                                onClick={(e) => {
-                                                                    const eL = e.target.closest('.' + cx('address'));
-                                                                    const classN = cx('address--active');
-                                                                    if (classN) {
-                                                                        eL.classList.add(classN);
-                                                                    }
-                                                                }}
-                                                            >
-                                                                {address.length > 0 ? (
-                                                                    <p>
-                                                                        Ship to{' '}
-                                                                        <strong>
-                                                                            {address[0].detail_address},{' '}
-                                                                            {address[0].village_name},{' '}
-                                                                            {address[0].district_name},{' '}
-                                                                            {address[0].city_name}{' '}
-                                                                        </strong>{' '}
-                                                                        - <span>Change address</span>{' '}
-                                                                    </p>
-                                                                ) : (
-                                                                    <p>
-                                                                        Please{' '}
-                                                                        <strong> enter your delivery address </strong>{' '}
-                                                                        to receive the most accurate delivery time &
-                                                                        cost forecast.
-                                                                    </p>
-                                                                )}
-                                                            </div>
 
-                                                            {address && (
-                                                                <div className={cx('overlay')}>
-                                                                    <div className={cx('address--select')}>
-                                                                        <FontAwesomeIcon
-                                                                            onClick={handleCloseAddress}
-                                                                            className={cx('close')}
-                                                                            icon={faTimes}
-                                                                        />
-                                                                        <p className={cx('overlay-title')}>
-                                                                            Delivery address
-                                                                        </p>
-                                                                        <p className={cx('overlay-description')}>
-                                                                            Please select the delivery address to
-                                                                            receive the most accurate forecast of
-                                                                            delivery time and packaging and shipping
-                                                                            fees{' '}
-                                                                        </p>
-                                                                        <div className={cx('list-address')}>
-                                                                            {address.map((add, index) => {
-                                                                                return (
-                                                                                    <div
-                                                                                        className={cx('address-item')}
-                                                                                        key={index}
-                                                                                    >
-                                                                                        <input
-                                                                                            type="radio"
-                                                                                            name="address"
-                                                                                            id={add.id_address}
-                                                                                        />
-                                                                                        <span
-                                                                                            className={cx(
-                                                                                                'checked-icon',
-                                                                                            )}
-                                                                                        ></span>
-                                                                                        <label
-                                                                                            htmlFor={add.id_address}
-                                                                                        >{`${add.detail_address}, ${add.village_name}, ${add.district_name}, ${add.city_name}`}</label>
-                                                                                    </div>
-                                                                                );
-                                                                            })}
-                                                                            <div className={cx('address-item')}>
-                                                                                <input
-                                                                                    type="radio"
-                                                                                    name="address"
-                                                                                    id={cx('more-select')}
-                                                                                />
-                                                                                <span
-                                                                                    className={cx('checked-icon')}
-                                                                                ></span>
-                                                                                <label htmlFor="more-select">
-                                                                                    Select other area
-                                                                                </label>
-                                                                                <SelectAddress
-                                                                                    className={cx('address-another')}
-                                                                                ></SelectAddress>
-                                                                            </div>
-                                                                        </div>
-                                                                        <Button
-                                                                            className={cx('btn-select-address')}
-                                                                            red
-                                                                            size="large"
-                                                                        >
-                                                                            SHIP TO THIS ADDRESS
-                                                                        </Button>
-                                                                    </div>
-                                                                </div>
-                                                            )}
-                                                            <div className={cx('delivery-charges')}>
-                                                                <div className={cx('transport-top')}>
-                                                                    <img className={cx('transport-img')} alt='' src={images.tikiFast} />
-                                                                    <p className={cx('transport-date')}>Friday 31/8/2022</p>
-                                                
-                                                                </div>
-                                                                <div className={cx("transport-fee")}>
-                                                                    22.000đ
-                                                                </div>
-
-                                    
-                                                            </div>
-                                                        </div>
-                                                    }
-
+                                                    <DisplayAddress />
+                                                    
                                                     <div className={cx('quantity')}>
                                                         <p>Quantity</p>
                                                         <ChangeQuantity />
@@ -354,9 +168,75 @@ function Product() {
                                                     
                                                 </div>
                                             </div>
-                                            <div className="col l-3">
+                                            <div className="col l-5">
                                                 <div className={cx('store-info')}>
-
+                                                        <div className={cx('store-title')}>
+                                                            <img className={cx('avatar')} src={product.avatar} alt='avatar' />
+                                                            <h3 className={cx('store-name')}>{product.shop_name}</h3>
+                                                        </div>
+                                                        <div className={cx('store-follow')}>
+                                                            <div className={cx('follow-detail')}>
+                                                                <span>4.8/5  <StarIcon color="yellow"/> </span>
+                                                                <div className={cx('follow-subtitle')}>681</div>
+                                                            </div>
+                                                            
+                                                            <div className={cx('follow-detail')}>
+                                                                <span>1.4k+</span>
+                                                                <div className={cx('follow-subtitle')}>Theo dõi</div>
+                                                            </div>
+                                                            <div className={cx('follow-detail')}>
+                                                                <span>97%</span>
+                                                                <div className={cx('follow-subtitle')}>Phản hồi chat</div>
+                                                            </div>
+                                                        </div>
+                                                        <div className={cx('store-action')}>
+                                                                <button className={cx('action-view')}>
+                                                                    <img className={cx('action-icon')} alt='view' src={images.shop} /> 
+                                                                    <span>View Shop</span>
+                                                                </button>
+                                                                <button className={cx('action-view')}>
+                                                                    <img className={cx('action-icon')} alt='view' src={images.add} /> 
+                                                                    <span>Follow</span>
+                                                                </button>
+                                                        </div>
+                                                        <div className={cx('insurance-list')}>
+                                                            <div className={cx('insurance-item')}>
+                                                                <span className={cx('insurance-title')}>
+                                                                        Warranty period
+                                                                </span>
+                                                                <span className={cx('insurance-value')}>12 months
+                                                                </span>
+                                                            </div>
+                                                            <div className={cx('insurance-item')}>
+                                                                <span className={cx('insurance-title')}>
+                                                                Warranty form</span>
+                                                                <span className={cx('insurance-value')}>Receipt
+                                                                </span>
+                                                            </div>
+                                                            <div className={cx('insurance-item')}>
+                                                                <span className={cx('insurance-title')}>
+                                                                Warranty place
+                                                                </span>
+                                                                <span className={cx('insurance-value')}>
+                                                                Warranty genuine
+                                                                </span>
+                                                            </div> 
+                                                            
+                                                        </div>
+                                                        <div className={cx('value-affirmation')}>
+                                                                <div className={cx('value-affirmation-item')}>
+                                                                    <img alt='' src={images.security} />
+                                                                    <p>Refund 111% if the goods are fake</p>
+                                                                </div>
+                                                                <div className={cx('value-affirmation-item')}>
+                                                                    <img alt='' src={images.like} />
+                                                                    <p>Oppen the box test receive</p>
+                                                                </div>
+                                                                <div className={cx('value-affirmation-item')}>
+                                                                    <img alt='' src={images.return} />
+                                                                    <p>Return within 30 days if product error</p>
+                                                                </div>
+                                                        </div>
                                                 </div>
                                             </div>
                                         </div>
