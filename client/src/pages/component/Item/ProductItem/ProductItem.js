@@ -3,11 +3,21 @@ import classNames from 'classnames/bind';
 import Image from '~/components/Image';
 import { StarIcon } from '~/components/Icons/Icons';
 import { Link } from 'react-router-dom';
+import slugify from 'slugify';
 const cx = classNames.bind(styles);
 
 function ProductItem({product, className}){
  /*    console.log(product) */
-    return <Link to = {'/'} className={'l-2 col '+ cx('product-wrapper',className)}>
+ 
+    return <Link to={slugify(product.name,{
+        replacement: '-', // replace spaces with replacement character, defaults to `-`
+        remove: undefined, // remove characters that match regex, defaults to `undefined`
+        lower: true, // convert to lower case, defaults to `false`
+        strict: true, // strip special characters except replacement, defaults to `false`
+        locale: 'vi', // language code of the locale to use
+        trim: true, // trim leading and trailing replacement chars, defaults to `true`
+    })+`?id=${product.id_product}`} 
+     className={'l-2 col '+ cx('product-wrapper',className)}>
         { <Image className = {cx('product-image')} src ={product.images ? product.images[0].image_link :''}/> }
         <div className={cx('product-title')}>
             <p className={cx('product-title__content')}>{product.name}</p>

@@ -3,7 +3,7 @@ import { useState } from "react";
 import styles from './ChangeQuantity.module.scss'
 const cx = classNames.bind(styles);
 function ChangeQuantity(){
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState(1);
 
     return (<div className={cx('wrapper')}>
         <button className={cx('minus')}

@@ -9,7 +9,7 @@ import styles from './Suggestion.module.scss';
 import * as productService from '~/apiServices/productService';
 import ProductItem from '../Item/ProductItem';
 const cx = classNames.bind(styles);
-function Suggestion() {
+function    Suggestion() {
     const [products, setProducts] = useState([]);
     const [market, setMarket] = useState([]);
     const [currentTab, setCurrentTab] = useState('products');
