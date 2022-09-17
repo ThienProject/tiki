@@ -26,15 +26,21 @@
 }
 
 .actions{
-   
     display: flex;
     align-items: center;
     font-size: 1.5rem;
+    cursor: pointer;
     .account{
         display: flex;
         align-items: center;
         min-width: 162px;
         margin: 0 20px;
+
+        &.account--login{
+            .login-form{
+                display: block;
+            }
+        }
     }
     .account-icon, .cart-icon{
         font-size: 2rem;
@@ -64,6 +70,9 @@
             background-color: rgb(253, 216, 53);
         }
     }
-
+    .login-form{
+        display: none;
+    }
+  
   
 }

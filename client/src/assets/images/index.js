@@ -20,7 +20,10 @@ const images =
          add : require('~/assets/images/add.png'),
          security : require('~/assets/images/security.png'),
          return : require('~/assets/images/return.png'),
-         like : require('~/assets/images/like.png')
+         like : require('~/assets/images/like.png'),
+         login : require('~/assets/images/login.png'),
+         facebook : require('~/assets/images/facebook.png'),
+         google : require('~/assets/images/google.png')
     }
 
 export default images

@@ -13,7 +13,7 @@ function Slide({slider, settings, classNameWrap,classNameItem }){
                   {
                     slider.map((item, index)=>{
                       return <div key={index} className = {cx(classNameItem)}>
-                        <img className={cx('img-slider__top')} alt={item.name} src= {`http://localhost:3001/images/banners/${item.image}`} />
+                        <img className={cx('img-slider__top')} alt={item.name} src= {`http://localhost:3002/images/banners/${item.image}`} />
                       </div>
                     })
                   }

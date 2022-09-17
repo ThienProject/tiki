@@ -24,7 +24,7 @@ function ProductCarousel({ brands = [] }) {
                                 <Image
                                     className={cx('brand_image')}
                                     alt={brand.image_name}
-                                    src={`http://localhost:3001/images/brands/${brand.brand_image}`}
+                                    src={`http://localhost:3002/images/brands/${brand.brand_image}`}
                                 />  
                             </Link>
                         </div>

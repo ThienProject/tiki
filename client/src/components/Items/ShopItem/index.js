@@ -8,7 +8,7 @@ function ShopItem({item, ...props})
 {
     return (
         <div className={cx('shop-item')}>
-            <Image className={cx('avatar')} src= {`http://localhost:3001/images/users/${item.avatar}` }alt="avatar"/>
+            <Image className={cx('avatar')} src= {`http://localhost:3002/images/users/${item.avatar}` }alt="avatar"/>
             <div className={cx('info')}>
                 <h4 className={cx('shop-name')}>{item.shop_name}</h4>
                 <div className={cx('rate')}>

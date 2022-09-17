@@ -7,7 +7,7 @@ import images from '~/assets/images';
 import Image from '~/components/Image';
 import styles from './Suggestion.module.scss';
 import * as productService from '~/apiServices/productService';
-import ProductItem from '../Item/ProductItem';
+import ProductItem from '../ProductItem';
 const cx = classNames.bind(styles);
 function    Suggestion() {
     const [products, setProducts] = useState([]);

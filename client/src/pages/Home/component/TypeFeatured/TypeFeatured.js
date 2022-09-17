@@ -28,7 +28,7 @@ function TypeFeatured() {
                         <>
                             <Image
                                 className={cx('type-featured__image')}
-                                src={`http://localhost:3001/images/types/${type.type_image}`}
+                                src={`http://localhost:3002/images/types/${type.type_image}`}
                             />
                             <p className={cx('type-featured__name')}> {type.type_name}</p>
                         </>

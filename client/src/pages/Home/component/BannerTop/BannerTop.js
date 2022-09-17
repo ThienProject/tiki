@@ -26,7 +26,7 @@ function BannerTop() {
                 <img
                     className={cx('img-banner__top')}
                     alt={banner_top.name}
-                    src={`http://localhost:3001/images/banners/${banner_top.image}`}
+                    src={`http://localhost:3002/images/banners/${banner_top.image}`}
                 />
             )}
         </>
