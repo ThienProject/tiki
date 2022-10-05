@@ -32,9 +32,10 @@ const getProducts = async (req, res) =>{
     const size = req.query.size;
     const category = req.query.category != 'products' ? `'${req.query.category}'` : 'category.cate_name';
     const product_id =  req.query.product_id ? `'${req.query.product_id}'` : 'product.id_product';
-    const query = `SELECT product.* , type.*, category.*  FROM product, type, category
+    const query = `SELECT product.* , type.*, category.* , user.*  FROM product, type, category ,user
     where product.id_type = type.id_type 
     and type.id_cate = category.id_cate
+    and product.id_user = user.id_user
     and category.cate_name = ${category}
     and product.id_product = ${product_id}
     limit  ${offset}, ${size}`
@@ -56,7 +57,10 @@ ON product.id_product = product2.id_product
     WHERE image.id_product = product.id_product 
     `);
 
-    const [row_colors, fields_colors] =  await pool.execute(`SELECT color.*, image.image_link FROM color, image, product
+    const [row_colors, fields_colors] =  await pool.execute(`
+        SELECT 
+        color.*, image.image_link 
+        FROM color, image,  product
     INNER JOIN 
 	(select id_product 
             	from product , type, category
@@ -74,7 +78,7 @@ ON product.id_product = product2.id_product
 
 
 
-    const [row_rate, fields_rate] =  await pool.execute(`SELECT rate.*, user.name, \`order\`.date_received 
+    const [row_rate, fields_rate] =  await pool.execute(`SELECT rate.*, user.user_name, \`order\`.date_received 
     FROM rate,  user,  \`order\`, detail_order,
     product INNER JOIN 
 	(select id_product 
@@ -141,7 +145,7 @@ ON product.id_product = product2.id_product
             minimumFractionDigits: 0,
         });
         product.price = formatter.format(product.price);
-
+        product.avatar = process.env.URL +"/images/users/" +product.avatar;
         row_images.forEach((image)=>{
             if(product.id_product === image.id_product){
                if(!Array.isArray(product.images)) {

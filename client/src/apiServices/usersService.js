@@ -12,3 +12,13 @@ export const getAddress  = async (id) =>{
         console.log(error)
     }
 }
+
+export const login = async(params) =>{
+    try {
+        const res = await request.post(`login`,params)
+        return res.data;
+    }
+    catch (error){
+        console.log(error);
+    }
+}

@@ -39,9 +39,10 @@ function Header() {
     }
     
     const userLogin = false;
+
     return <header className={cx('header')}>
         <a href='/' className={cx('logo')}>
-            <Image src={"errokkk"} alt='tiki' />
+            <Image src={"error"} alt='tiki' />
         </a>
         <div className={cx('header-right')}>
             <Search />
@@ -64,9 +65,8 @@ function Header() {
                             onClick = {handleClickOutLogin}
                         >
                             <FontAwesomeIcon className={cx('account-icon')} icon={faUser} />
-                            <span className={cx('name')}>Login / Register
-                                <FontAwesomeIcon className={cx('sort-down')} icon={faSortDown} />
-                            </span>
+                            <span className={cx('name')}>Login / Register </span>
+                            <FontAwesomeIcon className={cx('sort-down')} icon={faSortDown} />
                             <Login contentFormRef={contentFormRef} loginFormRef = {loginFormRef} classModifier= {cx('account--login')} className={cx('login-form')} />
                         </div>
 

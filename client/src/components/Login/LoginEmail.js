@@ -1,14 +1,13 @@
 import styles from './Login.module.scss'
 import classNames from 'classnames/bind'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button';
-import { unmountComponentAtNode } from 'react-dom';
 
 const cx = classNames.bind(styles);
 function LoginEmail({fn}) {
     const [emailValue, setEmailValue] = useState('');
     const [password, setPassword] = useState('');
-  
+
     return (
         <div className={cx('content-action')}>
             <div className={cx('content-action-top')}>

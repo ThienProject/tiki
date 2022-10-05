@@ -7,19 +7,41 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import LoginEmail from './LoginEmail';
 import EnterPass from './EnterPass';
+import * as usersService from '~/apiServices/usersService'
 const cx = classNames.bind(styles);
 function Login({ contentFormRef, loginFormRef, classModifier, className }) {
     const [phone, setPhone] = useState('');
-    const [loginType, setLoginType] = useState('Phone');
+    const [loginType, setLoginType] = useState('Phone');    
+    
+
     const errorRef = useRef();
+    const handleLogin = async (params)=>{
+        const result = await usersService.login(params);
+        console.log(result);
+        return result;
+    }
     const handleLoginWithPhone = (e)=>{
-        console.log(errorRef.current)
-        console.log(errorRef.current.innerHTML)
+        // console.log(errorRef.current)
+        // console.log(errorRef.current.innerHTML)
         if(!phone.length == 10 ||  phone < 1 || !phone.startsWith('0')){
             errorRef.current.innerHTML= "Phone is invalid"
         }
         else{
-            setLoginType('PassWithPhone');
+          const callAPI = async ()=>{
+            const result = await handleLogin({'phone': phone, 'password': ''});
+            if(result == 'no_account'){
+                console.log(result);
+            }
+            if(result == 'false'){
+                setLoginType('password');
+            }
+            else{
+               // const
+               console.log(result);
+               // 
+            }
+        }
+         callAPI();
         }
         
     }
@@ -55,7 +77,6 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
                                 <span
                                     className={cx('change-login')}
                                     onClick={() => {
-                                       
                                         setLoginType('Email');
                                     }}
                                 >Login with email</span>
@@ -75,13 +96,12 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
                         <div>
                             <span
                                 onClick={()=>{
-                                
                                     setLoginType('Phone');
                                 }}
                                 className={cx('back-btn')}><FontAwesomeIcon icon={faArrowLeft} />
                             </span>
                                 {
-                                    loginType === 'Email' ? <LoginEmail fn={fn} /> : <EnterPass phone={phone} />
+                                    loginType === 'Email' ? <LoginEmail fn={fn} handleLogin = {handleLogin} loginFormRef = {loginFormRef}/> : <EnterPass handleLogin = {handleLogin}  phone={phone} loginFormRef = {loginFormRef} classModifier = {classModifier} />
                                 }
                             
                         </div>
@@ -100,7 +120,6 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
                     className={cx('btn-close')}
                     onClick={(e) => {
                         loginFormRef.current.classList.remove(classModifier);
-
                     }}
                 ><FontAwesomeIcon icon={faTimes} /></button>
             </div>

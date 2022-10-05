@@ -9,12 +9,14 @@ import brandApi from "../services/brandApi";
 import typeApi from "../services/typeApi";
 import userApi from "../services/userApi";
 import administrativeApi from "../services/administrativeApi";
-/* import bodyParser from 'body-parser' */
+import bodyParser from 'body-parser'
+var cookieParser = require('cookie-parser')
 let router = express.Router();
 function innitAPIRoute(app){
     // CORS 
     app.use(cors());
-     
+    app.use(bodyParser.json());
+    app.use(cookieParser());
    /*  app.use(bodyParser.json());
     app.use(bodyParser.urlencoded({ extended: true })); */
 
