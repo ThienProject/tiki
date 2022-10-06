@@ -17,7 +17,7 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
     const errorRef = useRef();
     const handleLogin = async (params)=>{
         const result = await usersService.login(params);
-        console.log(result);
+        // console.log(result);
         return result;
     }
     const handleLoginWithPhone = (e)=>{

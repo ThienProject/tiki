@@ -1,0 +1,10 @@
+{
+    "tabnine.disableFileRegex": [
+        "[.]javascript$"
+    ],
+    "tabnine.disableLineRegex": [
+
+    
+    ],
+    "tabnine.experimentalAutoImports": false
+}
