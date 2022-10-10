@@ -2,7 +2,7 @@ import classNames from 'classnames/bind'
 import { useEffect, useRef, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping, faPercent, faSortDown, faUser } from '@fortawesome/free-solid-svg-icons'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 import images from '~/assets/images'
@@ -10,29 +10,37 @@ import styles from './Header.module.scss'
 import Menu from '~/components/Popper/Menu'
 import Image from '~/components/Image'
 import Search from '../Search'
-import Login from '~/components/Login'
-
+import Login from '~/components/Auth'
+import { logout } from '~/components/Auth/authSlice'
 const cx = classNames.bind(styles)
 
-const MENU_ITEMS = [
-    {
-        title: 'Đơn hàng của tôi',
-        to: '/order',
-    },
-    {
-        title: 'Thông báo của tôi',
-        to: '/notification',
-    },
-    {
-        title: 'Mã giảm giá',
-        to: '/discount',
-        icon: <FontAwesomeIcon icon={faPercent} />
-    },
-]
-
 function Header() {
+    const MENU_ITEMS = [
+        {
+            title: 'Đơn hàng của tôi',
+            to: '/order',
+        },
+        {
+            title: 'Thông báo của tôi',
+            to: '/notification',
+        },
+        {
+            title: 'Mã giảm giá',
+            to: '/discount',
+            icon: <FontAwesomeIcon icon={faPercent} />
+        },
+        {
+            title: 'Logout',
+            to: '/',
+            onClick : ()=>{
+                const action = logout();
+                dispatch(action)
+            }
+        },
+    ]
     const contentFormRef = useRef();
     const loginFormRef = useRef();
+    const dispatch = useDispatch();
     const handleClickOutLogin = (e) => {
         if (!(contentFormRef.current.contains(e.target))) {
             loginFormRef.current.classList.toggle(cx('account--login'));
@@ -41,7 +49,7 @@ function Header() {
     const state = useSelector(state  => state.auth);
     console.log(state);
     const user = state.user;
-    const isLogin = user?.user_name ? true : false;
+    const isLogin = Boolean(user);
     return <header className={cx('header')}>
         <a href='/' className={cx('logo')}>
             <Image src={"error"} alt='tiki' />

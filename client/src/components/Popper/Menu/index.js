@@ -13,11 +13,11 @@ import {default as PopperWrapper} from '~/components/Popper'
 const cx = classNames.bind(styles);
 function Menu({children, items =[]}){
     const [history, setHistory] = useState([{data : items}])
-    const currentMenu = history[history.length -1];
+    const currentMenu = history[history.length - 1];
 
     function renderItem(){
         return  currentMenu.data.map((item, index)=>{
-            return <MenuItem key={index}  data = {item}></MenuItem>
+            return <MenuItem key={index} onClick = {item.onClick} data = {item}></MenuItem>
         })
            
     }

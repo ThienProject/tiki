@@ -3,8 +3,8 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import Button from '../Button';
 import { useDispatch } from 'react-redux';
-import { login } from './loginSlice';
-
+import { login } from './authSlice';
+import * as usersService from '~/apiServices/usersService'
 const cx = classNames.bind(styles);
 function EnterPass({ handleLogin, phone }) {
     const [password, setPassword] = useState('');
@@ -16,11 +16,12 @@ function EnterPass({ handleLogin, phone }) {
         //console.log(result.user_name);
         if (result.user) {
             // const roles = result?.id_permission;
-            const { token, user } = result;
-            const action = login({token, user});
-            console.log({action});
-            dispatch(action);
-
+            // const action = login({token, user});
+            const action = await login({ phone: phone, password: password });
+            console.log({ action });
+            await dispatch(action);
+            const profile = await usersService.profile(23)
+            console.log(profile);
         }
     };
     return (
@@ -45,7 +46,7 @@ function EnterPass({ handleLogin, phone }) {
 
                 <div className={cx('bottom')}>
                     <span className={cx('bottom-forget')}>
-                        <a href='/'>Forget Password</a>
+                        <a href="/">Forget Password</a>
                     </span>
                 </div>
             </div>

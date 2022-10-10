@@ -22,3 +22,12 @@ export const login = async(params) =>{
         console.log(error);
     }
 }
+export const profile = async (id) => {
+    try {
+        const res = await request.post(`profile`,{id});
+        return res.data;
+    }
+    catch (error){
+        console.log(error);
+    }
+}
