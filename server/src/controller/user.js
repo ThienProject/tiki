@@ -1,5 +1,5 @@
 import pool from '../configs/connectBD'
-import { createTokens } from '../middleware/JWT'
+import { createTokens, validateToken } from '../middleware/JWT'
 const saltRounds = 10
 const bcrypt = require('bcrypt')
 const getAllUser = async (req, res) => {
@@ -13,7 +13,7 @@ const getAllUser = async (req, res) => {
 const getAddress = async (req, res) => {
   //  const idUser =  req.params.id; // use in http/:id
   const idUser = req.query.id
-  console.log(req.params)
+  // console.log(req.params)
   const [rows, fields] = await pool.execute(`
     SELECT address.*, village.*, district.*, city.* FROM address, user , district, village, city
     WHERE address.id_user = user.id_user 
@@ -91,7 +91,7 @@ const create = async (req, res) => {
       message: 'success',
     })
   } else {
-    console.log('fail')
+    // console.log('fail')
     return res.status(200).json({
       req,
       message: 'missing data',
@@ -163,11 +163,28 @@ const update = async (req, res) => {
     })
   }
 }
-
+const profile = async (req, res) =>{
+  let {id} = req.body;
+  // const accessToken = req.cookies["access-token"];
+  const  reqToken= req.headers.authorization.split(' ');
+  const accessToken = reqToken[1];
+  if (!accessToken)
+    return res.status(400).json({ error: "User not Authenticated!" });
+  try {
+    const validToken = validateToken(accessToken)
+    if (validToken) {
+      req.authenticated = true;
+      const [rows, fields] = await pool.execute(
+        `select * from user where id_user = '${id}'`)
+      return res.status(200).json({data:rows})
+    }
+  } catch (err) {
+    return res.status(400).json({ error: err });
+  }
+}
 const login = async (req, res) => {
-  
-  let { phone, password, email } = req.body
-  console.log(phone);
+  let {phone, password, email } = req.body
+  // console.log(phone);
   try {
     const [rows, fields] = await pool.execute(
       `select * from user where ${email ? 'email' : 'phone'} = '${
@@ -179,15 +196,14 @@ const login = async (req, res) => {
       const hash = rows[0].password
       const match = await bcrypt.compare(password, hash)
       if (match) {
-        console.log(true)
+        // console.log(true)
         const {password, ...user} = rows[0];
         const accessToken = createTokens(user);
-        console.log(accessToken);
-        res.cookie("access-token", accessToken, {
-            maxAge: 60 * 60 * 24 * 30 * 1000,
-            httpOnly: true,
-        });
-
+        // console.log(accessToken);
+        // res.cookie("access-token", accessToken, {
+        //     maxAge: 60 * 60 * 24 * 30 * 1000,
+        //     httpOnly: true,
+        // });
         return res.status(200).json({
           data: {user, token : accessToken}
         })
@@ -207,12 +223,12 @@ const register = async (req, res) => {
   console.log(username)
   bcrypt.hash(password, saltRounds, async function (err, hash) {
     try {
-      console.log(
-        `insert into user(${
-          email ? 'email' : 'phone'
-        }, password, user_name) VALUES (?,?,?)`,
-        [email ? email : phone, hash, username],
-      )
+      // console.log(
+      //   `insert into user(${
+      //     email ? 'email' : 'phone'
+      //   }, password, user_name) VALUES (?,?,?)`,
+      //   [email ? email : phone, hash, username],
+      // )
       await pool.execute(
         `insert into user(${
           email ? 'email' : 'phone'
@@ -227,7 +243,7 @@ const register = async (req, res) => {
   })
 }
 
-const profile = async (req, res) => {}
+
 module.exports = {
   getAllUser,
   create,

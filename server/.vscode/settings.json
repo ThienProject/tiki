@@ -1,0 +1,9 @@
+{
+    "tabnine.disableFileRegex": [
+    
+    ],
+    "tabnine.disableLineRegex": [
+    
+    ],
+    "tabnine.experimentalAutoImports": false
+}

@@ -39,7 +39,7 @@ const getProducts = async (req, res) =>{
     and category.cate_name = ${category}
     and product.id_product = ${product_id}
     limit  ${offset}, ${size}`
-    console.log(query)
+    // console.log(query)
     const [row_products, fields_products] = await pool.execute(query);
 
     const [row_images, fields_images] =  await pool.execute(`SELECT image.* FROM image, product
