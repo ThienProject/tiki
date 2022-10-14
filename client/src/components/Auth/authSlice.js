@@ -1,33 +1,34 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as usersService from '~/apiServices/usersService'
-import storegeKeys from "~/constants/storegeKeys";
+import localService from "~/services/local.service";
 import requestAxios from "~/utils/request";
 
 const initialState = {
-    user: JSON.parse(localStorage.getItem(storegeKeys.USER)),
-    token : localStorage.getItem(storegeKeys.TOKEN)
+    user: localService.getUser(),
+    accessToken : localService.getLocalAccessToken(),
+    refreshToken : localService.getLocalRefreshToken()
 };
 
 // thunk tao mot action
 export const login = createAsyncThunk('user/login', async (params, thunkApi)=>{
     //thunkApi.dispatch
     const response = await usersService.login(params);
-    const { token, user } = response;
-    localStorage.setItem(storegeKeys.USER, JSON.stringify(user) );
-    localStorage.setItem(storegeKeys.TOKEN, token);
-
-    requestAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    const { accessToken,refreshToken, user } = response;
+    localService.setUser(user);
+    localService.updateLocalAccessToken(accessToken);
+    localService.updateLocalRefreshToken(refreshToken);
+    // requestAxios.defaults.headers.common['refreshToken'] = `Bearer ${refreshToken}`;
+    // requestAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    return response;
+})
+export const refreshToken = createAsyncThunk('user/get-token', async (params, thunkApi) => {
+    const response = await usersService.getToken(params);
+    localService.updateLocalAccessToken(response);
     return response;
 })
 
 const auth =  createSlice({
     name:'user',
-    // initialState: {
-    //     user : {}, 
-    //     token: null,
-    //     loading: false,
-    //     error: ''
-    // },
     initialState,
     // tạo action và sử lý response
     reducers: {
@@ -35,12 +36,19 @@ const auth =  createSlice({
         //     state.user = action.payload.user;
         //     state.token = action.payload.token;
         // },
+
         logout : (state, action)=>{
             state.user = null;
             state.token = null;
-            localStorage.removeItem(storegeKeys.USER);
-            localStorage.removeItem(storegeKeys.TOKEN);
-        }
+            localService.removeUser()
+        },
+        // updateToken :(state, action) =>{
+        //     const token = action.payload.token;
+        //     state.token = token
+        //     localStorage.setItem(storegeKeys.TOKEN, token);
+        //     requestAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+        // }
+
     },
 
     //them du lieu vao reducer theo status "Chi xử lý response, k tạo action => dùng kết hợp với thunk"
@@ -55,10 +63,15 @@ const auth =  createSlice({
         builder.addCase(login.fulfilled,(state, action)=>{
             state.loading = false;
             state.user = action.payload.user;
-            state.token = action.payload.token;
+            state.accessToken = action.payload.accessToken;
+            state.refreshToken = action.payload.refreshToken;
         });
+
+        builder.addCase(refreshToken.fulfilled,(state, action)=>{
+            state.token = action.payload;
+        })
     }
 });
 const {reducer, actions} = auth;
-export const {logout} = actions;
+export const {logout, updateToken} = actions;
 export default reducer;

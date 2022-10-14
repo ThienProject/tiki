@@ -12,6 +12,8 @@ import Image from '~/components/Image'
 import Search from '../Search'
 import Login from '~/components/Auth'
 import { logout } from '~/components/Auth/authSlice'
+import { Button } from '@mui/material'
+import * as usersService from '~/apiServices/usersService'
 const cx = classNames.bind(styles)
 
 function Header() {
@@ -47,10 +49,17 @@ function Header() {
         }
     }
     const state = useSelector(state  => state.auth);
-    console.log(state);
+    // console.log(state);
     const user = state.user;
     const isLogin = Boolean(user);
     return <header className={cx('header')}>
+        {/* test btn */}
+        <Button onClick={async ()=>{
+            const profile = await usersService.profile(23,'thien');
+            console.log(profile)
+            
+        }}>click me </Button>
+
         <a href='/' className={cx('logo')}>
             <Image src={"error"} alt='tiki' />
         </a>

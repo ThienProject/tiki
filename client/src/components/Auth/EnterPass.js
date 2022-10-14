@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Button from '../Button';
 import { useDispatch } from 'react-redux';
 import { login } from './authSlice';
-import * as usersService from '~/apiServices/usersService'
+import { unwrapResult } from '@reduxjs/toolkit';
 const cx = classNames.bind(styles);
 function EnterPass({ handleLogin, phone }) {
     const [password, setPassword] = useState('');
@@ -17,11 +17,16 @@ function EnterPass({ handleLogin, phone }) {
         if (result.user) {
             // const roles = result?.id_permission;
             // const action = login({token, user});
-            const action = await login({ phone: phone, password: password });
-            console.log({ action });
-            await dispatch(action);
-            const profile = await usersService.profile(23)
-            console.log(profile);
+            try {
+                const action = await login({ phone: phone, password: password });
+                console.log({ action });
+                const actionResult  = await dispatch(action);
+                const currentValue = unwrapResult(actionResult);
+            } catch (error) {
+                console.error(error);
+            }
+           
+           
         }
     };
     return (
