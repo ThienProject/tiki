@@ -78,7 +78,7 @@ ON product.id_product = product2.id_product
 
 
 
-    const [row_rate, fields_rate] =  await pool.execute(`SELECT rate.*, user.user_name, \`order\`.date_received 
+    const [row_rate, fields_rate] =  await pool.execute(`SELECT rate.*, user.fullname, \`order\`.date_received 
     FROM rate,  user,  \`order\`, detail_order,
     product INNER JOIN 
 	(select id_product 

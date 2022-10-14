@@ -13,7 +13,7 @@ function EnterPass({ handleLogin, phone }) {
         //check password
         const result = await handleLogin({ phone: phone, password: password });
         console.log(result);
-        //console.log(result.user_name);
+        //console.log(result.fullname);
         if (result.user) {
             // const roles = result?.id_permission;
             // const action = login({token, user});

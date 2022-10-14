@@ -1,5 +1,10 @@
 import pool from '../configs/connectBD'
-import { createTokens, validateToken } from '../middleware/JWT'
+import {
+  createTokens,
+  validateToken,
+  refreshTokens,
+  validateRefreshToken,
+} from '../middleware/JWT'
 const saltRounds = 10
 const bcrypt = require('bcrypt')
 const getAllUser = async (req, res) => {
@@ -163,27 +168,35 @@ const update = async (req, res) => {
     })
   }
 }
-const profile = async (req, res) =>{
-  let {id} = req.body;
+const profile = async (req, res) => {
+  let { id } = req.body
   // const accessToken = req.cookies["access-token"];
-  const  reqToken= req.headers.authorization.split(' ');
-  const accessToken = reqToken[1];
-  if (!accessToken)
-    return res.status(400).json({ error: "User not Authenticated!" });
-  try {
-    const validToken = validateToken(accessToken)
-    if (validToken) {
-      req.authenticated = true;
-      const [rows, fields] = await pool.execute(
-        `select * from user where id_user = '${id}'`)
-      return res.status(200).json({data:rows})
+  const reqToken = req.headers.authorization?.split(' ')
+  if (reqToken) {
+    const accessToken = reqToken[1];
+    if (!accessToken)
+      return res.status(400).json({ error: 'User not Authenticated!' })
+    try {
+      const validToken = validateToken(accessToken)
+      if (validToken) {
+        req.authenticated = true
+        const [rows, fields] = await pool.execute(
+          `select * from user where id_user = '${id}'`,
+        )
+        return res.status(200).json({ data: rows })
+      }
+    } catch (err) {
+      return res.status(403).json({ error: err })
     }
-  } catch (err) {
-    return res.status(400).json({ error: err });
   }
+  else {
+    return res.status(400).json({ error: "please login"});
+  }
+
 }
+
 const login = async (req, res) => {
-  let {phone, password, email } = req.body
+  let { phone, password, email } = req.body
   // console.log(phone);
   try {
     const [rows, fields] = await pool.execute(
@@ -191,33 +204,55 @@ const login = async (req, res) => {
         email ? email : phone
       }'`,
     )
-
     if (rows.length > 0) {
       const hash = rows[0].password
       const match = await bcrypt.compare(password, hash)
       if (match) {
-        // console.log(true)
-        const {password, ...user} = rows[0];
-        const accessToken = createTokens(user);
-        // console.log(accessToken);
-        // res.cookie("access-token", accessToken, {
-        //     maxAge: 60 * 60 * 24 * 30 * 1000,
-        //     httpOnly: true,
-        // });
+        //  console.log(true)
+        const { password, ...user } = rows[0]
+        const payload = { fullname: user.fullname, id: user.id_user }
+        const accessToken = createTokens(payload)
+        // console.log("accessToken :",accessToken );
+        const refreshToken = createTokens(payload, true)
+        // console.log("refreshToken :", refreshToken);
         return res.status(200).json({
-          data: {user, token : accessToken}
+          data: {
+            user,
+            accessToken: accessToken,
+            refreshToken: refreshToken,
+          },
         })
       } else {
-        return res.status(200).json({data: 'false' })
+        return res.status(200).json({ data: 'false' })
       }
     } else {
-      return res.status(200).json({data: 'no_account' })
+      return res.status(200).json({ data: 'no_account' })
     }
   } catch (error) {
     return res.status(404).json({ err: error })
   }
 }
+const getToken = async (req, res) => {
+  let { id, name } = req.body
+  const payload = { fullname: name, id: id }
+  const reqRefreshToken = req.headers.refreshtoken.split(' ')
 
+  const refreshToken = reqRefreshToken[1]
+
+  if (!refreshToken)
+    return res.status(400).json({ error: 'User not Authenticated!' })
+  try {
+    const validRefreshToken = validateRefreshToken(refreshToken)
+    console.log(validRefreshToken)
+    if (validRefreshToken) {
+      req.authenticated = true
+      const accessToken = createTokens(payload)
+      return res.status(200).json({ data: accessToken })
+    }
+  } catch (err) {
+    return res.status(400).json({ error: err })
+  }
+}
 const register = async (req, res) => {
   let { phone, password, email, username } = req.body
   console.log(username)
@@ -226,13 +261,13 @@ const register = async (req, res) => {
       // console.log(
       //   `insert into user(${
       //     email ? 'email' : 'phone'
-      //   }, password, user_name) VALUES (?,?,?)`,
+      //   }, password, fullname) VALUES (?,?,?)`,
       //   [email ? email : phone, hash, username],
       // )
       await pool.execute(
         `insert into user(${
           email ? 'email' : 'phone'
-        }, password, user_name) VALUES (?,?,?)`,
+        }, password, fullname) VALUES (?,?,?)`,
         [email ? email : phone, hash, username],
       )
 
@@ -242,7 +277,6 @@ const register = async (req, res) => {
     }
   })
 }
-
 
 module.exports = {
   getAllUser,
@@ -254,4 +288,5 @@ module.exports = {
   login,
   register,
   profile,
+  getToken,
 }

@@ -5,5 +5,6 @@ function userApi(router){
     router.post('/profile',userController.profile);
     router.post('/login',userController.login);
     router.post('/register',userController.register);
+    router.post('/token',userController.getToken);
 }
 export default userApi

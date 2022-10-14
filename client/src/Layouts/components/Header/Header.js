@@ -74,7 +74,7 @@ function Header() {
                         >
                             <div className={cx('account')}>
                                 <FontAwesomeIcon className={cx('account-icon')} icon={faUser} />
-                                <span className={cx('name')}>{user.user_name}
+                                <span className={cx('name')}>{user.fullname}
                                     <FontAwesomeIcon className={cx('sort-down')} icon={faSortDown} />
                                 </span>
                             </div>

@@ -19,14 +19,14 @@ function    Suggestion() {
 
     /*   const [currentOffset, setCurrentOffset] = useState(0); */
 
-    console.log('render suggestion');
-    console.log(viewMore);
+    // console.log('render suggestion');
+    // console.log(viewMore);
     useEffect(()=>{
         switch (currentTab) {
             case 'products' :       
-                    console.log(viewMore.productsTab);
+                    // console.log(viewMore.productsTab);
                     if(viewMore.productsTab){
-                        console.log("có");
+                        
                         viewMoreRef.current.classList.add(cx('active'));
                     }
                     else {
@@ -62,7 +62,6 @@ function    Suggestion() {
             const offset = currentTab === 'products' ? products.length : market.length;
             const result = await productService.getProductLimit(offset, page_size, currentTab);
             if (result) {
-                console.log(result.length)
                 if(result.length < page_size){
                     if(currentTab === 'products'){
                         setViewMore({...viewMore, productsTab : false});
@@ -71,7 +70,6 @@ function    Suggestion() {
                         setViewMore({...viewMore, marketTab : false});
                     }
                 }
-                
                 if(currentTab === 'products'){
                     setProducts([...products, ...result]);
                 }

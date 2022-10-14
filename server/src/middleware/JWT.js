@@ -1,17 +1,28 @@
 const { sign, verify } = require("jsonwebtoken");
-import 'dotenv/config';
-const createTokens = (user) => {
-  const payload = { username: user.user_name, id: user.id_user };
-  const key = process.env.JWT_SECRET;
- 
-  const accessToken = sign(payload, key, {expiresIn : 120});
+import freeze from "../configs/freeze";
+
+
+const createTokens = (payload = {}, refresh = false) => {
+  // const payload = { username: user.fullname, id: user.id_user };
+  let key = freeze.JWT_SECRET;
+  let life = freeze.tokenLife;
+  if(refresh){
+      key = freeze.SECRET_REFRESH; 
+      life = freeze.refreshTokenLife;
+  }
+  const accessToken = sign(payload, key, {expiresIn : life});
   return accessToken;
 };
 
 const validateToken = (accessToken) => {
-  const key = process.env.JWT_SECRET;
+  const key = freeze.JWT_SECRET;
     const validToken = verify(accessToken, key);
     return validToken
 };
 
-module.exports = { createTokens, validateToken };
+const validateRefreshToken = (refreshToken) => {
+  const key = freeze.SECRET_REFRESH;
+  const validToken = verify(refreshToken, key);
+  return validToken
+}
+module.exports = { createTokens, validateToken,validateRefreshToken };
