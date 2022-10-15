@@ -8,11 +8,11 @@ import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
 import LoginEmail from './LoginEmail';
 import EnterPass from './EnterPass';
 import * as usersService from '~/apiServices/usersService'
+import Register from './Register';
 const cx = classNames.bind(styles);
 function Login({ contentFormRef, loginFormRef, classModifier, className }) {
     const [phone, setPhone] = useState('');
     const [loginType, setLoginType] = useState('Phone');    
-    
 
     const errorRef = useRef();
     const handleLogin = async (params)=>{
@@ -23,13 +23,13 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
     const handleLoginWithPhone = (e)=>{
         // console.log(errorRef.current)
         // console.log(errorRef.current.innerHTML)
-        if(!phone.length == 10 ||  phone < 1 || !phone.startsWith('0')){
+        if(!phone.length === 10 ||  phone < 1 || !phone.startsWith('0')){
             errorRef.current.innerHTML= "Phone is invalid"
         }
         else{
           const callAPI = async ()=>{
             const result = await handleLogin({'phone': phone, 'password': ''});
-            if(result == 'no_account'){
+            if(result === 'no_account'){
                 console.log(result);
             }
             if(result == 'false'){
@@ -37,7 +37,7 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
             }
             else{
                // const
-               console.log(result);
+               setLoginType('register');
                // 
             }
         }
@@ -93,18 +93,24 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
 
                         </div>
                         :
-                        <div>
-                            <span
-                                onClick={()=>{
-                                    setLoginType('Phone');
-                                }}
-                                className={cx('back-btn')}><FontAwesomeIcon icon={faArrowLeft} />
-                            </span>
-                                {
-                                    loginType === 'Email' ? <LoginEmail fn={fn} handleLogin = {handleLogin} loginFormRef = {loginFormRef}/> : <EnterPass handleLogin = {handleLogin}  phone={phone} loginFormRef = {loginFormRef} classModifier = {classModifier} />
-                                }
-                            
-                        </div>
+                            <div>
+                                <span
+                                    onClick={()=>{
+                                        setLoginType('Phone');
+                                    }}
+                                    className={cx('back-btn')}><FontAwesomeIcon icon={faArrowLeft} />
+                                </span>
+                                    {
+                                        loginType === 'Email' ? 
+                                            <LoginEmail fn={fn} handleLogin = {handleLogin} loginFormRef = {loginFormRef}/> 
+                                            : 
+                                            loginType === 'register' ? 
+                                                <Register phone ={phone} />
+                                                :
+                                                <EnterPass handleLogin = {handleLogin}  phone={phone} loginFormRef = {loginFormRef} classModifier = {classModifier} />
+                                    }
+                                
+                            </div>
 
                 }
 

@@ -42,6 +42,7 @@ const auth =  createSlice({
             state.token = null;
             localService.removeUser()
         },
+        
         // updateToken :(state, action) =>{
         //     const token = action.payload.token;
         //     state.token = token

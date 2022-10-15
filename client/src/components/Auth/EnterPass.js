@@ -11,22 +11,13 @@ function EnterPass({ handleLogin, phone }) {
     const dispatch = useDispatch();
     const handleLoginClick = async () => {
         //check password
-        const result = await handleLogin({ phone: phone, password: password });
-        console.log(result);
-        //console.log(result.fullname);
-        if (result.user) {
-            // const roles = result?.id_permission;
-            // const action = login({token, user});
-            try {
-                const action = await login({ phone: phone, password: password });
-                console.log({ action });
-                const actionResult  = await dispatch(action);
-                const currentValue = unwrapResult(actionResult);
-            } catch (error) {
-                console.error(error);
-            }
-           
-           
+        try {
+            const action = login({ phone: phone, password: password });
+            console.log({ action });
+            const actionResult  = await dispatch(action);
+            const currentValue = unwrapResult(actionResult);
+        } catch (error) {
+            console.error(error);
         }
     };
     return (

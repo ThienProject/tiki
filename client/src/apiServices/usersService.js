@@ -23,6 +23,16 @@ export const login = async(params) =>{
         console.log(error);
     }
 }
+export const register = async(params) =>{
+    try {
+        const res = await request.post(`register`,params)
+        return res.data;
+    }
+    catch (error){
+        console.log(error);
+    }
+}
+
 export const profile = async (id,name) => {
     try {
         const res = await request.post(`profile`,{id});
