@@ -2,6 +2,8 @@ import classNames from 'classnames/bind';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { unwrapResult } from '@reduxjs/toolkit';
+import PropTypes from 'prop-types';
+
 import styles from './Login.module.scss';
 import Button from '../Button';
 import { login } from './authSlice';
@@ -59,5 +61,9 @@ function Register({ phone }) {
             </div>
         </div>
     );
+}
+
+Register.propTypes = {
+    phone : PropTypes.number.isRequired
 }
 export default Register;

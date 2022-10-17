@@ -5,10 +5,13 @@ import Button from '../Button';
 import { useDispatch } from 'react-redux';
 import { login } from './authSlice';
 import { unwrapResult } from '@reduxjs/toolkit';
+import { useToast } from '~/contexts/Toast';
+
 const cx = classNames.bind(styles);
 function EnterPass({ handleLogin, phone }) {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
+    const {success}  = useToast();
     const handleLoginClick = async () => {
         //check password
         try {
@@ -16,6 +19,7 @@ function EnterPass({ handleLogin, phone }) {
             console.log({ action });
             const actionResult  = await dispatch(action);
             const currentValue = unwrapResult(actionResult);
+            success("Login successful!");
         } catch (error) {
             console.error(error);
         }

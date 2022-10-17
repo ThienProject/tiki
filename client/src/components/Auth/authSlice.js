@@ -2,13 +2,13 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as usersService from '~/apiServices/usersService'
 import localService from "~/services/local.service";
 import requestAxios from "~/utils/request";
-
+import { useToast } from "~/contexts/Toast";
 const initialState = {
     user: localService.getUser(),
     accessToken : localService.getLocalAccessToken(),
     refreshToken : localService.getLocalRefreshToken()
 };
-
+// const {success} = useToast();
 // thunk tao mot action
 export const login = createAsyncThunk('user/login', async (params, thunkApi)=>{
     //thunkApi.dispatch
@@ -66,6 +66,7 @@ const auth =  createSlice({
             state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            
         });
 
         builder.addCase(refreshToken.fulfilled,(state, action)=>{

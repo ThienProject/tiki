@@ -14,6 +14,7 @@ import Login from '~/components/Auth'
 import { logout } from '~/components/Auth/authSlice'
 import { Button } from '@mui/material'
 import * as usersService from '~/apiServices/usersService'
+import { useToast } from '~/contexts/Toast'
 const cx = classNames.bind(styles)
 
 function Header() {
@@ -40,6 +41,7 @@ function Header() {
             }
         },
     ]
+    const {warn, success}  = useToast();
     const contentFormRef = useRef();
     const loginFormRef = useRef();
     const dispatch = useDispatch();
@@ -55,8 +57,9 @@ function Header() {
     return <header className={cx('header')}>
         {/* test btn */}
         <Button onClick={async ()=>{
-            const profile = await usersService.profile(23,'thien');
-            console.log(profile)
+            // const profile = await usersService.profile(23,'thien');
+            // console.log(profile)
+            success('ngu ngoc');
             
         }}>click me </Button>
 

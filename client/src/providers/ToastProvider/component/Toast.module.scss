@@ -1,0 +1,128 @@
+.wrapper{
+    display: none;
+    
+    &.active{
+        display: block;
+        right: 10px;
+    }
+    position: fixed;
+    z-index: 999;
+    top: 10px;
+    right: -999px;
+   
+}
+.toast-content {
+    display: flex;
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: 1px 2px 4px #738CA5;
+    // right: -999;
+    transition: all 0.5 ease-in-out;
+    align-items: center;
+    width: 300px;
+    height: 60px;
+    font-size: 1.7rem;
+
+    
+}
+.toast-content + .toast-content{
+    margin-top: 15px;
+}
+.icon{
+    margin-right: 20px;
+}
+.icon-times{
+    cursor: pointer;
+    position: absolute;
+    right: 15px;
+
+    &:hover{
+        opacity: 0.7;
+    }
+}
+
+.title{
+    text-transform: capitalize;
+    font-weight: 600;
+    font-size: 1.6rem;
+}
+.content{
+    font-size: 1.5rem;
+    color: rgb(144, 143, 143);
+}
+.success{
+    --colorType : rgb(15, 196, 15) ;
+    background-color:var(--white);
+    .icon{
+        color: var(--colorType);
+    }
+
+    .icon-times{
+        color: #738CA5;
+    }
+    &::before{
+        content: '';
+        width: 7px;
+        margin-right: 20px;
+        height: 100%;
+        background-color:var(--colorType);
+    }
+}
+
+.error{
+    --colorType : rgb(234, 31, 31);;
+    background-color: var(--colorType);
+    .icon{
+        color: var(--colorType);
+    }
+
+    .icon-times{
+        color: #738CA5;
+    }
+    &::before{
+        content: '';
+        width: 7px;
+        margin-right: 20px;
+        height: 100%;
+        background-color:var(--colorType);
+    }
+}
+.info{
+    --colorType : #1043CE;
+    background-color: var(--colorType);
+    .icon{
+        color: var(--colorType);
+    }
+
+    .icon-times{
+        color: #738CA5;
+    }
+    &::before{
+        content: '';
+        width: 7px;
+        margin-right: 20px;
+        height: 100%;
+        background-color:var(--colorType);
+    }
+}
+.warn{
+    
+    --colorType : #FF8907;
+    background-color:var(--white);
+    .icon{
+        color: var(--colorType);
+    }
+
+    .icon-times{
+        color: #738CA5;
+    }
+    &::before{
+        content: '';
+        width: 7px;
+        margin-right: 20px;
+        height: 100%;
+        background-color:var(--colorType);
+    }
+
+    
+}
