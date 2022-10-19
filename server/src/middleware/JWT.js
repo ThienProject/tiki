@@ -12,6 +12,7 @@ const createTokens = (payload = {}, refresh = false) => {
   }
   const accessToken = sign(payload, key, {expiresIn : life});
   return accessToken;
+  
 };
 
 const validateToken = (accessToken) => {

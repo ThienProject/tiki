@@ -186,11 +186,11 @@ const profile = async (req, res) => {
         return res.status(200).json({ data: rows })
       }
     } catch (err) {
-      return res.status(403).json({ error: err })
+      return res.status(403).json({error: err })
     }
   }
   else {
-    return res.status(400).json({ error: "please login"});
+    return res.status(400).json({error: "please login"});
   }
 
 }
@@ -254,21 +254,21 @@ const getToken = async (req, res) => {
   }
 }
 const register = async (req, res) => {
-  let { phone, password, email, username } = req.body
-  console.log(username)
+  let { phone, password, email, fullname } = req.body
+  // console.log(fullname)
   bcrypt.hash(password, saltRounds, async function (err, hash) {
     try {
       // console.log(
       //   `insert into user(${
       //     email ? 'email' : 'phone'
       //   }, password, fullname) VALUES (?,?,?)`,
-      //   [email ? email : phone, hash, username],
+      //   [email ? email : phone, hash, fullname],
       // )
       await pool.execute(
         `insert into user(${
           email ? 'email' : 'phone'
         }, password, fullname) VALUES (?,?,?)`,
-        [email ? email : phone, hash, username],
+        [email ? email : phone, hash, fullname],
       )
 
       return res.json('success')
