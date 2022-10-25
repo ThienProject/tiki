@@ -11,16 +11,22 @@ const cx = classNames.bind(styles);
 function EnterPass({ handleLogin, phone }) {
     const [password, setPassword] = useState('');
     const dispatch = useDispatch();
-    const {success}  = useToast();
+    const {success, error}  = useToast();
     const handleLoginClick = async () => {
         //check password
         try {
             const action = login({ phone: phone, password: password });
             console.log({ action });
             const actionResult  = await dispatch(action);
-            const currentValue = unwrapResult(actionResult);
-            success("Login successful!");
+            const currentValue = await unwrapResult(actionResult);
+            console.log(currentValue);
+            if(currentValue.user){
+                success("Login successful!");
+            }else{
+                error("Password error!");
+            }
         } catch (error) {
+           
             console.error(error);
         }
     };

@@ -1,50 +1,76 @@
-import { useState } from "react";
-import { ToastContext } from "~/contexts/Toast";
-import Toast from "./component/Toast";
+import { useState } from 'react';
+import { ToastContext } from '~/contexts/Toast';
+import Alert from './component/Alert';
+import Toast from './component/Toast';
 
-function ToastProvider(props)
-{
-    const {children} = props;
-    const [state, setState] = useState({isShow : false});
-    const show = (message) =>{
-        setState({isShow : true, message: message});
-    }
-    const hide = () =>{
-        setState({isShow : false});
-    }
+function ToastProvider(props) {
+    const { children } = props;
+    const [toastList, setToastList] = useState([]);
+    const setToasts = (message) => {
+        setToastList((prev) => {
+            console.log(prev);
+            const idMess = prev.length;
+            return [...prev , {idMess, ...message}];
+        });
+    };
 
-    const success = (message) =>{
-        show({type : 'success', text: message});
-    }
+  
+    const success = (message) => {
+        setToasts({ severity: 'success', text: message });
+    };
 
-    const error = (message) =>{
-        show({type : 'error', text: message});
-    }
+    const error = (message) => {
+        setToasts({ severity: 'error', text: message });
+    };
 
-    const info = (message) =>{
-        show({type : 'info', text: message});
-    }
+    const info = (message) => {
+        setToasts({ severity: 'info', text: message });
+    };
 
-    const warn = (message) =>{
-        show({type : 'warn', text: message});
-    }
-    const {isShow, message} = state;
-    console.log(state);
-    return  <ToastContext.Provider
+    const warn = (message) => {
+        setToasts({ severity: 'warn', text: message });
+    };
+
+    const dle = (id)=>{ 
+        setToastList((prev) => {
+            console.log(id);
+            console.log("length :" +prev.length)
+            const newArr = prev.filter((val)=>{
+                return val.idMess !== id;
+            })
+            console.log("mang sau khi xoá : ", newArr);
+            return  newArr;
+        })
+    };
+
+    const onDismiss = (id) =>  () => dle(id);
+    // console.log("toast list :",toastList);
+
+    return (
+        <ToastContext.Provider
             value={{
                 error: error,
                 warn: warn,
                 info: info,
                 success: success,
-                hide: hide
             }}
-                    > 
-                {children}
-                {message && (
-                    <Toast onShow={isShow} severity={message.type} time = {5000} >
-                        {message.text}
-                    </Toast>
-                )} 
-            </ToastContext.Provider>;    
+        >
+            {children}
+
+            {
+                <Toast>
+                    {console.log("render container")}
+                    {toastList &&
+                        toastList.map((item, index) => {
+                            return (
+                                <Alert idMess={item.idMess} time={3500} onDismiss={onDismiss(item.idMess)} severity={item?.severity} key={item.idMess}>
+                                    {item?.text}
+                                </Alert>
+                            );
+                        })}
+                </Toast>
+            }
+        </ToastContext.Provider>
+    );
 }
-export  {ToastProvider};
+export { ToastProvider };

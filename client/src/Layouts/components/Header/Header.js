@@ -62,6 +62,12 @@ function Header() {
             success('ngu ngoc');
             
         }}>click me </Button>
+         <Button onClick={async ()=>{
+            // const profile = await usersService.profile(23,'thien');
+            // console.log(profile)
+            warn('ngu ngoc');
+            
+        }}>click me  2</Button>
 
         <a href='/' className={cx('logo')}>
             <Image src={"error"} alt='tiki' />

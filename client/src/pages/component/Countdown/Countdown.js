@@ -10,9 +10,11 @@ function CountDown({end = "2000-27-10 23:59:59", output = 'hour' }) {
     const endTime = moment(end, 'YYYY-MM-DD HH:mm:ss');
     const [countdown , setCountdown] = useState(moment(endTime - moment()));  
     useEffect(()=>{
-       const nowTime = moment();
-       const interval =  setInterval(()=>{
-            setCountdown(moment(endTime - nowTime));
+       const interval = setInterval(()=>{
+            setCountdown((prev) =>{
+               const nowTime = moment();
+               return moment(endTime - nowTime)
+            } );
         },2000)
 
         return ()=>{

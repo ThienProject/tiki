@@ -14,9 +14,12 @@ export const login = createAsyncThunk('user/login', async (params, thunkApi)=>{
     //thunkApi.dispatch
     const response = await usersService.login(params);
     const { accessToken,refreshToken, user } = response;
-    localService.setUser(user);
-    localService.updateLocalAccessToken(accessToken);
-    localService.updateLocalRefreshToken(refreshToken);
+    if(user){
+        localService.setUser(user);
+        localService.updateLocalAccessToken(accessToken);
+        localService.updateLocalRefreshToken(refreshToken);
+    }
+    
     // requestAxios.defaults.headers.common['refreshToken'] = `Bearer ${refreshToken}`;
     // requestAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
     return response;
