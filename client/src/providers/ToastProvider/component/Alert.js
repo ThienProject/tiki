@@ -20,11 +20,11 @@ function Alert(props){
         console.log("props :",props);
         let hideID = null;
         const timeOut =  setTimeout( () => { 
-            // setHide(true);
+            setHide(true);
             hideID = setTimeout(() => {
-                console.log('alert Xoa id ', +idMess);
+                // console.log('alert Xoa id ', +idMess);
                 onDismiss();
-            }, 500); 
+            }, 1000); 
             
             // removeRef.current();
             },time);
