@@ -26,7 +26,7 @@ function Menu({children, items =[]}){
         <Tippy
             delay={[0, 500]}
             interactive = {true}
-            placement='bottom-end'
+            placement='bottom'
             render = {(attrs) => (
                 <div className = {cx('menu-account')} tabIndex="-1" {...attrs}>
                    <PopperWrapper className={cx('menu-popper')}>

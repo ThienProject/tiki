@@ -17,7 +17,7 @@ function ProductItem({product, className}){
         locale: 'vi', // language code of the locale to use
         trim: true, // trim leading and trailing replacement chars, defaults to `true`
     })+`?id=${product.id_product}`} 
-     className={'l-2 col '+ cx('product-wrapper',className)}>
+     className={ cx('product-wrapper',className)}>
         { <Image className = {cx('product-image')} src ={product.images ? product.images[0].image_link :''}/> }
         <div className={cx('product-title')}>
             <p className={cx('product-title__content')}>{product.name}</p>

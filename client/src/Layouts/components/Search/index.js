@@ -13,7 +13,7 @@ import { default as PopperWrapper } from '~/components/Popper';
 import { useDebounce } from '~/hooks';
 import * as searchService from '~/apiServices/searchService';
 const cx = classNames.bind(styles);
-function Search() {
+function Search({className}) {
     /*   const [searchHistory, setSearchHistory] = useState([]);
     const [searchPopular, setSearchPopular] = useState([]); */
     const [searchResult, setSearchResult] = useState([]);
@@ -46,7 +46,7 @@ function Search() {
     }
 
     return (
-        <div className={cx('searchbar')}>
+        <div className={cx('searchbar',className)}>
             <div className={cx('tippy')}>
                 <Tippy
                     onClickOutside={handleOutInput}

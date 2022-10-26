@@ -12,17 +12,15 @@
     padding: 0 15px;
 }
 .header-right{
-    display: flex;
+    width: 100%;
 }
+
 .logo{
-    width: 60px;
-    height: 40px;
-    display: block;
-    
     img{
-        height: 100%;
-        width: 100%;
+        max-width: 60px;
+        max-height: 40px;
     }
+    padding: 0 5px;
 }
 
 .actions{
@@ -31,11 +29,10 @@
     font-size: 1.5rem;
     cursor: pointer;
     .account{
+        position: relative;
         display: flex;
         align-items: center;
-        min-width: 162px;
-        margin: 0 20px;
-
+        margin-left: 20px;
         &.account--login{
             .login-form{
                 display: block;
@@ -48,15 +45,17 @@
     }
     .name{
         text-transform: capitalize;
+        
     }
     .sort-down{
-        margin: 0 0 7px 5px;
+        margin-left: 5px;
+        margin-bottom: 3.5px;
         font-size: 1.3rem;
     }
 
     .cart{
         position: relative;
-
+        margin: 0 20px;
         .quantity{
             color: var(--black);
             position: absolute;
@@ -76,6 +75,21 @@
     .login-form{
         display: none;
     }
-  
-  
+}
+
+// Responsive
+@media (max-width: 1130px){
+    .cart-name{
+        display: none;
+    }
+}
+
+@media (max-width: 740px) {
+    .header{
+        height:calc(var(--header-height) + 20px) ;
+        padding: 10px;
+    }
+    .name{
+        display: none;
+    }
 }

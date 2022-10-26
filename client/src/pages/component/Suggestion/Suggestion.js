@@ -125,7 +125,7 @@ function    Suggestion() {
             </div>
             <div className={'row ' + cx('suggestions-content')}>
                     {(currentTab === 'products' ? products : market).map((product, index) => {
-                        return <ProductItem className = {cx('suggestions-content__item')} key={index} product={product} ></ProductItem>;
+                        return <ProductItem className = {'l-2 col m-3 c-6 '+ cx('suggestions-content__item')} key={index} product={product} ></ProductItem>;
                     })}
             </div>
             <div 

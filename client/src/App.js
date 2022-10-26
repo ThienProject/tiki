@@ -1,7 +1,6 @@
 import {BrowserRouter,Route, Routes} from 'react-router-dom'
 import {publicRoutes, privateRoutes} from '~/routes'
 
-import {ToastProvider} from './providers/ToastProvider/ToastProvider';
 function App() {
   return (
    <BrowserRouter>
