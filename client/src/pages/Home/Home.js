@@ -42,10 +42,10 @@ function Home() {
                         row: true,
                     })}
                 >
-                    <div className="l-7 m-12">
+                    <div className="l-7 m-12 c-12">
                         <PromotionToday />
                     </div>
-                    <div className="l-5 m-0">
+                    <div className="l-5 m-0 c-0">
                         <div className={cx('video-group')}>
                             <video className={cx('video-astra')} controls>
                                 <source src={videos.astra} type="video/mp4" />
@@ -74,7 +74,7 @@ function Home() {
                         row: true,
                     })}
                 >
-                    <div className="l-12 m-12 c-12">
+                    <div className="l-12 m-12 c-0">
                         <BrandGenuine />
                     </div>
                 </div>

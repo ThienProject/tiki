@@ -28,6 +28,7 @@ function SliderMiddle(){
         speed: 600,
         autoplaySpeed: 3000,
         cssEase: 'linear',
+        
         appendDots: (dots) => (
             <div
                 style={{
