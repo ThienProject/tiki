@@ -11,7 +11,7 @@ function Footer() {
             <div className={cx('footer')}>
                 <div className={cx('footer-top')}>
                     <div className="row">
-                        <div className="l-2-4 col">
+                        <div className="l-2-4 l-o-0 m-o-0 m-6 c-6 c-o-1 col">
                             <div className={cx('footer-top__item')}>
                                 <h4 className={cx('footer-top-item__title')}> Hỗ trợ khách hàng </h4>
                                 <div className={cx('footer-top-item__body')}>
@@ -45,7 +45,7 @@ function Footer() {
                                 </div>
                             </div>
                         </div>
-                        <div className="l-2-4 col">
+                        <div className="l-2-4 l-o-0 m-o-0 m-6 c-6 c-o-1 col">
                             <div className={cx('footer-top__item')}>
                                 <h4 className={cx('footer-top-item__title')}> Về Tiki </h4>
                                 <div className={cx('footer-top-item__body')}>
@@ -79,7 +79,7 @@ function Footer() {
                                 </div>
                             </div>
                         </div>
-                        <div className="l-2-4 col">
+                        <div className="l-2-4 l-o-0 m-o-0 m-6 c-6 c-o-1 col">
                             <div className={cx('footer-top__item')}>
                                 <h4 className={cx('footer-top-item__title')}> Hợp tác và liên kết </h4>
                                 <div className={cx('footer-top-item__body')}>
@@ -113,7 +113,7 @@ function Footer() {
                                 </div>
                             </div>
                         </div>
-                        <div className="l-2-4 col">
+                        <div className="l-2-4 l-o-0 m-o-0 m-6 c-6 c-o-1 col">
                             <div className={cx('footer-top__item')}>
                                 <h4 className={cx('footer-top-item__title')}> Phương thức thanh toán </h4>
                                 <div className={cx('footer-top-item__body')}>
@@ -744,7 +744,7 @@ function Footer() {
                                 </div>
                             </div>
                         </div>
-                        <div className="l-2-4 col">
+                        <div className="l-2-4 l-o-0 m-o-0 m-6 c-6 c-o-1 col">
                             <div className={cx('footer-top__item')}>
                                 <h4 className={cx('footer-top-item__title')}> Kết nối với chúng tôi </h4>
                                 <div className={cx('footer-top-item__body')}>
