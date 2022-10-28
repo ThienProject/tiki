@@ -1,9 +1,8 @@
 
 .searchbar{
-    
     display: flex;
     height: 46px;
-    width: var(--search-bar);
+    
     
     .tippy{
         
@@ -41,7 +40,6 @@
     
 }
 .view-more{
-    
     align-items: center;
     display: flex;
     font-size: 1.2rem;
@@ -71,6 +69,4 @@
     margin-left: 10px ;
 }
 
-.search-result{
-    width: calc((var(--search-bar)) );
-}
+

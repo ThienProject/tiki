@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import Tippy from '@tippyjs/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass, faSortDown } from '@fortawesome/free-solid-svg-icons';
@@ -20,7 +20,8 @@ function Search({className}) {
     const [searchValue, setSearchValue] = useState('');
     const [isFocus, setIsFocus] = useState(false);
     const inputRef = useRef();
-
+    const searchBarRef = useRef();
+    const [width, setWidth] = useState();
     const debounced = useDebounce(searchValue, 500);
 
     useEffect(() => {
@@ -38,6 +39,21 @@ function Search({className}) {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [debounced]);
 
+    useEffect(() => {
+        function handleWindowResize() {
+            console.log(searchBarRef.current.offsetWidth);
+            setWidth(searchBarRef.current.offsetWidth);
+        }
+        setWidth(searchBarRef.current.offsetWidth);
+        window.addEventListener('resize', handleWindowResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleWindowResize);
+        };
+      }, []);
+
+    // console.log(window.getComputedStyle(searchBarRef.current).offsetWidth);
+
     function handleOnInput() {
         setIsFocus(true);
     }
@@ -46,15 +62,18 @@ function Search({className}) {
     }
 
     return (
-        <div className={cx('searchbar',className)}>
+        <div ref={searchBarRef} className={cx('searchbar',className)}>
             <div className={cx('tippy')}>
                 <Tippy
                     onClickOutside={handleOutInput}
-                    placement={'bottom'}
+                    placement={'bottom-end'}
                     interactive={true}
                     visible={isFocus}
                     render={(attrs) => (
-                        <div className={cx('search-result')} tabIndex="-1" {...attrs}>
+                        <div 
+                            style={{width: width}}
+                            className={cx('search-result')} 
+                            tabIndex="-1" {...attrs}>
                             {isFocus && (
                                 <PopperWrapper>
                                     {searchValue === '' ? (
@@ -71,12 +90,13 @@ function Search({className}) {
                                             </div>
 
                                             <h4 className={cx('search-title')}>Popular Search</h4>
-                                            <div className={cx('popular-group')}>
-                                                <PopularSearchItem />
-                                                <PopularSearchItem />
-                                                <PopularSearchItem />
-                                                <PopularSearchItem />
-                                                <PopularSearchItem />
+                                            <div className={cx('popular-group','row')}>   
+                                                <PopularSearchItem className = {'l-4 m-4 c-6'}/>
+                                                <PopularSearchItem className = {'l-4 m-4 c-6'}/>
+                                                <PopularSearchItem className = {'l-4 m-4 c-6'}/>
+                                                <PopularSearchItem className = {'l-4 m-4 c-6'}/>
+                                                <PopularSearchItem className = {'l-4 m-4 c-6'}/>
+                                                <PopularSearchItem className = {'l-4 m-4 c-6'}/>
                                             </div>
                                         </div>
                                     ) : (
