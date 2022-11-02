@@ -26,7 +26,7 @@
 
     &.onShow{
         right: 10px;
-        animation: slideIn  1s;
+        animation: slideIn  0.2s;
     }
     &.onHide{
         animation: slideOut  1s;
@@ -157,4 +157,7 @@
     }
 
     
+}
+.btn-dle{
+    padding: 10px;
 }

@@ -26,11 +26,11 @@ const getLocalRefreshToken =()=>{
 
 const getUser = () => {
     return JSON.parse(localStorage.getItem(storegeKeys.USER));
-  };
+};
   
-  const setUser = (user) => {
+const setUser = (user) => {
     localStorage.setItem(storegeKeys.USER, JSON.stringify(user));
-  };
+};
   
 const removeUser = () => {
     localStorage.removeItem(storegeKeys.USER);

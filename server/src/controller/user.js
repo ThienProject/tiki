@@ -36,36 +36,42 @@ const getAddress = async (req, res) => {
 const searchShop = async (req, res) => {
   // console.log(req)
   const key = req.query.q
-  const [rows, fields] = await pool.execute(`SELECT user.* 
-    from  user
-    WHERE user.id_user in(
-               SELECT us.id_user from (
-                (SELECT user.id_user , sum(star_product) as star_shop 
-                from user, product, 
-                           (SELECT  product.id_user as id_shop, sum(rate.star) as star_product 
-                            from user, product, rate
-                            WHERE 	user.id_user = product.id_user
+  const [rows, fields] = await pool.execute(`SELECT shop.*
+    from  shop
+    WHERE shop.id_shop in(
+               SELECT us.id_shop from (
+                (SELECT shop.id_shop , sum(star_product) as star_shop 
+                from shop, product,
+                           (SELECT  product.id_shop as id_shop, sum(rate.star) as star_product 
+                            from shop, product, rate
+                            WHERE 	shop.id_shop = product.id_shop
+                                 and  shop.id_shop = product.id_shop
                                    and product.id_product = rate.id_product
                             GROUP by product.id_product) as star 
-                WHERE star.id_shop = user.id_user
-                    and product.id_user = user.id_user
-                    and	product.name like "${key}%" or user.shop_name LIKE "%${key}%" 
-                GROUP by user.id_user
+                WHERE star.id_shop = shop.id_shop
+                    and product.id_shop = shop.id_shop
+                    and product.id_shop = shop.id_shop
+                    and	product.product_name like "${key}%" or shop.shop_name LIKE "%${key}%" 
+                GROUP by shop.id_shop
                 order by star_shop DESC
                  LIMIT 0, 10
                 )
                ) as us
    )
-    or  user.id_user in 
-       (SELECT DISTINCT user.id_user
-       FROM product, user 
-       WHERE user.id_user = product.id_user
-       and	product.name like "%${key}%" or user.shop_name LIKE "%${key}%"
-        order by user.id_user ASC
+    or  shop.id_shop in 
+       (SELECT DISTINCT shop.id_shop
+       FROM product, shop 
+       WHERE shop.id_shop = product.id_shop
+       and product.id_shop = shop.id_shop
+       and	product.product_name like "%${key}%" or shop.shop_name LIKE "%${key}%"
+        order by shop.id_shop ASC
         
        )
        LIMIT 0, 10
+
     `)
+
+    console.log(rows);
   return res.status(200).json({
     message: 'success',
     data: rows,
@@ -173,7 +179,7 @@ const profile = async (req, res) => {
   // const accessToken = req.cookies["access-token"];
   const reqToken = req.headers.authorization?.split(' ')
   if (reqToken) {
-    const accessToken = reqToken[1];
+    const accessToken = reqToken[1]
     if (!accessToken)
       return res.status(400).json({ error: 'User not Authenticated!' })
     try {
@@ -186,13 +192,11 @@ const profile = async (req, res) => {
         return res.status(200).json({ data: rows })
       }
     } catch (err) {
-      return res.status(403).json({error: err })
+      return res.status(403).json({ error: err })
     }
+  } else {
+    return res.status(400).json({ error: 'please login' })
   }
-  else {
-    return res.status(400).json({error: "please login"});
-  }
-
 }
 
 const login = async (req, res) => {

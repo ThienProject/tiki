@@ -1,7 +1,9 @@
 .breadcrumb{
     margin-top: 10px;
+    user-select: none;
 }
 .product-content{
+    user-select: none;
     margin-top: 20px;
 }
 
@@ -245,6 +247,9 @@
 .action-icon{
     width: 20px;
     height: 20px;
+}
+.change-quantity{
+    margin-top: 10px;
 }
 .insurance-item{
     display: flex;

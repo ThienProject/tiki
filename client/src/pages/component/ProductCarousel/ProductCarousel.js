@@ -21,61 +21,68 @@ function ProductCarousel({ products = [] }) {
 
     return (
         <div className="product-carousel">
-            <Slider 
+            <Slider
                 infinite={false}
                 initialSlide={0}
                 slidesToShow={5}
                 slidesToScroll={5}
                 speed={500}
-                responsive = {[
+                responsive={[
                     {
-                      breakpoint: 1024,
-                      settings: {
-                        slidesToShow: 3,
-                        slidesToScroll: 3,
-                        infinite: true,
-                        dots: true
-                      }
+                        breakpoint: 1024,
+                        settings: {
+                            slidesToShow: 3,
+                            slidesToScroll: 3,
+                            infinite: true,
+                            dots: true,
+                        },
                     },
                     {
-                      breakpoint: 600,
-                      settings: {
-                        slidesToShow: 2,
-                        slidesToScroll: 2,
-                        initialSlide: 2
-                      }
+                        breakpoint: 600,
+                        settings: {
+                            slidesToShow: 2,
+                            slidesToScroll: 2,
+                            initialSlide: 2,
+                        },
                     },
                     {
-                      breakpoint: 480,
-                      settings: {
-                        slidesToShow: 1,
-                        slidesToScroll: 1
-                      }
-                    }
-                  ]}
-                >
+                        breakpoint: 480,
+                        settings: {
+                            slidesToShow: 1,
+                            slidesToScroll: 1,
+                        },
+                    },
+                ]}
+            >
                 {products.map((product, index) => {
                     const quantity_sold = product.promotion_quantity - product.remaining_quantity;
-                    const price = formatter.format(product.price * (1- product.percent/100));
+                    const price = formatter.format(product.price * (1 - product.percent / 100));
                     return (
                         <div key={index} className={cx('product')}>
                             {/* / */}
-                            <Link className={cx('product-link')} to={slugify(product.name,{
-                                replacement: '-', // replace spaces with replacement character, defaults to `-`
-                                remove: undefined, // remove characters that match regex, defaults to `undefined`
-                                lower: true, // convert to lower case, defaults to `false`
-                                strict: true, // strip special characters except replacement, defaults to `false`
-                                locale: 'vi', // language code of the locale to use
-                                trim: true, // trim leading and trailing replacement chars, defaults to `true`
-                            })+`?id=${product.id_product}`}>
+                            <Link
+                                className={cx('/product-link')}
+                                to={
+                                    slugify(product.product_name, {
+                                        replacement: '-', // replace spaces with replacement character, defaults to `-`
+                                        remove: undefined, // remove characters that match regex, defaults to `undefined`
+                                        lower: true, // convert to lower case, defaults to `false`
+                                        strict: true, // strip special characters except replacement, defaults to `false`
+                                        locale: 'vi', // language code of the locale to use
+                                        trim: true, // trim leading and trailing replacement chars, defaults to `true`
+                                    }) + `?id=${product.id_product}`
+                                }
+                            >
                                 <Image
                                     className={cx('image-product')}
                                     alt={product.image_name}
                                     src={`http://localhost:3002/images/products/${product.image_link}`}
                                 />
                                 <div className={cx('product-price_group')}>
-                                    <div className={cx('product-price')}> {price} 
-                                    <span className={cx('product-price__percent')}>{-product.percent}%</span>
+                                    <div className={cx('product-price')}>
+                                        {' '}
+                                        {price}
+                                        <span className={cx('product-price__percent')}>{-product.percent}%</span>
                                     </div>
                                 </div>
                                 <div

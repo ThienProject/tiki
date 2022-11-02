@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import * as usersService from '~/apiServices/usersService'
 import localService from "~/services/local.service";
-import requestAxios from "~/utils/request";
-import { useToast } from "~/contexts/Toast";
+import store from "~/app/store";
+import { getCart } from "~/pages/Cart/cartSlice";
 const initialState = {
     user: localService.getUser(),
     accessToken : localService.getLocalAccessToken(),
@@ -18,7 +18,13 @@ export const login = createAsyncThunk('user/login', async (params, thunkApi)=>{
         localService.setUser(user);
         localService.updateLocalAccessToken(accessToken);
         localService.updateLocalRefreshToken(refreshToken);
+
+        
+        const id_user = user.id_user;
+        const actionGetCart = getCart(id_user);
+        store.dispatch(actionGetCart);
     }
+    // cart
     
     // requestAxios.defaults.headers.common['refreshToken'] = `Bearer ${refreshToken}`;
     // requestAxios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
@@ -54,7 +60,7 @@ const auth =  createSlice({
         // }
 
     },
-
+    
     //them du lieu vao reducer theo status "Chi xử lý response, k tạo action => dùng kết hợp với thunk"
     extraReducers : (builder)=>{
         builder.addCase(login.pending,(state, action)=>{
@@ -69,6 +75,7 @@ const auth =  createSlice({
             state.user = action.payload.user;
             state.accessToken = action.payload.accessToken;
             state.refreshToken = action.payload.refreshToken;
+            
             
         });
 

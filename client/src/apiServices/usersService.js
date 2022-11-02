@@ -1,6 +1,4 @@
 import * as request from '~/utils/request';
-import requestAxios from "~/utils/request";
-import storegeKeys from '~/constants/storegeKeys';
 export const getAddress  = async (id) =>{
     try {
         const res = await request.get(`user/address`,{

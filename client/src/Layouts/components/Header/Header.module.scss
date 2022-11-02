@@ -8,8 +8,14 @@
     box-shadow: 0px 1px 1px rgb(0, 0, 0, 0.4);
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    padding: 0 15px;
+    flex-wrap: nowrap;
+    user-select: none;
+}
+.header-content{
+  
+}
+.header-row{
+ 
 }
 .header-right{
     width: 100%;
@@ -27,8 +33,12 @@
     display: flex;
     align-items: center;
     font-size: 1.5rem;
+    height: 100%;
     cursor: pointer;
     .account{
+        &:hover {
+          
+        }
         position: relative;
         display: flex;
         align-items: center;
@@ -54,8 +64,13 @@
     }
 
     .cart{
+        color: var(--white);
         position: relative;
         margin: 0 20px;
+        &:hover {
+            opacity: 0.8;
+        }
+
         .quantity{
             color: var(--black);
             position: absolute;

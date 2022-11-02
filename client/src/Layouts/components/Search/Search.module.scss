@@ -1,13 +1,10 @@
 
 .searchbar{
-    display: flex;
+    display: flex!important;
     height: 46px;
     
-    
     .tippy{
-        
         flex:1;
-
         input{
             border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;

@@ -10,6 +10,7 @@ import typeApi from "../services/typeApi";
 import userApi from "../services/userApi";
 import administrativeApi from "../services/administrativeApi";
 import bodyParser from 'body-parser'
+import cartApi from "../services/cartApi";
 var cookieParser = require('cookie-parser')
 let router = express.Router();
 function innitAPIRoute(app){
@@ -38,7 +39,8 @@ function innitAPIRoute(app){
     brandApi(router);
     typeApi(router);
     userApi(router);
-    administrativeApi(router)
+    administrativeApi(router);
+    cartApi(router);
     return app.use('/api/',router)
 }
 export default innitAPIRoute;

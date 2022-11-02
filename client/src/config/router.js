@@ -4,7 +4,7 @@ const routes ={
     'contact' : '/contact',
     'shop' : '/shop/@:shop',
     'user_update' : '/user-update',
-    'product' : '/:product'
- 
+    'product' : '/:product',
+    'cart' : '/cart'
 }
 export default routes 

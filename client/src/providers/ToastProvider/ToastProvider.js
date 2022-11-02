@@ -33,12 +33,10 @@ function ToastProvider(props) {
 
     const dle = (id)=>{ 
         setToastList((prev) => {
-            console.log(id);
-            console.log("length :" +prev.length)
             const newArr = prev.filter((val)=>{
                 return val.idMess !== id;
             })
-            console.log("mang sau khi xoá : ", newArr);
+            
             return  newArr;
         })
     };
@@ -59,9 +57,9 @@ function ToastProvider(props) {
 
             {
                 <Toast>
-                    {console.log("render container")}
+                   
                     {toastList &&
-                        toastList.map((item, index) => {
+                        toastList.map((item) => {
                             return (
                                 <Alert idMess={item.idMess} time={3500} onDismiss={onDismiss(item.idMess)} severity={item?.severity} key={item.idMess}>
                                     {item?.text}

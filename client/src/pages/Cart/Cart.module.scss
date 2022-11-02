@@ -1,0 +1,153 @@
+.wrapper{
+    padding: 30px 0;
+}
+.title{
+    font-size: 2rem;
+    font-weight: 500;
+}
+.cart-header{
+    margin-top: 20px;
+    padding: 15px 15px;
+    background-color: #fcf6f6;
+    border-radius: 5px;
+    user-select: none;
+}
+
+.checkbox-container{
+    display: block;
+    position: relative;
+    cursor: pointer;
+    padding-left: 35px ;
+    &:hover input ~ .checkmark{
+        background-color: #2196F3;
+    }
+}
+.check-input{
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+    height:0;
+    width:0;
+
+    &:checked ~ .checkmark::after {
+        display: block;
+    }
+    &:checked ~ .checkmark {
+        background-color: #2196F3;
+    }
+}
+.checkmark{
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 22px;
+  width: 22px;
+  background-color: white;
+  border: 1px solid rgb(209, 206, 206);
+  border-radius: 5px;
+  &::after {
+    content: "";
+    position: absolute;
+    display: none;
+    left: 7px;
+    top: 2px;
+    width: 4px;
+    height: 9px;
+    border: solid white;
+    border-width: 0 3px 3px 0;
+    -webkit-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+  }
+}
+.btn_remove-selected{
+    cursor: pointer;
+    color: rgb(116, 113, 113);
+    
+    &:hover{
+        opacity: 0.8;
+    }
+}
+
+.cart-seller{
+    background-color: #fcf6f6;
+    border-radius: 5px;
+    padding: 15px 15px;
+    margin-top: 20px;
+}
+
+.seller-head{
+    display: flex;
+    user-select: none;
+    background-color: #fcf6f6;
+}
+.product-list{
+    
+}
+.seller-link{
+    display: flex;
+    align-items: center;
+}
+.seller-name{
+    
+    font-size: 1.8rem;
+    font-weight: 500;
+    margin: 0 5px;
+}
+.seller-icon{
+    font-size: 1.4rem;
+    color: #b1b1b6;
+}
+.product-list{
+    margin-top: 20px;
+}
+.product-item{
+    display: flex;
+    font-size: 1.3rem;
+    margin-top: 25px;
+}
+.product-item__left{
+    display: flex;
+}
+.product-item__right{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.product-link{
+    display: flex;
+}
+.product_name-group{
+    width: calc(100% - 100px);
+    padding-left: 10px;
+    position: relative;
+
+}
+.product-name{
+    font-weight: 300;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    margin-bottom: 5px;
+    line-height: 20px;
+    overflow: hidden;
+}
+.product-image{
+    width: 80px;
+    height: 80px;
+    object-fit: cover;
+}
+.sub-name__icon{
+    display: flex;
+    color: #29a453;
+    align-items: center;
+    text-transform: uppercase;
+
+    p{
+        margin-left: 4px;
+    }
+}
+.into-money{
+    color: red;
+    font-weight: 500;
+}

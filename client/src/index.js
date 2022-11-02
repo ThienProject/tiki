@@ -16,7 +16,7 @@ root.render(
         </ToastProvider>
       </Provider>
     </GlobalStyle>
-    </React.StrictMode>
+     </React.StrictMode>
 );
 
 reportWebVitals();

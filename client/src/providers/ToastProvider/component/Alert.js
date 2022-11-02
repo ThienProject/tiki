@@ -17,7 +17,7 @@ function Alert(props){
     // removeRef.current = onDismiss;
 
     useEffect(()=>{
-        console.log("props :",props);
+        // console.log("props :",props);
         let hideID = null;
         const timeOut =  setTimeout( () => { 
             setHide(true);
@@ -44,20 +44,25 @@ function Alert(props){
             onShow : !hide
         })}>
             <FontAwesomeIcon className={cx('icon')} icon ={type[severity]} />
-            {console.log(`Render ${idMess}....`)}
+          
             <div>
                 <p className={cx('title')}>{severity}</p>
                 <p className={cx('content')}>{children}</p>
             </div>
-
-            <FontAwesomeIcon className={cx('icon-times')} icon ={faTimes}
-
+            <div 
+            className={cx('btn-dle')}
             onClick = {
                 ()=>{
                     onDismiss();
                 }
             }
-            />
+                >
+            <FontAwesomeIcon className={cx('icon-times')} icon ={faTimes} />
+            </div>
+            
+
+            
+          
         </div>
     )
 }

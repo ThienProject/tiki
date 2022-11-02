@@ -66,7 +66,7 @@ function Search({className}) {
             <div className={cx('tippy')}>
                 <Tippy
                     onClickOutside={handleOutInput}
-                    placement={'bottom-end'}
+                    placement={'bottom-start'}
                     interactive={true}
                     visible={isFocus}
                     render={(attrs) => (
