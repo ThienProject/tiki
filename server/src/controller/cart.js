@@ -5,18 +5,44 @@ export const addCart = async (req, res) => {
 
   try {
     const [rows, fields] = await pool.execute(
-      `insert into cart(id_user, id_shop,id_product, id_size, id_color, quantity) value (${id_user}, ${id_shop}, ${id_product}, ${id_size}, ${id_color}, ${quantity})`,
+      `insert into cart(id_user, id_shop,id_product, id_size, id_color, quantity) value (${id_user}, ${id_shop}, '${id_product}', ${id_size}, ${id_color}, ${quantity})`,
     )
     return res.status(200).json('success')
   } catch (error) {
     return res.status(400).json(error)
   }
 }
+
+export const updateCart = async(req, res) =>{
+  let {id_cart, quantity } = req.body;
+
+  try {
+    if(quantity > 0){
+      const result = await pool.execute(
+        `update cart SET quantity = '${quantity}' WHERE id_cart = '${id_cart}'`,
+      )
+      return res.status(200).json('delete success')
+    }
+    else{
+      const result = await pool.execute(
+        `delete from cart where id_cart = '${id_cart}'`,
+      )
+      return res.status(200).json('delete success')
+    }
+    
+    
+  } catch (error) {
+    return res.status(400).json(error)
+  }
+
+
+}
 export const getCart = async (req, res) => {
   const id_user = req?.query?.id_user
   if (id_user) {
     try {
       const [rows, fields] = await pool.execute(`SELECT shop.id_shop, shop.shop_name,
+      cart.id_cart,
       cart.id_product, cart.quantity, 
       product.product_name, product.price, (product.price * cart.quantity) as 									into_money, cart.id_size, cart.id_color,
       image.image_link as image
@@ -42,7 +68,7 @@ export const getCart = async (req, res) => {
            GROUP by  product.id_product
       ) 
          )
-     GROUP by image.id_product`)
+     GROUP by  cart.id_cart`)
       // console.log(rows);
       const cart_items = []
       let total = rows.length

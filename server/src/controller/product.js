@@ -38,14 +38,16 @@ const getProducts = async (req, res) => {
   const product_id = req.query.product_id
     ? `'${req.query.product_id}'`
     : 'product.id_product'
-  const query = `SELECT product.* , type.*, category.* , user.*  FROM product, type, category ,user
+  const query = `SELECT product.* , type.*, category.* , user.* , shop.* 
+  FROM product, type, category ,user, shop
     where product.id_type = type.id_type 
     and type.id_cate = category.id_cate
     and product.id_shop = user.id_user
     and category.cate_name = ${category}
     and product.id_product = ${product_id}
+    and product.id_shop = shop.id_shop
+    order by product.id_product
     limit  ${offset}, ${size}`
-  // console.log(query)
   const [row_products, fields_products] = await pool.execute(query)
 
   const [
@@ -64,7 +66,8 @@ const getProducts = async (req, res) => {
 	) as product2
 ON product.id_product = product2.id_product 
     WHERE image.id_product = product.id_product 
-    `)
+    `);
+    
 
   const [row_colors, fields_colors] = await pool.execute(`
         SELECT 
