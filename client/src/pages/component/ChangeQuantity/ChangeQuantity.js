@@ -1,34 +1,47 @@
+import { unwrapResult } from "@reduxjs/toolkit";
 import classNames from "classnames/bind"
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { changeAmountCart } from "~/pages/Cart/cartSlice";
 import styles from './ChangeQuantity.module.scss'
 const cx = classNames.bind(styles);
-function ChangeQuantity({init = 1,setChoice, className}){
+function ChangeQuantity({init = 1,  setChoice, className, changeAmountCart = null}){
     const [quantity, setQuantity] = useState(init);
-
+    const dispatch = useDispatch();
     useEffect(()=>{
         if(setChoice){
-            setChoice((prev)=>{
+            setChoice( (prev)=>{
                 const newChoice = {...prev, quantity : quantity};
                 return newChoice;
             })
         }
-         
+        
     },[quantity]);
 
     return (<div className={cx('wrapper',className)}>
         <button className={cx('minus')}
         onClick={()=>{
-            if(quantity !== 1){
+           
                 setQuantity((prev)=>{
-                    return prev - 1;
+                    if(prev > 1){
+                        
+                        if(changeAmountCart){
+                            changeAmountCart(prev-1);
+                        }
+                        return prev - 1;
+                    }
+                    return 1;
                 })
-            }
+            
         }}
         >-</button>
         <div className={cx('quantity')}>{quantity}</div>
         <button 
             onClick={()=>{
                 setQuantity((prev)=>{
+                    if(changeAmountCart){
+                        changeAmountCart(prev+1);
+                    }
                     return prev + 1;
                 })
             }}

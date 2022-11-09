@@ -21,13 +21,14 @@ function Product() {
     const idProduct = searchParams.get('id');
     const [product, setProduct] = useState();
     const [choice, setChoice] = useState({
-        id_shop: null,
-        id_product: null,
-        quantity: 0,
-        id_size: null,
-        id_color: null,
+                id_product: null,
+                quantity: 0,
+                id_size: null,
+                id_color: null,
+                image : null
+       
     });
-
+    
     useEffect(() => {
         const fetchApi = async () => {
             const resultProduct = await productService.getProductLimit(0, 1, 'products', idProduct);
@@ -44,6 +45,17 @@ function Product() {
     const starPercent = (star / (countRate * 5)) * 100 || 0;
 
     const dispatch = useDispatch();
+
+    /* id_shop: null,
+        shop_name : null,
+        products: [
+            {
+                id_product: null,
+                quantity: 0,
+                id_size: null,
+                id_color: null,
+            }
+        ] */
     const handleAddCart = (product) => {
         console.log(product);
         if (
@@ -51,11 +63,23 @@ function Product() {
             (product.colors && choice.id_color === null) ||
             (product.sizes && choice.id_size === null)
         ) {
-            console.log('kkkkk');
             warn('please select a quantity, size, color !');
         } else {
-            console.log(product.id_product);
-            const action = addCart({ ...choice, id_shop: product.id_user, id_product: product.id_product });
+            
+            const data = {
+                id_shop: product.id_user,
+                shop_name : product.shop_name,
+                products: [
+                    {   
+                        ...choice,
+                        id_product: product.id_product,  
+                        product_name: product.product_name,
+                        image : product.colors ? choice.image : product.images[0].image_link ,
+                        price : product.price,
+                    }
+                ]
+            }
+            const action = addCart(data);
             dispatch(action);
             success('Add to cart success !');
         }
@@ -160,6 +184,7 @@ function Product() {
                                                                             const newChoice = {
                                                                                 ...prev,
                                                                                 id_color: color.id_color,
+                                                                                image : color.image_link
                                                                             };
                                                                             return newChoice;
                                                                         });

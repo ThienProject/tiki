@@ -20,3 +20,20 @@ export const getCart = async (id_user)=>{
         throw(error)
     }
 }
+
+export const updateCart = async(id_cart, quantity)=>{
+    try {
+        const res = await request.post('cart/update', {id_cart, quantity});
+        return res.data
+    } catch (error) {
+        throw(error);
+    }
+}
+
+export const deleteCart = async(id_cart)=>{
+    try {
+       return  await updateCart(id_cart,0);
+    } catch (error) {
+        throw(error);
+    }
+}

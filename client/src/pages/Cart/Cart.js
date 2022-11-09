@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faShop, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getCart } from './cartSlice';
+import { changeAmountCart, getCart } from './cartSlice';
 import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
 import images from '~/assets/images';
@@ -16,7 +16,7 @@ const cx = classNames.bind(style);
 function Cart() {
     const [cart, setCart] = useState([]);
     const { items, total } = useSelector((state) => state.cart);
-
+    const dispatch = useDispatch();
     return (
         <div className={cx('wrapper', 'wide grid')}>
             <h1 className={cx('title')}>CART</h1>
@@ -75,9 +75,9 @@ function Cart() {
                                     </div>
 
                                     <div className={cx('product-list')}>
-                                        {seller.products.map((item) => {
+                                        {seller.products.map((item, index) => {
                                             return (
-                                                <div className={cx('product-item', 'row')} key={item.id_product}>
+                                                <div className={cx('product-item', 'row')} key={item.id_product+index}>
                                                     <div className={'col l-6'}>
                                                         <div className={cx('product-item__left')}>
                                                             <label className={cx('checkbox-container')}>
@@ -117,7 +117,21 @@ function Cart() {
                                                                 )}
                                                                 <p className={cx('current-pice')}>{item.price}</p>
                                                             </div>
-                                                            <ChangeQuantity init={item.quantity} />
+                                                            <ChangeQuantity 
+                                                  
+                                                                changeAmountCart = {
+                                                                    (quantity)=> {((id_shop, id_cart)=>{ 
+
+                                                                        const params = {id_shop, id_cart, quantity}
+                                                                        const action = changeAmountCart(params);
+                                                                        dispatch(action);
+                                                                    })(seller.id_shop,item.id_cart)}
+                                                                    }
+                                                                init={item.quantity} 
+                                        
+                                                            >
+
+                                                            </ChangeQuantity>
 
                                                             <div className={cx('into-money')}>{item.into_money}</div>
                                                             <FontAwesomeIcon
