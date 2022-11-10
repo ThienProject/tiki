@@ -23,15 +23,24 @@ function ChangeQuantity({init = 1,  setChoice, className, changeAmountCart = nul
         onClick={()=>{
            
                 setQuantity((prev)=>{
+                    let quantityNew = 0;
+                    
                     if(prev > 1){
-                        
-                        if(changeAmountCart){
-                            changeAmountCart(prev-1);
-                        }
-                        return prev - 1;
+                        quantityNew = prev - 1;
                     }
-                    return 1;
+
+                    if(changeAmountCart){
+                        changeAmountCart(quantityNew); 
+                    }
+                    else{
+                        if(quantityNew == 0){
+                            quantityNew = 1;
+                        }
+                    }
+                    
+                    return quantityNew;
                 })
+
             
         }}
         >-</button>

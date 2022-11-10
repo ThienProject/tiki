@@ -77,7 +77,7 @@ function Cart() {
                                     <div className={cx('product-list')}>
                                         {seller.products.map((item, index) => {
                                             return (
-                                                <div className={cx('product-item', 'row')} key={item.id_product+index}>
+                                                <div className={cx('product-item', 'row')} key={item.id_cart}>
                                                     <div className={'col l-6'}>
                                                         <div className={cx('product-item__left')}>
                                                             <label className={cx('checkbox-container')}>
@@ -137,6 +137,11 @@ function Cart() {
                                                             <FontAwesomeIcon
                                                                 className={cx('btn_remove-selected')}
                                                                 icon={faTrashCan}
+                                                                onClick = {()=>{
+                                                                    const params = {id_shop : seller.id_shop, id_cart :item.id_cart, quantity: 0};
+                                                                    const action = changeAmountCart(params);
+                                                                    dispatch(action);
+                                                                }}
                                                             ></FontAwesomeIcon>
                                                         </div>
                                                     </div>

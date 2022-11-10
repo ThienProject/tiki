@@ -11,11 +11,13 @@ const insertCart = async (params) =>{
         const productObject = products[0];
         const newParams = { id_user, ...moreParams, ...productObject };
         const res = await cartService.addCart(newParams);
+        console.log( "id new cart :",res.id_cart);
+        return res.id_cart;
     }
 }
 const updateCart = async (id_cart, quantity) =>{
     try {
-        const res = await cartService.updateCart(id_cart, quantity);
+        await cartService.updateCart(id_cart, quantity);
     } catch (error) {
         throw error;
     }
@@ -45,11 +47,11 @@ export const addCart = createAsyncThunk('cart/add', async (params, thunkApi) => 
     let isExistShop = false;
     const newCartItem = params;
     const newProduct = newCartItem.products[0] || {};
-    let into_money = calculated(newProduct.price,newProduct.quantity ) 
+    let into_money = calculated(newProduct.price,newProduct.quantity ) ;
     newProduct.into_money = formatter.format(into_money);
 
 
-    cartCurrent.items.forEach(async (currentShop) => {
+    const promises =  cartCurrent.items.map(async (currentShop) => {
         if (currentShop.id_shop === newCartItem.id_shop){
             isExistShop = true;
             const products = currentShop.products;
@@ -62,26 +64,33 @@ export const addCart = createAsyncThunk('cart/add', async (params, thunkApi) => 
                 );
 
             // Existing product in shop
-            if(indexProduct != -1){
-
+            if(indexProduct !== -1){
                 products[indexProduct].quantity += newProduct.quantity;
                 const quantity = products[indexProduct].quantity;
                 into_money = (into_money/newProduct.quantity) * quantity;
                 products[indexProduct].into_money = formatter.format(into_money);
                 await updateCart(products[indexProduct].id_cart,products[indexProduct].quantity)
             }
-            else{
-                products.push(newProduct); 
+            else{     
                 cartCurrent.total = cartCurrent.total + 1; 
-                await insertCart(params); 
+                const id_cart = await insertCart(params);
+                newProduct.id_cart = id_cart;
+                if(id_cart){
+                    console.log(newProduct);
+                    products.push(newProduct); 
+                }
+                
             }
            
         }
     });
+    await Promise.all(promises);
     if (!isExistShop) {
+        const id_cart =  await insertCart(params);
+        newProduct.id_cart = id_cart;
         cartCurrent.items.push(newCartItem);
         cartCurrent.total = cartCurrent.total + 1; 
-        await insertCart(params);
+       
         
     } 
     return cartCurrent;
@@ -98,15 +107,7 @@ const initialState = { total: 0, items: [] };
 const cart = createSlice({
     name: 'cart',
     initialState,
-    reducers: {
-       
-        DELETE_CART_ITEM: (state, action) => {
-            state = state;
-        },
-        CLEAR_CART: (state, action) => {
-            state = state;
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(addCart.fulfilled, (state, action) => {
             const { items, total } = action.payload;
@@ -121,15 +122,26 @@ const cart = createSlice({
         builder.addCase(changeAmountCart.fulfilled, (state, action) => {
             const {id_shop, id_cart, quantity} = action.payload;
            
-            state.items.every(shop=>{
+            state.items.every((shop,indexShop)=>{
                 if(shop.id_shop === id_shop ){
-                    shop.products.every(product =>{
+                    shop.products.every((product, indexProduct) =>{
                         console.log(product.id_cart , id_cart);
                         if(product.id_cart === id_cart){
+                            if(quantity === 0){
+                                if(shop.products.length === 1){
+                                    //delete a shop
+                                    state.items.splice(indexShop,1)
+                                }
+                                else{
+                                    shop.products.splice(indexProduct,1);
+                                }
+                                return false;
+                            }
                             product.quantity = quantity;
                             product.into_money = formatter.format(calculated(product.price, quantity));
                             console.log(product);
                             return false;
+                            
                         }
                         return true;
                     })

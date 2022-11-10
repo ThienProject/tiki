@@ -1,4 +1,4 @@
-import { response } from 'express'
+
 import pool from '../configs/connectBD'
 export const addCart = async (req, res) => {
   let { id_user, id_shop, id_product, id_size, id_color, quantity } = req.body
@@ -7,7 +7,8 @@ export const addCart = async (req, res) => {
     const [rows, fields] = await pool.execute(
       `insert into cart(id_user, id_shop,id_product, id_size, id_color, quantity) value (${id_user}, ${id_shop}, '${id_product}', ${id_size}, ${id_color}, ${quantity})`,
     )
-    return res.status(200).json('success')
+    console.log(rows);
+    return res.status(200).json({data: {id_cart: rows.insertId, status: 'success'}});
   } catch (error) {
     return res.status(400).json(error)
   }
@@ -15,13 +16,13 @@ export const addCart = async (req, res) => {
 
 export const updateCart = async(req, res) =>{
   let {id_cart, quantity } = req.body;
-
+  console.log(req.body);
   try {
     if(quantity > 0){
       const result = await pool.execute(
         `update cart SET quantity = '${quantity}' WHERE id_cart = '${id_cart}'`,
       )
-      return res.status(200).json('delete success')
+      return res.status(200).json('update success')
     }
     else{
       const result = await pool.execute(
@@ -39,6 +40,7 @@ export const updateCart = async(req, res) =>{
 }
 export const getCart = async (req, res) => {
   const id_user = req?.query?.id_user
+
   if (id_user) {
     try {
       const [rows, fields] = await pool.execute(`SELECT shop.id_shop, shop.shop_name,
@@ -53,6 +55,7 @@ export const getCart = async (req, res) => {
    and if( cart.id_color is NULL, image.id_img in(
        select image.id_img 
         from cart, image,  product  
+
          where cart.id_product = product.id_product
          and cart.id_user =  '${id_user}'
          and image.id_product = product.id_product
