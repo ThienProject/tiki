@@ -1,25 +1,26 @@
 import classNames from 'classnames/bind';
+import { useDispatch } from 'react-redux';
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import * as productService from '~/apiServices/productService';
-import Breadcrumb from '~/components/Breadcrumb';
-import { ChatIcon, StarIcon } from '~/components/Icons';
-import styles from './Product.module.scss';
+import { useSearchParams, useNavigate } from 'react-router-dom';
+
 import images from '~/assets/images';
 import Button from '~/components/Button';
-import ChangeQuantity from '../component/ChangeQuantity';
-import ImagePreview from '../component/ImagePreview';
-import DisplayAddress from '../component/DisplayAddress';
-import { useDispatch } from 'react-redux';
-import { addCart } from '../Cart/cartSlice';
+import styles from './Product.module.scss';
 import { useToast } from '~/contexts/Toast';
+import { addCart } from '../Cart/cartSlice';
+import Breadcrumb from '~/components/Breadcrumb';
+import ImagePreview from '../component/ImagePreview';
+import { ChatIcon, StarIcon } from '~/components/Icons';
+import DisplayAddress from '../component/DisplayAddress';
+import ChangeQuantity from '../component/ChangeQuantity';
+import * as productService from '~/apiServices/productService';
 const cx = classNames.bind(styles);
 function Product() {
     const cx = classNames.bind(styles);
 
     const [searchParams, setSearchParams] = useSearchParams();
-    const idProduct = searchParams.get('id');
-    const [product, setProduct] = useState();
+    const navigation = useNavigate();
+    const [product, setProduct] = useState({idProduct :searchParams.get('id')});
     const [choice, setChoice] = useState({
                 id_product: null,
                 quantity: 0,
@@ -30,13 +31,19 @@ function Product() {
     });
     
     useEffect(() => {
-        const fetchApi = async () => {
-            const resultProduct = await productService.getProductLimit(0, 1, 'products', idProduct);
-            if (resultProduct) {
-                setProduct(...resultProduct);
-            }
-        };
-        fetchApi();
+        if(product.idProduct){
+            const fetchApi = async () => {
+                const resultProduct = await productService.getProductLimit(0, 1, 'products', product?.idProduct);
+                if (resultProduct) {
+                    setProduct(...resultProduct);
+                }
+            };
+            fetchApi();
+        }
+        else{
+           navigation('/');
+        }
+        
     }, []);
     const { warn, success } = useToast();
 
@@ -87,7 +94,7 @@ function Product() {
     //console.log(searchParams.get('id'));
     return (
         <div className={cx('product grid wide')}>
-            {product && (
+            {product.product_name && (
                 <>
                     <div className={cx('breadcrumb')}>
                         <Breadcrumb

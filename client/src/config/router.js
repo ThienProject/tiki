@@ -1,4 +1,4 @@
-const routes ={
+const routes = {
     'home' : '/',
     'search' : '/search',
     'contact' : '/contact',

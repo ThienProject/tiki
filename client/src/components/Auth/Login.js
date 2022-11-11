@@ -4,7 +4,7 @@ import {useRef, useState } from 'react';
 import images from '~/assets/images';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import LoginEmail from './LoginEmail';
 import EnterPass from './EnterPass';
 import * as usersService from '~/apiServices/usersService'
@@ -34,7 +34,7 @@ function Login({className }) {
             if(result === 'no_account'){
                 console.log(result);
             }
-            if(result == 'false'){
+            if(result === 'false'){
                 setLoginType('password');
             }
             else{

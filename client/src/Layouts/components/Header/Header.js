@@ -1,18 +1,17 @@
+import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import classNames from 'classnames/bind';
-import {useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faPercent, faSortDown, faUser } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch, useSelector } from 'react-redux';
 
+import Search from '../Search';
 import styles from './Header.module.scss';
 import Menu from '~/components/Popper/Menu';
 import Image from '~/components/Image';
-import Search from '../Search';
 import Login from '~/components/Auth';
 import { logout } from '~/components/Auth/authSlice';
-import { Link } from 'react-router-dom';
 import { getCart } from '~/pages/Cart/cartSlice';
-import { useEffect } from 'react';
 import PopupOverlay from '~/components/PopupOverlay';
 const cx = classNames.bind(styles);
 
@@ -40,22 +39,7 @@ function Header() {
             },
         },
     ];
-    const [showFormLogin, setShowFormLogin] = useState(false);
-    // useEffect(()=>{
-    //     setShowFormLogin(!showFormLogin);
-    // },[showFormLogin]);
-    
-    
     const dispatch = useDispatch();
-   
-   
-    const handleClickOutLogin = (e) => {
-        // if (!contentFormRef.current.contains(e.target)) {
-        //     loginFormRef.current.classList.toggle(cx('account--login'));
-        // }
-        setShowFormLogin(!showFormLogin);
-    };
-
     const state = useSelector((state) => state.auth);
     const cart  = useSelector((state) => state.cart);
     const user = state.user;
@@ -68,7 +52,6 @@ function Header() {
             dispatch(actionGetCart);
         }
         // eslint-disable-next-line
-        // localStorage.setItem("kkkkkkkkkkkk", 2);
     },[]);
     const cartAmount = cart.total || 0;
     return (
@@ -83,7 +66,7 @@ function Header() {
                             <Search className={'l-9 m-9 c-12'} />
                             <div className=' l-3 m-3 c-0'>
                                 <div className={cx('actions')}>
-                                    {isLogin ? (
+                                    {isLogin ? ( <>
                                         <div>
                                             <Menu items={MENU_ITEMS}>
                                                 <div className={cx('account')}>
@@ -95,27 +78,45 @@ function Header() {
                                                 </div>
                                             </Menu>
                                         </div>
-                                    ) : (<PopupOverlay
+                                        <Link to={'/cart'} className={cx('cart')}>
+                                        <FontAwesomeIcon className={cx('cart-icon')} icon={faCartShopping} />
+                                        <span className={cx('cart-name')}> Cart</span>
+                                        <span className={cx('quantity')}>{cartAmount}</span>
+                                        </Link>
+                                            </>
+                                        
+                                        
+                                    ) : (
+                                        <>
+                                        <PopupOverlay
                                             ButtonTrigger = {
                                                 ({onOpenModel})=>{
-                                                   return <div className={cx('account')} onClick={onOpenModel}>
+                                                   return <>
+                                                   
+                                                        <div className={cx('account')} onClick={onOpenModel}>
                                                         <FontAwesomeIcon className={cx('account-icon')} icon={faUser} />
                                                         <span className={cx('name')}>Login / Register </span>
                                                         <FontAwesomeIcon className={cx('sort-down')} icon={faSortDown} />
-                                                    </div>
+                                                    
+                                                        <div className={cx('cart')}>
+                                                        <FontAwesomeIcon className={cx('cart-icon')} icon={faCartShopping} />
+                                                        <span className={cx('cart-name')}> Cart</span>
+                                                        <span className={cx('quantity')}>{cartAmount}</span>
+                                                        </div>
+                                                        </div>
+                                                   
+                                                        </>  
+                                                   
                                                 }
                                                 
                                             }
                                             FormContent={Login}
-
                                         />
-                                       
+                                        
+                                        
+                                        </>
                                     )}
-                                    <Link to={'/cart'} className={cx('cart')}>
-                                        <FontAwesomeIcon className={cx('cart-icon')} icon={faCartShopping} />
-                                        <span className={cx('cart-name')}> Cart</span>
-                                        <span className={cx('quantity')}>{cartAmount}</span>
-                                    </Link>
+                                    
                                 </div>
                             </div>
                         </div>

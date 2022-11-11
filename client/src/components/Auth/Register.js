@@ -17,7 +17,7 @@ function Register({ phone }) {
     const handleRegisterBtn = async (e) => {
         try {
             const result = await userService.register({phone, fullname, password});
-            const action = login({ phone: phone, password: password });
+            const action = await login({ phone: phone, password: password });
             const actionResult  = await dispatch(action);
             unwrapResult(actionResult);
             console.log(result);
@@ -64,6 +64,6 @@ function Register({ phone }) {
 }
 
 Register.propTypes = {
-    phone : PropTypes.number.isRequired
+    phone : PropTypes.string.isRequired
 }
 export default Register;

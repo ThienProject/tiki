@@ -7,8 +7,6 @@ const cx = classNames.bind(style);
 function Model({FormContent, onCloseModel}) {
     const bodyRef = useRef();
     const onClickOutside =(e)=>{
-        console.log(e.target);
-        console.log(bodyRef.current);
         if(bodyRef.current.contains(e.target)){
             return;
         }

@@ -119,6 +119,7 @@ function Search({className}) {
                     )}
                 >
                     <input
+                        autoComplete="new-password"
                         onFocus={handleOnInput}
                         value={searchValue}
                         ref={inputRef}
