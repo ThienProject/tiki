@@ -1,5 +1,5 @@
 import classNames from 'classnames/bind';
-import { useRef } from 'react';
+import {useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCartShopping, faPercent, faSortDown, faUser } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -13,6 +13,7 @@ import { logout } from '~/components/Auth/authSlice';
 import { Link } from 'react-router-dom';
 import { getCart } from '~/pages/Cart/cartSlice';
 import { useEffect } from 'react';
+import PopupOverlay from '~/components/PopupOverlay';
 const cx = classNames.bind(styles);
 
 function Header() {
@@ -39,17 +40,20 @@ function Header() {
             },
         },
     ];
-
-
-    const contentFormRef = useRef();
-    const loginFormRef = useRef();
+    const [showFormLogin, setShowFormLogin] = useState(false);
+    // useEffect(()=>{
+    //     setShowFormLogin(!showFormLogin);
+    // },[showFormLogin]);
+    
+    
     const dispatch = useDispatch();
    
    
     const handleClickOutLogin = (e) => {
-        if (!contentFormRef.current.contains(e.target)) {
-            loginFormRef.current.classList.toggle(cx('account--login'));
-        }
+        // if (!contentFormRef.current.contains(e.target)) {
+        //     loginFormRef.current.classList.toggle(cx('account--login'));
+        // }
+        setShowFormLogin(!showFormLogin);
     };
 
     const state = useSelector((state) => state.auth);
@@ -91,18 +95,21 @@ function Header() {
                                                 </div>
                                             </Menu>
                                         </div>
-                                    ) : (
-                                        <div className={cx('account')} ref={loginFormRef} onClick={handleClickOutLogin}>
-                                            <FontAwesomeIcon className={cx('account-icon')} icon={faUser} />
-                                            <span className={cx('name')}>Login / Register </span>
-                                            <FontAwesomeIcon className={cx('sort-down')} icon={faSortDown} />
-                                            <Login
-                                                contentFormRef={contentFormRef}
-                                                loginFormRef={loginFormRef}
-                                                classModifier={cx('account--login')}
-                                                className={cx('login-form')}
-                                            />
-                                        </div>
+                                    ) : (<PopupOverlay
+                                            ButtonTrigger = {
+                                                ({onOpenModel})=>{
+                                                   return <div className={cx('account')} onClick={onOpenModel}>
+                                                        <FontAwesomeIcon className={cx('account-icon')} icon={faUser} />
+                                                        <span className={cx('name')}>Login / Register </span>
+                                                        <FontAwesomeIcon className={cx('sort-down')} icon={faSortDown} />
+                                                    </div>
+                                                }
+                                                
+                                            }
+                                            FormContent={Login}
+
+                                        />
+                                       
                                     )}
                                     <Link to={'/cart'} className={cx('cart')}>
                                         <FontAwesomeIcon className={cx('cart-icon')} icon={faCartShopping} />

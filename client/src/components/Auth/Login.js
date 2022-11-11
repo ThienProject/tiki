@@ -1,6 +1,6 @@
 import styles from './Login.module.scss'
 import classNames from 'classnames/bind'
-import { useRef, useState } from 'react';
+import {useRef, useState } from 'react';
 import images from '~/assets/images';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,11 +9,13 @@ import LoginEmail from './LoginEmail';
 import EnterPass from './EnterPass';
 import * as usersService from '~/apiServices/usersService'
 import Register from './Register';
+
 const cx = classNames.bind(styles);
-function Login({ contentFormRef, loginFormRef, classModifier, className }) {
+
+function Login({className }) {
     const [phone, setPhone] = useState('');
     const [loginType, setLoginType] = useState('Phone');    
-
+    const loginFormRef = useRef();
     const errorRef = useRef();
     const handleLogin = async (params)=>{
         const result = await usersService.login(params);
@@ -49,8 +51,8 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
         setLoginType(value)
     }
     return (
-        <div className={cx('wrapper', className)}>
-            <div ref={contentFormRef} className={cx('content')}>
+       
+            <div className={cx('content')}>
                 {
                     loginType === 'Phone' ?
                         <div className={cx('content-action')}>
@@ -62,7 +64,7 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
                                     className={cx('input')}
                                     value={phone}
                                     placeholder={'Phone Number'}
-                                    onChange={
+                                    onChange = {
                                         (e) => { 
                                             errorRef.current.innerHTML= ""
                                             setPhone(e.target.value) 
@@ -107,7 +109,7 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
                                             loginType === 'register' ? 
                                                 <Register phone ={phone} />
                                                 :
-                                                <EnterPass handleLogin = {handleLogin}  phone={phone} loginFormRef = {loginFormRef} classModifier = {classModifier} />
+                                                <EnterPass handleLogin = {handleLogin}  phone={phone} loginFormRef = {loginFormRef} />
                                     }
                                 
                             </div>
@@ -122,14 +124,8 @@ function Login({ contentFormRef, loginFormRef, classModifier, className }) {
                     </div>
 
                 </div>
-                <button
-                    className={cx('btn-close')}
-                    onClick={(e) => {
-                        loginFormRef.current.classList.remove(classModifier);
-                    }}
-                ><FontAwesomeIcon icon={faTimes} /></button>
+                
             </div>
-        </div>
     )
 }
-export default Login
+export default (Login)

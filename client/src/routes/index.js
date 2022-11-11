@@ -20,9 +20,9 @@ const publicRoutes = [
     {path : routes.user_update, component:UserUpdate, layout: HeaderFooterLayout},
     {path : routes.contact, component:Contact, layout: Fragment},
     {path : routes.product, component: Product, layout: HeaderFooterLayout},
-    {path : routes.cart, component: Cart, layout: HeaderFooterLayout}
+   
 ]
 const privateRoutes = [
-
+    {path : routes.cart, component: Cart, layout: HeaderFooterLayout}
 ]
 export {publicRoutes, privateRoutes}
