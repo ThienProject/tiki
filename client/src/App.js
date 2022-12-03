@@ -10,7 +10,7 @@ function App() {
       <ScrollToTop />
       <div className="App">
         {
-          <Routes  >
+          <Routes>
             {
               publicRoutes.map((route, index) =>{
                 let Layout = route.layout;
@@ -18,10 +18,8 @@ function App() {
                 return <Route 
                   key={index} path={route.path} element={<Layout>{ <Page /> }</Layout> } ></Route>
               })
-
             }
             {
-              
                 user &&  privateRoutes.map((route, index) => {
                 let Layout = route.layout;
                 const Page = route.component

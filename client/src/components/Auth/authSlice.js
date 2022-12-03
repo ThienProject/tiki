@@ -3,23 +3,43 @@ import * as usersService from '~/apiServices/usersService'
 import localService from "~/services/local.service";
 import store from "~/app/store";
 import { getCart } from "~/pages/Cart/cartSlice";
-const initialState = {
-    user: localService.getUser(),
-    accessToken : localService.getLocalAccessToken(),
-    refreshToken : localService.getLocalRefreshToken()
-};
+const initialState = ()=>{
+    const user = localService.getUser();
+    const accessToken  = localService.getLocalAccessToken();
+    const refreshToken  = localService.getLocalRefreshToken();
+    return {
+        user, accessToken, refreshToken
+    };
+} 
+
+export const isTokenExpired = (token)=>{
+    const base64Url = token.split(".")[1];
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+        atob(base64)
+        .split("")
+        .map(function (c) {
+            return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
+        })
+        .join("")
+    );
+   const { exp } = JSON.parse(jsonPayload);
+   const expired = exp * 1000;
+   const timeNow = Date.now();
+   return (timeNow >= expired)
+}
+
 // const {success} = useToast();
 // thunk tao mot action
 export const login = createAsyncThunk('user/login', async (params, thunkApi)=>{
     //thunkApi.dispatch
     const response = await usersService.login(params);
     const { accessToken,refreshToken, user } = response;
+
     if(user){
         localService.setUser(user);
         localService.updateLocalAccessToken(accessToken);
         localService.updateLocalRefreshToken(refreshToken);
-
-        
         const id_user = user.id_user;
         const actionGetCart = getCart(id_user);
         store.dispatch(actionGetCart);
@@ -32,10 +52,20 @@ export const login = createAsyncThunk('user/login', async (params, thunkApi)=>{
 })
 export const refreshToken = createAsyncThunk('user/get-token', async (params, thunkApi) => {
     const response = await usersService.getToken(params);
-    localService.updateLocalAccessToken(response);
-    return response;
+    if(response){
+        localService.updateLocalAccessToken(response);
+        return response;
+    }
+    return false;
+   
 })
-
+export const logout = createAsyncThunk(
+    "user/logout", async function (_payload, thunkAPI) {
+        localService.removeUser();
+        thunkAPI.dispatch({ type: 'logout/LOGOUT' });
+        console.log('logged out')
+    }
+);
 const auth =  createSlice({
     name:'user',
     initialState,
@@ -46,11 +76,10 @@ const auth =  createSlice({
         //     state.token = action.payload.token;
         // },
 
-        logout : (state, action)=>{
-            state.user = null;
-            state.token = null;
-            localService.removeUser()
-        },
+        // logout : (state, action)=>{
+        //     store.dispatch({});
+        //     localService.removeUser();
+        // },
         
         // updateToken :(state, action) =>{
         //     const token = action.payload.token;
@@ -85,5 +114,5 @@ const auth =  createSlice({
     }
 });
 const {reducer, actions} = auth;
-export const {logout, updateToken} = actions;
+export const { updateToken} = actions;
 export default reducer;

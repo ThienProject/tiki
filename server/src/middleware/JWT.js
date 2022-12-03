@@ -12,13 +12,16 @@ const createTokens = (payload = {}, refresh = false) => {
   }
   const accessToken = sign(payload, key, {expiresIn : life});
   return accessToken;
-  
 };
 
 const validateToken = (accessToken) => {
-  const key = freeze.JWT_SECRET;
-    const validToken = verify(accessToken, key);
-    return validToken
+    const key = freeze.JWT_SECRET;
+    try {
+      const validToken = verify(accessToken, key);
+      return validToken
+    } catch (error) {
+        return false;
+    }  
 };
 
 const validateRefreshToken = (refreshToken) => {

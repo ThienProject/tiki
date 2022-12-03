@@ -37,3 +37,22 @@ export const deleteCart = async(id_cart)=>{
         throw(error);
     }
 }
+
+export const deleteAllCart = async(id_user)=>{
+    try {
+        // console.log("params:",params);
+        const res = await request.post('cart/delete', {id_user});
+        return res.data
+    } catch (error) {
+        throw(error);
+    }
+}
+export const updateChecked = async(params)=>{
+    try {
+        // console.log("params:",params);
+        const res = await request.post('cart/update/checked', params);
+        return res.data
+    } catch (error) {
+        throw(error);
+    }
+}

@@ -29,30 +29,39 @@ request.interceptors.response.use(
     },
     async (error) => {
         const originalRequest = error.config;
-        console.log(error);
-        if (error.response.status === 403 && !originalRequest._retry) {
-            originalRequest._retry = true;
+        // console.log(error);
+        if (error.response.status === 401 && !originalRequest._retry) {
             try {
                 const {id_user,fullname, ...user} = store.getState().auth.user; 
                 const action = refreshToken({ id :id_user,name : fullname});
                 const access_token = await store.dispatch(action);
-                console.log(access_token);
+                
                 unwrapResult (access_token) ;
-                axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token;
+                if(access_token){
+                    // console.log("token get again : ", access_token);
+                    originalRequest._retry = true;
+                    axios.defaults.headers.common['Authorization'] = 'Bearer ' + access_token; 
+                    return request(originalRequest);
+                }
+                else{
+                    // console.log("Error refreshing");
+                    const action = logout();
+                    store.dispatch(action);
+                }
                 // return axiosApiInstance(originalRequest);
-                return request(originalRequest);
+                
             } catch (error) {
                 return Promise.reject(error);
             }
         }
-        else{
-             // refreshToken is expired
-             if (error.response.status === 400){
-                 console.log("Error refreshing   ")
-                 const action = logout();
-                 store.dispatch(action);
-             }
-        }
+        // else{
+        //      // refreshToken is expired
+        //      if (error.response.status === 401){
+        //          console.log("Error refreshing");
+        //          const action = logout();
+        //          store.dispatch(action);
+        //      }
+        // }
         return Promise.reject(error);
     },
 );

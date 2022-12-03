@@ -244,7 +244,7 @@ const getToken = async (req, res) => {
   const refreshToken = reqRefreshToken[1]
 
   if (!refreshToken)
-    return res.status(400).json({ error: 'User not Authenticated!' })
+    return res.status(401).json({ error: 'User not Authenticated!' })
   try {
     const validRefreshToken = validateRefreshToken(refreshToken)
     console.log(validRefreshToken)
@@ -252,6 +252,8 @@ const getToken = async (req, res) => {
       req.authenticated = true
       const accessToken = createTokens(payload)
       return res.status(200).json({ data: accessToken })
+    }else{
+      return res.status(401).json({ error: 'User not Authenticated!' })
     }
   } catch (err) {
     return res.status(400).json({ error: err })

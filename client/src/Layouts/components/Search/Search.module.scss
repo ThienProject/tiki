@@ -5,6 +5,10 @@
     
     .tippy{
         flex:1;
+        form {
+            height: 100%;
+            width: 100%;
+        }
         input{
             border-top-left-radius: 4px;
             border-bottom-left-radius: 4px;

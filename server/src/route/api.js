@@ -32,7 +32,7 @@ function innitAPIRoute(app){
     router.put('/update-user',userController.update); // update
     /* router.delete('/delete-user/:id',userController.dlt);  */// delete
     router.delete('/delete-user/:id',userController.dlt); 
-
+    
     bannerApi(router);
     productApi(router);
     categoryApi(router);
@@ -41,6 +41,7 @@ function innitAPIRoute(app){
     userApi(router);
     administrativeApi(router);
     cartApi(router);
-    return app.use('/api/',router)
+    return app.use('/api/',router);
+
 }
 export default innitAPIRoute;

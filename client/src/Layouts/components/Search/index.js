@@ -118,8 +118,9 @@ function Search({className}) {
                         </div>
                     )}
                 >
+                    <form autoComplete="off">
                     <input
-                        autoComplete="new-password"
+                        type="text"
                         onFocus={handleOnInput}
                         value={searchValue}
                         ref={inputRef}
@@ -131,6 +132,8 @@ function Search({className}) {
                         spellCheck="false"
                         placeholder="Enter a desired product, category or brand ..."
                     />
+                    </form>
+                    
                 </Tippy>
             </div>
 

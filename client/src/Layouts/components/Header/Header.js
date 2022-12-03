@@ -10,7 +10,7 @@ import styles from './Header.module.scss';
 import Menu from '~/components/Popper/Menu';
 import Image from '~/components/Image';
 import Login from '~/components/Auth';
-import { logout } from '~/components/Auth/authSlice';
+import { logout, isTokenExpired, refreshToken } from '~/components/Auth/authSlice';
 import { getCart } from '~/pages/Cart/cartSlice';
 import PopupOverlay from '~/components/PopupOverlay';
 const cx = classNames.bind(styles);
@@ -40,16 +40,20 @@ function Header() {
         },
     ];
     const dispatch = useDispatch();
-    const state = useSelector((state) => state.auth);
+    const auth = useSelector((state) => state.auth);
     const cart  = useSelector((state) => state.cart);
-    const user = state.user;
+    const user = auth.user;
     const isLogin = Boolean(user);
-    useEffect(()=>{ 
-        
+    useEffect(()=>{  
         if(isLogin){
-            const id_user = user?.id_user;
-            const actionGetCart = getCart(id_user);
-            dispatch(actionGetCart);
+            if(isTokenExpired(auth.refreshToken)){
+                const action = logout();
+                dispatch(action);
+            }else{
+                const id_user = user?.id_user;
+                const actionGetCart = getCart(id_user);
+                dispatch(actionGetCart);
+            }
         }
         // eslint-disable-next-line
     },[]);
