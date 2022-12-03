@@ -1,8 +1,6 @@
-import { unwrapResult } from "@reduxjs/toolkit";
 import classNames from "classnames/bind"
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { changeAmountCart } from "~/pages/Cart/cartSlice";
 import styles from './ChangeQuantity.module.scss'
 const cx = classNames.bind(styles);
 function ChangeQuantity({init = 1,  setChoice, className, changeAmountCart = null}){

@@ -1,6 +1,5 @@
 .wrapper{
     width: fit-content;
-    
     display: flex;
     align-items: center;
     border: 1px solid rgb(160, 155, 155);
@@ -11,20 +10,24 @@
         outline: none;
         border: none;
         background-color: unset;
+        padding: 5px 10px;
         font-size: 2rem;
         &:hover{
             background-color:  rgb(236, 236, 236);
             cursor: pointer;
         }
     }
-    div, button{
-        border-right: 1px solid rgb(160, 155, 155);
-        padding: 5px 10px;
+    button:nth-child(1){
+        border-right: 1px solid rgb(160, 155, 155); 
     }
-    
     button:nth-child(n+2){
-        border: none;
+        border-left: 1px solid rgb(160, 155, 155);
     }
 
-
+    .quantity{
+        // padding: 5px 10px;
+        text-align: center;
+        width: 30px;
+        box-sizing: border-box;
+    }
 }

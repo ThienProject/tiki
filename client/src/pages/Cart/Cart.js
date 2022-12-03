@@ -6,7 +6,6 @@ import classNames from 'classnames/bind';
 import { useDispatch, useSelector } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faShop, faTrashCan } from '@fortawesome/free-solid-svg-icons';
-
 import style from './Cart.module.scss';
 import { FastIcon } from '~/components/Icons';
 import { changeAmountCart, deleteAllCart, updateChecked } from './cartSlice';
@@ -23,36 +22,6 @@ function Cart() {
         setCart({total : 0, cartItem : items, money_checked, checked});
     }, [items]);
 
-    const formatter = new Intl.NumberFormat('de-DE', {
-        style: 'currency',
-        currency: 'VND',
-        minimumFractionDigits: 0,
-    })
-
-
-    const chooseToBuy = (arrPrev, event, seller_id = false) => {
-        let total = 0;
-        const newArray = arrPrev.cartItem.map((item_shop) => {
-            const isActiveShop = seller_id && seller_id === item_shop.id_shop;
-            return {
-                ...item_shop,
-                active: seller_id ? (isActiveShop ? event.target.checked : item_shop.checked) : event.target.checked,
-                products: item_shop.products.map((item_product) => {
-                    if (isActiveShop || seller_id === false) {
-                        if(event.target.checked){
-                            const  priceFloat = Number.parseFloat((item_product.into_money).substring(0, item_product.into_money.length - 2).replace(/\./g, ''));
-                            total +=  priceFloat;
-                        }
-                        return { ...item_product, active: event.target.checked };
-                    } else {
-                        return item_product;
-                    }
-                }),
-            };
-        });
-        console.log(newArray);
-        return {total, newArray};
-    };
     return (
         <div className={cx('wrapper', 'wide grid')}>
             <h1 className={cx('title')}>CART</h1>
@@ -60,7 +29,7 @@ function Cart() {
                 <div className={cx('cart-left', 'col l-9')}>
                     <div className={cx('cart-header')}>
                         <div className="row">
-                            <div className="col l-6">
+                            <div className="col l-6 m-11 c-11">
                                 <div className={cx('product-item__left')}>
                                     <p className={cx('cart-header_item')}>
                                         <label className={cx('checkbox-container')}>
@@ -86,13 +55,13 @@ function Cart() {
                                 </div>
                             </div>
 
-                            <div className="col l-6">
+                            <div className="col l-6 m-1 c-1">
                                 <div className={cx('product-item__right')}>
                                     <p className={cx('cart-header_item')}>Unit price</p>
                                     <p className={cx('cart-header_item')}>Amount</p>
                                     <p className={cx('cart-header_item')}>Into money</p>
                                     <FontAwesomeIcon
-                                        className={cx('cart-header_item', 'btn_remove-selected')}
+                                        className={cx('btn_remove-selected')}
                                         icon={faTrashCan}
                                         onClick = {async ()=>{
                                             const action = await deleteAllCart();
@@ -139,7 +108,7 @@ function Cart() {
                                         {seller.products.map((item, index) => {
                                             return (
                                                 <div className={cx('product-item', 'row')} key={item.id_cart}>
-                                                    <div className={'col l-6'}>
+                                                    <div className={'col l-6 m-12 c-12'}>
                                                         <div className={cx('product-item__left')}>
                                                             <label className={cx('checkbox-container')}>
                                                                 <input
@@ -176,39 +145,47 @@ function Cart() {
                                                         </div>
                                                     </div>
 
-                                                    <div className="col l-6">
-                                                        <div className={cx('product-item__right')}>
+                                                    <div className="col l-6 m-12 c-12">
+                                                        <div className={cx('right_body-cart')}>
+            
                                                             <div className={cx('price')}>
                                                                 {item.newPrice && (
                                                                     <p className={cx('old-pice')}>{item.price}</p>
                                                                 )}
                                                                 <p className={cx('current-pice')}>{item.price}</p>
                                                             </div>
-                                                            <ChangeQuantity
-                                                                changeAmountCart={(quantity) => {
-                                                                    ((id_shop, id_cart) => {
-                                                                        const params = { id_shop, id_cart, quantity };
+                                                           
+                                                            
+                                                            <div className={cx('group-action__cart-item')}>
+                                                                <div >
+                                                                    <ChangeQuantity
+                                                                        
+                                                                        changeAmountCart={(quantity) => {
+                                                                            ((id_shop, id_cart) => {
+                                                                                const params = { id_shop, id_cart, quantity };
+                                                                                const action = changeAmountCart(params);
+                                                                                dispatch(action);
+                                                                            })(seller.id_shop, item.id_cart);
+                                                                        }}
+                                                                        init={item.quantity}
+                                                                    ></ChangeQuantity>
+                                                                </div>
+                                                                <div className={cx('into-money')}>{item.into_money}</div>
+                                                                <FontAwesomeIcon
+                                                                    className={cx('btn_remove-selected')}
+                                                                    icon={faTrashCan}
+                                                                    onClick={() => {
+                                                                        const params = {
+                                                                            id_shop: seller.id_shop,
+                                                                            id_cart: item.id_cart,
+                                                                            quantity: 0,
+                                                                        };
                                                                         const action = changeAmountCart(params);
                                                                         dispatch(action);
-                                                                    })(seller.id_shop, item.id_cart);
-                                                                }}
-                                                                init={item.quantity}
-                                                            ></ChangeQuantity>
-
-                                                            <div className={cx('into-money')}>{item.into_money}</div>
-                                                            <FontAwesomeIcon
-                                                                className={cx('btn_remove-selected')}
-                                                                icon={faTrashCan}
-                                                                onClick={() => {
-                                                                    const params = {
-                                                                        id_shop: seller.id_shop,
-                                                                        id_cart: item.id_cart,
-                                                                        quantity: 0,
-                                                                    };
-                                                                    const action = changeAmountCart(params);
-                                                                    dispatch(action);
-                                                                }}
-                                                            ></FontAwesomeIcon>
+                                                                    }}
+                                                                ></FontAwesomeIcon>
+                                                            </div>
+                                                            
                                                         </div>
                                                     </div>
                                                 </div>
@@ -220,7 +197,7 @@ function Cart() {
                         })}
                     </div>
                 </div>
-                <div className={cx('cart-right', 'col l-3')}>
+                <div className={cx('cart-right', 'col l-3 m-12 c-12')}>
                     <div className={cx('address', 'left-cart_container')}></div>
                     <div className={cx('voucher', 'left-cart_container')}></div>
                     <div className={cx('money', 'left-cart_container')}>
