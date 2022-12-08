@@ -3,6 +3,7 @@ import * as usersService from '~/apiServices/usersService'
 import localService from "~/services/local.service";
 import store from "~/app/store";
 import { getCart } from "~/pages/Cart/cartSlice";
+
 const initialState = ()=>{
     const user = localService.getUser();
     const accessToken  = localService.getLocalAccessToken();

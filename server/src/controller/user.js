@@ -227,10 +227,10 @@ const login = async (req, res) => {
           },
         })
       } else {
-        return res.status(200).json({ data: 'false' })
+        return res.status(401).json({ data: 'false' })
       }
     } else {
-      return res.status(200).json({ data: 'no_account' })
+      return res.status(401).json({ data: 'no_account' })
     }
   } catch (error) {
     return res.status(404).json({ err: error })

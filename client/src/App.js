@@ -2,6 +2,7 @@ import { useSelector } from 'react-redux';
 import {BrowserRouter,Route, Routes} from 'react-router-dom'
 import {publicRoutes, privateRoutes} from '~/routes'
 import ScrollToTop from './helpers/ScrollToTop';
+import  AdminCPN  from '~/pages/Admin';
 
 function App() {
   const user = useSelector(state => state.auth.user);
@@ -22,14 +23,11 @@ function App() {
             {
                 user &&  privateRoutes.map((route, index) => {
                 let Layout = route.layout;
-                const Page = route.component
+                const Page = route.component;
                 return <Route 
                   key={index} path={route.path} element={  <Layout>{ <Page /> }</Layout> } ></Route>
               })
-             
-              
             }
-          
           </Routes>
         }
       </div>

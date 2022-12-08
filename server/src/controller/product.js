@@ -240,4 +240,17 @@ ON product.id_product = product2.id_product
     data: row_products,
   })
 }
-export { getPromotion, getProducts }
+
+const getProductsByShop = async(req, res) =>{
+  const  {id_shop} = req.body;
+  if(!id_shop) id_shop = 1;
+  try {
+      const result = await pool.query(`select * from product where id_shop = '${id_shop}'`);
+      const [rows, fields] = result;
+      return res.send({data: rows});   
+  } catch (error) {
+      console.log(error);
+  }
+
+}
+export {getPromotion, getProducts, getProductsByShop }

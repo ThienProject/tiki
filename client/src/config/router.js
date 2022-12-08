@@ -5,6 +5,6 @@ const routes = {
     'shop' : '/shop/@:shop',
     'user_update' : '/user-update',
     'product' : '/:product',
-    'cart' : '/cart'
+     cart : '/cart',
 }
 export default routes 
