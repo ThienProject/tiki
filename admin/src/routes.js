@@ -59,6 +59,7 @@ const routes = [
     component: <Dashboard />,
   },
   {
+    auth: true,
     type: "collapse",
     name: "Tables",
     key: "tables",
@@ -67,6 +68,7 @@ const routes = [
     component: <Tables />,
   },
   {
+    auth: true,
     type: "collapse",
     name: "Billing",
     key: "billing",
@@ -100,6 +102,19 @@ const routes = [
     icon: <Icon fontSize="small">person</Icon>,
     route: "/profile",
     component: <Profile />,
+  },
+  {
+    type: "button",
+    auth: true,
+    name: "Logout",
+    key: "logout",
+    icon: <Icon fontSize="small">person</Icon>,
+  },
+  {
+    type: "title",
+    name: "Logout",
+    key: "logout2",
+    icon: <Icon fontSize="small">person</Icon>,
   },
   {
     type: "collapse",

@@ -40,16 +40,18 @@ import SidenavRoot from "examples/Sidenav/SidenavRoot";
 import sidenavLogoLabel from "examples/Sidenav/styles/sidenav";
 
 // Material Dashboard 2 React context
+import { useDispatch } from "react-redux";
 import {
   useMaterialUIController,
   setMiniSidenav,
   setTransparentSidenav,
   setWhiteSidenav,
 } from "context";
+import { logout } from "layouts/authentication/authSlice";
 
 function Sidenav({ color, brand, brandName, routes, ...rest }) {
   const [controller, dispatch] = useMaterialUIController();
-  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode, sidenavColor } = controller;
+  const { miniSidenav, transparentSidenav, whiteSidenav, darkMode } = controller;
   const location = useLocation();
   const collapseName = location.pathname.replace("/", "");
 
@@ -60,6 +62,8 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
   } else if (whiteSidenav && darkMode) {
     textColor = "inherit";
   }
+
+  const dispatchRedux = useDispatch();
 
   const closeSidenav = () => setMiniSidenav(dispatch, true);
 
@@ -107,6 +111,21 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         <NavLink key={key} to={route}>
           <SidenavCollapse name={name} icon={icon} active={key === collapseName} />
         </NavLink>
+      );
+    } else if (type === "button") {
+      returnValue = (
+        <MDBox key={key} p={2}>
+          <MDButton
+            onClick={() => {
+              dispatchRedux(logout());
+            }}
+            fontWeight="bold"
+            variant="gradient"
+          >
+            <Icon>{icon}</Icon>
+            {name}
+          </MDButton>
+        </MDBox>
       );
     } else if (type === "title") {
       returnValue = (
@@ -179,19 +198,6 @@ function Sidenav({ color, brand, brandName, routes, ...rest }) {
         }
       />
       <List>{renderRoutes}</List>
-      <MDBox p={2} mt="auto">
-        <MDButton
-          component="a"
-          href="https://www.creative-tim.com/product/material-dashboard-pro-react"
-          target="_blank"
-          rel="noreferrer"
-          variant="gradient"
-          color={sidenavColor}
-          fullWidth
-        >
-          upgrade to pro
-        </MDButton>
-      </MDBox>
     </SidenavRoot>
   );
 }

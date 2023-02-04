@@ -80,7 +80,6 @@ export default function App() {
 
     setRtlCache(cacheRtl);
   }, []);
-
   // Open sidenav when mouse enter on mini sidenav
   const handleOnMouseEnter = () => {
     if (miniSidenav && !onMouseEnter) {
@@ -110,6 +109,12 @@ export default function App() {
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
   }, [pathname]);
+  const getAuthRoutes = (authRoutes) =>
+    authRoutes.filter((route) => {
+      if (user) return route.auth;
+      if (!user) return !route.auth;
+      return null;
+    });
   const getRoutes = (allRoutes) =>
     allRoutes.map((route) => {
       if (route.auth) {
@@ -166,7 +171,7 @@ export default function App() {
               color={sidenavColor}
               brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
               brandName="Material Dashboard 2"
-              routes={routes}
+              routes={getAuthRoutes(routes)}
               onMouseEnter={handleOnMouseEnter}
               onMouseLeave={handleOnMouseLeave}
             />
@@ -193,10 +198,12 @@ export default function App() {
             color={sidenavColor}
             brand={(transparentSidenav && !darkMode) || whiteSidenav ? brandDark : brandWhite}
             brandName="Material Dashboard 2"
-            routes={routes}
+            routes={getAuthRoutes(routes)}
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}
-          />
+          >
+            <h1 className="btn btn-primary"> kkkk </h1>
+          </Sidenav>
           <Configurator />
           {configsButton}
         </>

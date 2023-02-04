@@ -46,12 +46,26 @@ import { login } from "../authSlice";
 
 function Basic() {
   const [rememberMe, setRememberMe] = useState(false);
+  const [password, setPassword] = useState();
+  const [phone, setPhone] = useState();
   const dispatch = useDispatch();
   // const user = useSelector((state) => state.auth.user);
   const handleSetRememberMe = () => setRememberMe(!rememberMe);
+  const handleChangePassword = (e) => {
+    const value = e.target.value.trim();
+    if (value) {
+      setPassword(value);
+    }
+  };
+  const handleChangePhone = (e) => {
+    const value = e.target.value.trim();
+    if (value) {
+      setPhone(value);
+    }
+  };
   const handleLogin = async () => {
     try {
-      const action = await login({ password: "vansy", phone: "0394921219" });
+      const action = await login({ password, phone });
       const result = dispatch(action);
       unwrapResult(result);
     } catch (error) {
@@ -96,10 +110,22 @@ function Basic() {
         <MDBox pt={4} pb={3} px={3}>
           <MDBox component="form" role="form">
             <MDBox mb={2}>
-              <MDInput type="email" label="Email" fullWidth />
+              <MDInput
+                value={phone}
+                type="phone"
+                label="Phone"
+                fullWidth
+                onChange={handleChangePhone}
+              />
             </MDBox>
             <MDBox mb={2}>
-              <MDInput type="password" label="Password" fullWidth />
+              <MDInput
+                value={password}
+                type="password"
+                label="Password"
+                fullWidth
+                onChange={handleChangePassword}
+              />
             </MDBox>
             <MDBox display="flex" alignItems="center" ml={-1}>
               <Switch checked={rememberMe} onChange={handleSetRememberMe} />
