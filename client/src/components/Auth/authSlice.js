@@ -14,8 +14,8 @@ const initialState = ()=>{
 } 
 
 export const isTokenExpired = (token)=>{
-    const base64Url = token.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const base64Url = token?.split(".")[1];
+    const base64 = base64Url?.replace(/-/g, "+").replace(/_/g, "/");
     const jsonPayload = decodeURIComponent(
         atob(base64)
         .split("")

@@ -13,10 +13,9 @@ function UserUpdate()
         setFile(img);
     };
     const uploadFile = async (e) => {
-
         const formData = new FormData();
         formData.append('file', file);
-        const fetchApi = async ()=>{
+        const fetchApi = async ()=> {
             const result = await createUser.create(formData);
             console.log(result);
         }

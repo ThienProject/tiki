@@ -10,7 +10,7 @@ export const getAddress  = async (id) =>{
     } catch (error) {
         console.log(error)
     }
-}
+};
 
 export const login = async(params) =>{
     try {
@@ -29,7 +29,7 @@ export const register = async(params) =>{
     catch (error){
         console.log(error);
     }
-}
+};
 
 export const profile = async (id,name) => {
     try {
@@ -39,7 +39,8 @@ export const profile = async (id,name) => {
     catch (error){
         console.log(error);
     }
-}
+};
+
 export const getToken = async (id, name) => {
     try {
         const res = await request.post(`token`,{id, name});
@@ -48,4 +49,4 @@ export const getToken = async (id, name) => {
     catch (error){
         console.log(error);
     }
-}
+};
