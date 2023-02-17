@@ -29,8 +29,9 @@ const getPromotion = async (req, res) => {
 }
 
 const getProducts = async (req, res) => {
-  const offset = req.query.offset
-  const size = req.query.size
+  const offset = req.query.offset;
+  const size = req.query.size == 'all'
+      ? '18446744073709551615' : req.query.size;
   const category =
     req.query.category != 'products'
       ? `'${req.query.category}'`
@@ -71,8 +72,8 @@ ON product.id_product = product2.id_product
 
   const [row_colors, fields_colors] = await pool.execute(`
         SELECT 
-        color.*, image.image_link 
-        FROM color, image,  product
+        color.*, color_code.*, image.image_link 
+        FROM color, image, color_code, product
     INNER JOIN 
 	(select id_product 
             	from product , type, category
@@ -86,6 +87,7 @@ ON product.id_product = product2.id_product
     ON product.id_product = product2.id_product 
     WHERE color.id_product = product.id_product
     and color.color_image = image.id_img
+    and color.id_color = color_code.id_color
     `)
 
   const [
@@ -253,4 +255,54 @@ const getProductsByShop = async(req, res) =>{
   }
 
 }
-export {getPromotion, getProducts, getProductsByShop }
+
+const create = async (req, res, next) => {
+  let { id_shop, product_name, colors, description, type, price
+    } = req.body;
+  const imageColors = req.files['colors[image]'];
+  const idColors = colors.id_color;
+  const imageMain = req.files['image_main'][0].filename;
+  console.log("image_main :", imageMain);
+  console.log("imageColors :", imageColors);
+
+  // console.log(imageMain, imageColors);
+  if( !id_shop || !product_name || !colors || !description || !type || !price ) {
+    return res.status(200).json({
+      message: 'missing required params',
+    });
+  } else if (idColors?.length > 0 && !imageColors) {
+    // Handle the case where no color files were uploaded
+    console.log('No color files uploaded');
+  } else {
+    // console.log("colors", colors);
+    const [rows, fields] = await pool.execute(`SELECT id_product from product ORDER BY id_product DESC limit 1`);
+    const id_productOld = rows[0].id_product;
+    let id_productNew = ((+(id_productOld.slice(2)) + 1)).toString();
+    id_productNew = "PD" + ( id_productNew.length <= 2 ? "0" + id_productNew : id_productNew );
+    const [rows2, fields2] = await pool.execute(`SELECT id_img from image ORDER BY id_img DESC limit 1`);
+    let id_image = (+rows2[0].id_img) + 1;
+    console.log(id_image);
+    try {
+      await pool.execute(`insert into product(id_product, id_shop, product_name, description, id_type, price) values ('${id_productNew}', '${id_shop}', '${product_name}', '${description}', '${type}', '${price}')`);
+      let queryImage = `insert into image(id_img, id_product, image_link) values (${id_image},'${id_productNew}', '${imageMain}')`;
+      let queryColor = `insert into color(id_color, id_product, color_quantity, color_image) values `;
+      for(let i = 0; i < imageColors.length; i++) {
+        id_image += 1;
+        queryImage += `,(${id_image}, '${id_productNew}', '${imageColors[i].filename}')`;
+        queryColor += `(${idColors[i]}, '${id_productNew}','10',${id_image}),`;
+      }
+      queryColor = queryColor.substring(0, queryColor.length - 1);
+      await pool.execute(queryImage);
+      await pool.execute(queryColor);
+      return res.status(200).json({
+        message: 'success',
+      })
+
+
+    } catch (error) {
+      throw error;
+    }
+    
+  }
+}
+export {getPromotion, getProducts, getProductsByShop, create }
