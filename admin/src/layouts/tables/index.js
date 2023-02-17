@@ -30,6 +30,8 @@ import DataTable from "examples/Tables/DataTable";
 // Data
 import authorsTableData from "layouts/tables/data/authorsTableData";
 import projectsTableData from "layouts/tables/data/projectsTableData";
+import MDButton from "components/MDButton";
+import { Link } from "react-router-dom";
 
 function Tables() {
   const { columns, rows } = authorsTableData();
@@ -70,6 +72,9 @@ function Tables() {
           <Grid item xs={12}>
             <Card>
               <MDBox
+                display="flex"
+                alignItems="center"
+                justifyContent="space-between"
                 mx={2}
                 mt={-3}
                 py={3}
@@ -80,15 +85,21 @@ function Tables() {
                 coloredShadow="info"
               >
                 <MDTypography variant="h6" color="white">
-                  Projects Table
+                  Products Table
                 </MDTypography>
+                <Link to="/products/new">
+                  <MDButton color="success" variant="contained">
+                    Add New
+                  </MDButton>
+                </Link>
               </MDBox>
               <MDBox pt={3}>
                 <DataTable
                   table={{ columns: pColumns, rows: pRows }}
-                  isSorted={false}
+                  isSorted
                   entriesPerPage={false}
-                  showTotalEntries={false}
+                  showTotalEntries
+                  canSearch
                   noEndBorder
                 />
               </MDBox>

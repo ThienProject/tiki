@@ -44,6 +44,7 @@ import Notifications from "layouts/notifications";
 import Profile from "layouts/profile";
 import SignIn from "layouts/authentication/sign-in";
 import SignUp from "layouts/authentication/sign-up";
+import NewProduct from "layouts/tables/products/NewProduct";
 
 // @mui icons
 import Icon from "@mui/material/Icon";
@@ -66,6 +67,13 @@ const routes = [
     icon: <Icon fontSize="small">table_view</Icon>,
     route: "/tables",
     component: <Tables />,
+  },
+  {
+    auth: true,
+    key: "newProduct",
+    icon: <Icon fontSize="small">table_view</Icon>,
+    route: "/products/new",
+    component: <NewProduct />,
   },
   {
     auth: true,

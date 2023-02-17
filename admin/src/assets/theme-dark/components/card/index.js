@@ -32,7 +32,7 @@ const card = {
       flexDirection: "column",
       position: "relative",
       minWidth: 0,
-      wordWrap: "break-word",
+      wordwrap: "break-word",
       backgroundImage: "none",
       backgroundColor: background.card,
       backgroundClip: "border-box",

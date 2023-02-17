@@ -32,7 +32,7 @@ const card = {
       flexDirection: "column",
       position: "relative",
       minWidth: 0,
-      wordWrap: "break-word",
+      wordwrap: "break-word",
       backgroundColor: white.main,
       backgroundClip: "border-box",
       border: `${borderWidth[0]} solid ${rgba(black.main, 0.125)}`,
