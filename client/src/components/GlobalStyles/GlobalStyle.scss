@@ -11,16 +11,7 @@
     --search-bar: 746px;
     --btn-search :120px;
 }
-*{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-html{
-    font-family: 'Roboto', sans-serif;
-    font-size: 62.5%;
-    color: var(--text);
-}
+
 body{
     font-size: 1.6rem;
     text-rendering: optimizeSpeed;

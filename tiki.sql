@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2022 at 08:19 AM
+-- Generation Time: Feb 27, 2023 at 05:36 PM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -118,21 +118,17 @@ CREATE TABLE `cart` (
   `id_product` varchar(50) NOT NULL,
   `id_size` int(11) DEFAULT NULL,
   `id_color` int(11) DEFAULT NULL,
-  `quantity` int(11) NOT NULL
+  `quantity` int(11) NOT NULL,
+  `checked` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `cart`
 --
 
-INSERT INTO `cart` (`id_cart`, `id_user`, `id_shop`, `id_product`, `id_size`, `id_color`, `quantity`) VALUES
-(1, 23, 3, 'PD003', 1, 2, 3),
-(2, 23, 1, 'PD001', 5, 4, 3),
-(3, 23, 4, 'PD004', 7, NULL, 4),
-(17, 23, 5, 'PD006', NULL, NULL, 2),
-(21, 23, 1, 'PD001', 2, 2, 5),
-(23, 23, 1, 'PD001', 1, 2, 3),
-(24, 23, 4, 'PD012', NULL, NULL, 1);
+INSERT INTO `cart` (`id_cart`, `id_user`, `id_shop`, `id_product`, `id_size`, `id_color`, `quantity`, `checked`) VALUES
+(146, 23, 1, 'PD005', 8, NULL, 16, 1),
+(148, 23, 2, 'PD002', 4, NULL, 110, 1);
 
 -- --------------------------------------------------------
 
@@ -215,9 +211,33 @@ CREATE TABLE `color` (
 
 INSERT INTO `color` (`id_color`, `id_product`, `color_name`, `color_quantity`, `color_image`) VALUES
 (1, 'PD001', 'Vàng', 200, '1'),
+(1, 'PD017', '', 10, '181'),
 (2, 'PD001', 'Trắng nâu', 200, '177'),
-(3, 'PD003', 'đen', 200, '178'),
-(4, 'PD003', 'nâu', 200, '179');
+(3, 'PD003', 'đen', 200, '12'),
+(3, 'PD017', '', 10, '182'),
+(4, 'PD003', 'nâu', 200, '14');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `color_code`
+--
+
+CREATE TABLE `color_code` (
+  `id_color` int(11) NOT NULL,
+  `color_name` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `color_code`
+--
+
+INSERT INTO `color_code` (`id_color`, `color_name`) VALUES
+(1, 'Vàng'),
+(2, 'Trắng'),
+(3, 'Cam'),
+(4, 'Nâu'),
+(5, 'Đen Sẩm');
 
 -- --------------------------------------------------------
 
@@ -376,7 +396,10 @@ INSERT INTO `image` (`id_img`, `id_product`, `image_name`, `image_link`) VALUES
 (176, 'PD003', NULL, '99edae2cc38ff918c74b595ea2e46307.jpg'),
 (177, 'PD001', NULL, 'downloadtrangnau.jpg'),
 (178, 'PD003', NULL, '3b870440ae742b93a470e3e09763bef2.jpg'),
-(179, 'PD003', NULL, 'balo-kim-long-032-nau-2.jpg\r\n');
+(179, 'PD003', NULL, 'balo-kim-long-032-nau-2.jpg\r\n'),
+(180, 'PD017', NULL, 'image_main-1676649904380.jpg'),
+(181, 'PD017', NULL, 'colors[image]-1676649904534.jpg'),
+(182, 'PD017', NULL, 'colors[image]-1676649904730.jpg');
 
 -- --------------------------------------------------------
 
@@ -459,7 +482,8 @@ INSERT INTO `product` (`id_product`, `id_shop`, `id_type`, `id_promotion`, `id_b
 ('PD012', 4, 22, NULL, NULL, 'Yêu Thầm', 'Món Tây nhưng quá quen với người Việt chính là bánh pizza. Bánh pizza lúc nào cũng rất bắt mắt bởi phần nhân bên trên đầy màu sắc tươi sáng từ đủ loại nguyên liệu như rau củ, hải sản cùng lớp phủ phô mai vàng óng.\r\n\r\nĐế bánh mềm vừa phải khi ăn lại không bị ngán bởi chúng đã được nướng nóng giòn vô cùng, phần sốt cà chua đậm đà quyện với rau củ ngọt thanh cùng hải sản tươi, khi ăn rất ngọt thịt.\r\n\r\nĐặc biệt có thêm phần phô mai tan chảy bên trên, thơm lừng, béo ngậy làm cho món bánh pizza tăng thêm phần hấp dẫn.', 2, 'visible', '159250.00', 'Chúc bạn thành công', 0, '2022-06-21 21:44:56'),
 ('PD014', 1, 24, NULL, NULL, 'Ghế Văn Phòng Thời Trang & thiết kế Ergonomic 8723-XAM (giúp làm việc cả ngày không lo mệt mỏi)', 'Trứng ngâm trà được xem như là một món ăn nhẹ độc đáo và phổ biến của người Trung Hoa. Bên cạnh việc chứa đựng những giá trị truyền thống của dân tộc thì nó còn là một món ăn chứa nhiều chất dinh dưỡng nhưng lại chế biến rất đơn giản, mang lại may mắn đối với người Trung Hoa. Sau đây Bách hóa XANH sẽ gợi ý cho bạn cách làm món trứng ngâm trà này nhé!', 2, 'visible', '961000.00', 'Chúc bạn thành công', 0, '2022-06-21 21:47:27'),
 ('PD015', 2, 25, NULL, NULL, 'Máy tính bán háng OS-A2, màn hình LCD rộng , rõ nét, thiết kế cực đẹp, chất lượng cao(tiêu chuẩn Châu Âu-CE)', 'OSALO là thương hiệu máy tính rất thông dụng và nổi tiếng được bán hầu hết trên các sàn thương mại điện tử lơn trên thế giới. Đây là thương hiệu được đăng ký độc quyền nên tất cả sản phẩm của OSALO đều được hiểm soát và quản lý chặt chẻ nên chất lượng luôn được đảm bảo. Sản phẩm máy tính COSALO được xuất khẩu toàn thế giới và rất được tất cả mọi giới ưa chuộng .\n\nMáy tính OSALO OS-A2 là một sản phẩm được giành cho những nhà bán hàng,showroom, cửa hàng vật tư thiết bị. Với thiết kế cực kỳ tinh xảo và đẹp mắt giúp bạn tự tin và thoải mái trong thao tác khi tính toán.\n\nMáy tính có màn hình LCD rộng và sắc nét với 12 chữ số , 2 hàng\n\nBàn phím cực lỳ êm nhẹ với những nút phím lớn dễ bấm và chóng mòn\n\nMáy có 2 nguồn năng lượng ánh sáng và pin AAA giúp máy vận hành liên tục . Khi có  ánh sáng đủ mạnh(chỉ 1 cần bóng đèn  ) thì máy sử dụng năng lượng ánh sáng , còn khi không có ánh sáng thì máy chuyển qua sử dụng năng lượng từ Pin .\n\nChất liệu: nhựa cao cấp\n\nKích thước : 108x 160 x 32(mm)\n\nTrọng lượng: 132g', 2, 'visible', '170000.00', 'Chú ý lửa nhỏ , cho nước chanh vào cuối cùng', 0, '2022-06-21 21:47:03'),
-('PD016', 6, 29, NULL, NULL, '[Chỉ Giao HCM] - Dưa Hấu Ruột Đỏ (bán theo trái 3kg) - Chuẩn An toàn Vietgap', 'Thương hiệu: 3Sạch Food\r\nXuất xứ: Việt Nam\r\nVới sản phẩm tươi sống, trọng lượng thực tế có thể chênh lệch khoảng 10%.\r\n\r\nDưa hấu là một trong những loại trái cây yêu thích của nhiều người vào mỗi dịp hè nóng bức. Loại quả này không chỉ có vị ngọt thanh mát mà còn mang lại nhiều lợi ích nhất định cho sức khỏe bởi chúng chứa nhiều thành phần dinh dưỡng thiết yếu, như vitamin, khoáng chất và các hợp chất thực vật.', 100, 'visible', '110000.00', NULL, 0, '2022-07-08 08:34:36');
+('PD016', 6, 29, NULL, NULL, '[Chỉ Giao HCM] - Dưa Hấu Ruột Đỏ (bán theo trái 3kg) - Chuẩn An toàn Vietgap', 'Thương hiệu: 3Sạch Food\r\nXuất xứ: Việt Nam\r\nVới sản phẩm tươi sống, trọng lượng thực tế có thể chênh lệch khoảng 10%.\r\n\r\nDưa hấu là một trong những loại trái cây yêu thích của nhiều người vào mỗi dịp hè nóng bức. Loại quả này không chỉ có vị ngọt thanh mát mà còn mang lại nhiều lợi ích nhất định cho sức khỏe bởi chúng chứa nhiều thành phần dinh dưỡng thiết yếu, như vitamin, khoáng chất và các hợp chất thực vật.', 100, 'visible', '110000.00', NULL, 0, '2022-07-08 08:34:36'),
+('PD017', 23, 1, NULL, NULL, 'tíadlkf', '5', 0, NULL, '2345.00', NULL, NULL, '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -660,7 +684,12 @@ INSERT INTO `user` (`id_user`, `user_name`, `fullname`, `birth_day`, `phone`, `i
 (22, '', NULL, NULL, '00000000', NULL, 'vanthien', NULL, NULL, '$2b$10$69SdwN4bY3y4zcrADm6IyO2AvoR8ADdLEuOR7Bw3.SmxcV/9MI37W', NULL, NULL, '1'),
 (23, '', 'sỷ bùi', NULL, '0394921219', NULL, 'vanthien.dev@gmail.com', NULL, NULL, '$2b$10$2leZ.R.mxaSGAf3IqtJUuuAxYyApBkqea.o.L1oEROzLJm9mD5VyK', NULL, NULL, '1'),
 (25, '', 'phạm thiên', NULL, '0394921218', NULL, NULL, NULL, NULL, '$2b$10$WcOtIIpGYhmmgUc1RhcF3udY43GIYwN..gxI.X4H7gkrdCApuZz5y', NULL, NULL, '1'),
-(26, '', 'Thành Nhân', NULL, '0394921217', NULL, NULL, NULL, NULL, '$2b$10$ZdilmqoO/ls3zp64jEzF7OZHg60JoN0AdGGAnq93PhESYP1tgQOD6', NULL, NULL, '1');
+(26, '', 'Thành Nhân', NULL, '0394921217', NULL, NULL, NULL, NULL, '$2b$10$ZdilmqoO/ls3zp64jEzF7OZHg60JoN0AdGGAnq93PhESYP1tgQOD6', NULL, NULL, '1'),
+(29, '', 'phạm thiên', NULL, '0498567223', NULL, NULL, NULL, NULL, '$2b$10$K5zw0GHxfq1LeIP0QYbfneF1ukDh0T.S/pumohD/DA6/Exc2qtXvC', NULL, NULL, '1'),
+(30, '', 'phạm thiên', NULL, '0987237253', NULL, NULL, NULL, NULL, '$2b$10$GSoncfRKf0oVGUx29kNLeOlGEzIEicDPIqJC5uAlBzOVqgigSYzla', NULL, NULL, '1'),
+(34, '', 'phạm thiên', NULL, '0893287342', NULL, NULL, NULL, NULL, '$2b$10$2gPukMD40fSS.63QqMAgG.OzVL/mzyv4nJ.SmNWuhLn6igSHanfrS', NULL, NULL, '1'),
+(35, '', 'phạm thiên', NULL, '0823459834', NULL, NULL, NULL, NULL, '$2b$10$NlEK2Y2T/zTIJIbcTZ0sMexpCnsjivHYTJNiu5.xnfhBRmmmZ1JEO', NULL, NULL, '1'),
+(36, '', 'năm nguyễn', NULL, '0238523845', NULL, NULL, NULL, NULL, '$2b$10$YIoutn/WveDqxOiJjQiRyOdfC0eYlloogEVHnm5PQicCGEcRBsP96', NULL, NULL, '1');
 
 -- --------------------------------------------------------
 
@@ -745,8 +774,14 @@ ALTER TABLE `city`
 -- Indexes for table `color`
 --
 ALTER TABLE `color`
-  ADD PRIMARY KEY (`id_color`),
+  ADD PRIMARY KEY (`id_color`,`id_product`),
   ADD KEY `fk_product_color` (`id_product`);
+
+--
+-- Indexes for table `color_code`
+--
+ALTER TABLE `color_code`
+  ADD PRIMARY KEY (`id_color`);
 
 --
 -- Indexes for table `comment`
@@ -890,7 +925,7 @@ ALTER TABLE `brand`
 -- AUTO_INCREMENT for table `cart`
 --
 ALTER TABLE `cart`
-  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
+  MODIFY `id_cart` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=150;
 
 --
 -- AUTO_INCREMENT for table `category`
@@ -905,10 +940,10 @@ ALTER TABLE `city`
   MODIFY `id_city` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `color`
+-- AUTO_INCREMENT for table `color_code`
 --
-ALTER TABLE `color`
-  MODIFY `id_color` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+ALTER TABLE `color_code`
+  MODIFY `id_color` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `comment`
@@ -938,7 +973,7 @@ ALTER TABLE `district`
 -- AUTO_INCREMENT for table `image`
 --
 ALTER TABLE `image`
-  MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=180;
+  MODIFY `id_img` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
 
 --
 -- AUTO_INCREMENT for table `order`
@@ -986,7 +1021,7 @@ ALTER TABLE `type`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_user` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- AUTO_INCREMENT for table `village`
